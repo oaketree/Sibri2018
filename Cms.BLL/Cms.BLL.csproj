@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="login\viewmodels\" />
     <Folder Include="news\service\" />
     <Folder Include="news\viewmodels\" />
   </ItemGroup>

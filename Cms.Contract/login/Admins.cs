@@ -12,13 +12,14 @@ namespace Cms.Contract.login
         [Key]
         public int UserID { get; set; }
 
-        [Required(ErrorMessage ="请输入用户名")]
         [StringLength(50)]
         public string UserName { get; set; }
 
-        [Required(ErrorMessage = "请输入密码")]
         [StringLength(50)]
         public string Password { get; set; }
+
+        [StringLength(50)]
+        public string Role { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? RegDate { get; set; }

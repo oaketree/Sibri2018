@@ -8,6 +8,6 @@ namespace Cms.BLL.login.services
 {
     public interface IAdminServices
     {
-        Task<Admins> getUser(Admins admin);
+        Task<Admins> getUser(string username,string password);
     }
 }

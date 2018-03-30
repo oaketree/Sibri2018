@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Cms.BLL.login.services;
+﻿using Cms.BLL.login.services;
 using Cms.Contract.login;
-using Core.Cache;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,12 +27,20 @@ namespace Cms.WebPage
             services.AddScoped<IAdminServices, AdminServices>();
             //services.AddSingleton<ICacheHelper, CacheHelper>();
             services.AddMvc();
-            services.AddDistributedMemoryCache();
-            services.AddSession(options =>
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
             {
-                options.Cookie.Name = ".cms2018.Session";
-                options.IdleTimeout = TimeSpan.FromSeconds(50);
+                options.LoginPath = new PathString("/Admin/Login");
+                options.AccessDeniedPath = new PathString("/Denied");
             });
+
+            //services.AddDistributedMemoryCache();
+            //services.AddSession(options =>
+            //{
+            //    options.Cookie.Name = ".cms2018.Session";
+            //    //options.IdleTimeout = TimeSpan.FromSeconds(50);
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +57,8 @@ namespace Cms.WebPage
             }
 
             app.UseStaticFiles();
-
+            //app.UseSession();
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

@@ -1,5 +1,5 @@
-﻿@model Cms.Contract.login.Admins
-@{
+﻿@model Cms.BLL.login.viewmodels.AdminView
+@{ 
     ViewData["Title"] = "登陆";
 }
 <div class="middle-box text-center animated fadeInDown">
@@ -18,6 +18,11 @@
             <div class="form-group">
                 <input asp-for="Password" type="password" class="form-control" placeholder="密码">
                 <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input asp-for= "isPersistent" type="checkbox" class="i-checks">自动登录
+                </label>
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
         </form>

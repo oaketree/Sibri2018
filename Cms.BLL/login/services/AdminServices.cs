@@ -15,10 +15,10 @@ namespace Cms.BLL.login.services
         {
             _dbContext = dbContext;
         }
-        public async Task<Admins> getUser(Admins admin)
+        public async Task<Admins> getUser(string username, string password)
         {
             return await Task.Run(() => {
-                return _dbContext.Admins.SingleOrDefault(n => n.UserName == admin.UserName && n.Password == admin.Password);
+                return _dbContext.Admins.SingleOrDefault(n => n.UserName == username && n.Password == password);
             });
         }
         //private LoginDBContext context;
