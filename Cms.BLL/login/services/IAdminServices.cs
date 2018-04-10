@@ -9,5 +9,8 @@ namespace Cms.BLL.login.services
     public interface IAdminServices
     {
         Task<Admins> getUser(string username,string password);
+        //Task<bool> checkUserExist(string username);
+        Task<bool> addUser(string username, string password);
+        Task<List<Admins>> userList();
     }
 }

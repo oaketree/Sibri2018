@@ -1,0 +1,176 @@
+﻿@{
+    ViewData["Title"] = "登陆管理";
+}
+
+@*<div class="wrapper wrapper-content animated fadeInRight" id="app">*@
+<div class="wrapper wrapper-content fadeInRight" id="app">
+    <div class="modal inmodal" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog form-horizontal">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                        </button>*@
+                    <i class="fa fa-laptop modal-icon"></i>
+                    <h4 class="modal-title">管理员注册</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户名：</label>
+                        <div class="col-sm-8">
+                            <input placeholder="用户名" class="form-control" v-model="username">
+                            <span class="text-danger">{{uValidate}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">密码：</label>
+                        <div class="col-sm-8">
+                            <input type="password" placeholder="密码" class="form-control" v-model="password">
+                            <span class="text-danger">{{pValidate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-white" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-sm btn-white" type="button" v-on:click="login">注册</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                        管理员注册
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>管理员列表</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped app">
+                            <thead>
+                                <tr>
+                                    <th>序列</th>
+                                    <th>用户名</th>
+                                    <th>密码</th>
+                                    <th>角色</th>
+                                    <th>日期</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in adminlists">
+                                    @*<td>
+                                            <input type="checkbox" class="i-checks" v-bind:value="item.UserID" v-model="userid">
+                                        </td>*@
+                                    <td>
+                                       {{index+1}}
+                                    </td>
+                                    <td>{{item.userName}}</td>
+                                    <td>
+                                        <span class="pie">{{item.password}}</span>
+                                    </td>
+                                    <td>{{item.role}}</td>
+                                    <td>{{item.regDate}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs"  v-on:click="edit(item.userID)">修改</button>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.userID)">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                username: '',
+                password: '',
+                uValidate: '',
+                pValidate: '',
+                adminlists: []
+            }, methods: {
+                login: function () {
+                    if (this.username == "") {
+                        this.uValidate = "请输入用户名";
+                    }
+                    if (this.password == "") {
+                        this.pValidate = "请输入密码";
+                    }
+                    if (this.username != "" && this.password != "") {
+                        var vm = this;
+                        $.post('/Admin/AddUser', { username: this.username, password: this.password }, function (data) {
+                            if (!data) {
+                                vm.uValidate = "该用户名已存在";
+                            } else {
+                                //vm.adminlists.push({ username: this.username, password: this.password })
+                                $("#loginModal").modal("hide");
+                                $.post('/Admin/UserList', function (data) {
+                                    vm.adminlists = data;
+                                })
+                            }
+                        })
+
+                    }
+                }, edit: function (id) {
+
+                    console.log(id);
+                }, del: function (id) {
+                    console.log(id);
+                }
+            }, watch: {
+                username: function (newValue, oldValue) {
+                    if (newValue != "")
+                        this.uValidate = "";
+                    else
+                        this.uValidate = "请输入用户名";
+                },
+                password: function (newValue, oldValue) {
+                    if (newValue != "")
+                        this.pValidate = "";
+                    else
+                        this.pValidate = "请输入密码";
+                }
+            }, mounted: function () {
+                var vm = this;
+                $.post('/Admin/UserList', function (data) {
+                    vm.adminlists = data;
+                })
+            }
+        })
+    </script>
+}

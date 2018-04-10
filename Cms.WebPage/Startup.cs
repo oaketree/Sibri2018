@@ -32,7 +32,7 @@ namespace Cms.WebPage
                .AddCookie(options =>
             {
                 options.LoginPath = new PathString("/Admin/Login");
-                options.AccessDeniedPath = new PathString("/Denied");
+                options.AccessDeniedPath = new PathString("/Admin/Denied");
             });
 
             //services.AddDistributedMemoryCache();

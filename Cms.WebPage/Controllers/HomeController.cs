@@ -5,29 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cms.WebPage.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cms.WebPage.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        [Authorize]
+        public IActionResult Right()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
+
 
         public IActionResult Error()
         {
