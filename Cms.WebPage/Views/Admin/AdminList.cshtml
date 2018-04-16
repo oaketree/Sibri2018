@@ -4,6 +4,7 @@
 
 @*<div class="wrapper wrapper-content animated fadeInRight" id="app">*@
 <div class="wrapper wrapper-content fadeInRight" id="app">
+    <edit :edit-data="parentData"></edit>
     <div class="modal inmodal" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog form-horizontal">
             <div class="modal-content animated bounceInRight">
@@ -18,15 +19,27 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">用户名：</label>
                         <div class="col-sm-8">
-                            <input placeholder="用户名" class="form-control" v-model="username">
+                            <input placeholder="用户名" class="form-control" v-model.trim="username">
                             <span class="text-danger">{{uValidate}}</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">密码：</label>
                         <div class="col-sm-8">
-                            <input type="password" placeholder="密码" class="form-control" v-model="password">
+                            <input type="password" placeholder="密码" class="form-control" v-model.trim="password">
                             <span class="text-danger">{{pValidate}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色：</label>
+                        <div class="col-sm-8">
+                            <select v-model="role" class="form-control">
+                                <option disabled value="">请选择</option>
+                                <option>admin</option>
+                                <option>system</option>
+                            </select>
+                            @*<input type="password" placeholder="密码" class="form-control" v-model="role">*@
+                            <span class="text-danger">{{rValidate}}</span>
                         </div>
                     </div>
                 </div>
@@ -37,7 +50,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-sm-12">
@@ -66,16 +78,16 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <input type="text" placeholder="请输入关键词" class="input-sm form-control"> <span class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button>
-                                    </span>
-                                </div>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords"> <span class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary" v-on:click="search"> 搜索</button>
+                                </span>
                             </div>
                         </div>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-striped app">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>序列</th>
@@ -92,7 +104,7 @@
                                             <input type="checkbox" class="i-checks" v-bind:value="item.UserID" v-model="userid">
                                         </td>*@
                                     <td>
-                                       {{index+1}}
+                                        {{index+1}}
                                     </td>
                                     <td>{{item.userName}}</td>
                                     <td>
@@ -101,7 +113,7 @@
                                     <td>{{item.role}}</td>
                                     <td>{{item.regDate}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-xs"  v-on:click="edit(item.userID)">修改</button>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="edit(item.userID)">修改</button>
                                         <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.userID)">删除</button>
                                     </td>
                                 </tr>
@@ -115,59 +127,182 @@
 </div>
 @section Scripts{
     <script>
-        new Vue({
-            el: "#app",
-            data: {
-                username: '',
-                password: '',
-                uValidate: '',
-                pValidate: '',
-                adminlists: []
-            }, methods: {
-                login: function () {
-                    if (this.username == "") {
-                        this.uValidate = "请输入用户名";
-                    }
-                    if (this.password == "") {
-                        this.pValidate = "请输入密码";
-                    }
-                    if (this.username != "" && this.password != "") {
-                        var vm = this;
-                        $.post('/Admin/AddUser', { username: this.username, password: this.password }, function (data) {
+        Vue.component('edit', {
+            // 声明 props
+            props: ['editData'],
+            // 就像 data 一样，prop 也可以在模板中使用
+            // 同样也可以在 vm 实例中通过 this.message 来使用
+            template: `<div class="modal inmodal" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog form-horizontal">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <h4 class="modal-title">编辑内容</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户名：</label>
+                        <div class="col-sm-8">
+                            <input placeholder="用户名" class="form-control" v-model.trim="editData.userName">
+                            <span class="text-danger">{{uValidate}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">密码：</label>
+                        <div class="col-sm-8">
+                            <input type="password" placeholder="密码" class="form-control" v-model.trim="editData.password">
+                            <span class="text-danger">{{pValidate}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色：</label>
+                        <div class="col-sm-8">
+                            <select v-model="editData.role" class="form-control">
+                                <option disabled value="">请选择</option>
+                                <option>admin</option>
+                                <option>system</option>
+                            </select>
+                            <span class="text-danger">{{rValidate}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-white" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-sm btn-white" type="button" v-on:click="editConfirm(editData.userID)">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>`,
+            methods: {
+                editConfirm: function (id) {
+                    if (this.editData.userName != "" && this.editData.password != "" && this.editData.role != "") {
+                        let self = this;
+                        $.post('/Admin/EditUser', { id: id, username: this.editData.userName, password: this.editData.password, role: this.editData.role }, function (data) {
                             if (!data) {
-                                vm.uValidate = "该用户名已存在";
+                                self.temp = "该用户名已存在";
                             } else {
                                 //vm.adminlists.push({ username: this.username, password: this.password })
-                                $("#loginModal").modal("hide");
-                                $.post('/Admin/UserList', function (data) {
+                                $("#editModal").modal("hide");
+                                $.getJSON('/Admin/UserList', function (data) {
                                     vm.adminlists = data;
                                 })
                             }
                         })
 
                     }
-                }, edit: function (id) {
+                }
+            }, computed: {
+                uValidate: function () {
+                    let msg = '';
+                    if (this.editData.userName == "") {
+                        msg = "请输入用户名";
+                    } else { 
+                        msg = this.temp;
+                    }
+                    return msg;
+                }, pValidate: function () { 
+                    let msg = '';
+                    if (this.editData.password == "") {
+                        msg = "请输入密码";
+                    }
+                    return msg;
+                }, rValidate: function () { 
+                    let msg = '';
+                    if (this.editData.role == "") {
+                        msg = "请选择角色";
+                    }
+                    return msg;
+                }
 
-                    console.log(id);
+            }, watch:{
+                'editData.userName': function(newValue) { 
+                    if (newValue != '') {
+                        this.temp = '';
+                    }
+                }
+            }, data: function () { 
+                return {
+                    temp: ''
+                }
+            }
+
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                username: '',
+                password: '',
+                role: '',
+                temp: '',
+                keywords:'',
+                adminlists: [],
+                parentData: {}
+            }, methods: {
+                login: function () {
+                    if (this.username != "" && this.password != "" && this.role != "") {
+                        $.post('/Admin/AddUser', { username: this.username, password: this.password, role: this.role }, function (data) {
+                            if (!data) {
+                                vm.temp = "该用户名已存在";
+                            } else {
+                                //vm.adminlists.push({ username: this.username, password: this.password })
+                                $("#loginModal").modal("hide");
+                                $.getJSON('/Admin/UserList', function (data) {
+                                    vm.adminlists = data;
+                                })
+                            }
+                        })
+                    }
+                }, edit: function (id) {
+                    $.getJSON('/Admin/EditUser', { id: id }, function (data) {
+                        //console.log(data);
+                        vm.parentData = data;
+                        $("#editModal").modal("show");
+                    });
+
                 }, del: function (id) {
-                    console.log(id);
+                    if (confirm("是否确定要删除")) {
+                        $.post('/Admin/DelUser', { id: id }, function () {
+                            $.getJSON('/Admin/UserList', function (data) {
+                                vm.adminlists = data;
+                            })
+                        });
+                    }
+                }, search: function () { 
+                    $.post('/Admin/SearchUser', { key: this.keywords }, function (data) { 
+                        vm.adminlists = data;
+                    })
+
+                }
+            }, computed: {
+                uValidate: function () { 
+                    let msg = "";
+                    if (this.username == "") {
+                        msg = "请输入用户名";
+                    } else {
+                        msg = this.temp;
+                    }
+                    return msg;
+                }, pValidate: function () {
+                    let msg = "";
+                    if (this.password == "") {
+                        msg = "请输入密码";
+                    }
+                    return msg;
+                }, rValidate: function () {
+                    let msg = "";
+                    if (this.role == "") {
+                        msg = "请选择角色";
+                    }
+                    return msg;
                 }
             }, watch: {
-                username: function (newValue, oldValue) {
-                    if (newValue != "")
-                        this.uValidate = "";
-                    else
-                        this.uValidate = "请输入用户名";
-                },
-                password: function (newValue, oldValue) {
-                    if (newValue != "")
-                        this.pValidate = "";
-                    else
-                        this.pValidate = "请输入密码";
+                username: function (newValue) {
+                    if (newValue != "") {
+                        this.temp = "";
+                    }
                 }
             }, mounted: function () {
-                var vm = this;
-                $.post('/Admin/UserList', function (data) {
+                $.getJSON('/Admin/UserList', function (data) {
                     vm.adminlists = data;
                 })
             }

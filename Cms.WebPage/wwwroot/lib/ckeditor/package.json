@@ -1,0 +1,127 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "@ckeditor/ckeditor5-build-classic",
+        "scope": "@ckeditor",
+        "escapedName": "@ckeditor%2fckeditor5-build-classic",
+        "name": "@ckeditor/ckeditor5-build-classic",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "H:\\"
+    ]
+  ],
+  "_from": "@ckeditor/ckeditor5-build-classic@latest",
+  "_id": "@ckeditor/ckeditor5-build-classic@1.0.0-beta.3",
+  "_inCache": true,
+  "_location": "/@ckeditor/ckeditor5-build-classic",
+  "_nodeVersion": "6.9.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/ckeditor5-build-classic_1.0.0-beta.3_1523352823744_0.49438838317284906"
+  },
+  "_npmUser": {
+    "name": "ckeditor",
+    "email": "npm@cksource.com"
+  },
+  "_npmVersion": "4.6.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "@ckeditor/ckeditor5-build-classic",
+    "scope": "@ckeditor",
+    "escapedName": "@ckeditor%2fckeditor5-build-classic",
+    "name": "@ckeditor/ckeditor5-build-classic",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-1.0.0-beta.3.tgz",
+  "_shasum": "e165a77452242513e3eccc0cb2f4ec5399e66271",
+  "_shrinkwrap": null,
+  "_spec": "@ckeditor/ckeditor5-build-classic",
+  "_where": "H:\\",
+  "author": {
+    "name": "CKSource",
+    "url": "http://cksource.com/"
+  },
+  "bugs": {
+    "url": "https://github.com/ckeditor/ckeditor5-build-classic/issues"
+  },
+  "dependencies": {},
+  "description": "CKEditor 5 classic editor build.",
+  "devDependencies": {
+    "@ckeditor/ckeditor5-adapter-ckfinder": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-autoformat": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-basic-styles": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-block-quote": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-dev-utils": "^8.0.0",
+    "@ckeditor/ckeditor5-dev-webpack-plugin": "^4.0.0",
+    "@ckeditor/ckeditor5-easy-image": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-editor-classic": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-essentials": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-heading": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-image": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-link": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-list": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-paragraph": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-theme-lark": "^1.0.0-beta.2",
+    "@ckeditor/ckeditor5-upload": "^1.0.0-beta.2",
+    "babel-minify-webpack-plugin": "^0.3.0",
+    "postcss-loader": "^2.0.10",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.20.3",
+    "webpack": "^3.11.0",
+    "webpack-sources": "1.0.1"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "e165a77452242513e3eccc0cb2f4ec5399e66271",
+    "tarball": "https://registry.npmjs.org/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-1.0.0-beta.3.tgz",
+    "fileCount": 49,
+    "unpackedSize": 3276556
+  },
+  "engines": {
+    "node": ">=6.0.0",
+    "npm": ">=3.0.0"
+  },
+  "files": [
+    "build"
+  ],
+  "gitHead": "9dcac6145a0facaf0b45a3fa7b272d8defc87ef7",
+  "homepage": "https://ckeditor.com",
+  "keywords": [
+    "ckeditor5",
+    "ckeditor5-build",
+    "text editor",
+    "WYSIWYG",
+    "rich-text editor"
+  ],
+  "license": "(GPL-2.0 OR LGPL-2.1 OR MPL-1.1)",
+  "main": "./build/ckeditor.js",
+  "maintainers": [
+    {
+      "name": "ckeditor",
+      "email": "npm@cksource.com"
+    }
+  ],
+  "name": "@ckeditor/ckeditor5-build-classic",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckeditor/ckeditor5-build-classic.git"
+  },
+  "scripts": {
+    "build": "npm run create-entry-file && npm run build-ckeditor",
+    "build-ckeditor": "sh bin/build-ckeditor.sh",
+    "create-entry-file": "node bin/create-entry-file.js",
+    "preversion": "npm run build; if [ -n \"$(git status src/ckeditor.js build/ --porcelain)\" ]; then git add -u src/ckeditor.js build/ && git commit -m 'Internal: Build.'; fi"
+  },
+  "version": "1.0.0-beta.3"
+}

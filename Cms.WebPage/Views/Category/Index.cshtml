@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "网站菜单管理";
+}
+
+<div class="wrapper wrapper-content fadeInRight" id="app">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>网站菜单</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="buttons.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="buttons.html#">选项1</a>
+                            </li>
+                            <li>
+                                <a href="buttons.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-6">
+                        <div id="treeview12" class="test"></div>
+                    </div>
+                    @*<div class="col-sm-3">
+                        <div id="treeview13" class="test"></div>
+                    </div>*@
+                    <div class="col-sm-6">
+                        <h5>点击菜单添加、修改、删除结点：</h5>
+                        <hr>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">结点名称：{{nodename}}</label>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="addPeer">添加同级</button>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="addChild">添加子级</button>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="edit">编辑结点</button>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="del">删除结点</button>
+                        </div>
+                        <template v-if="ok">
+                            <form>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-12 control-label">操作名称：{{control}}</label>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">结点名称*：</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="结点名称" class="form-control" v-model.trim="categoryname" />
+                                        <span class="text-danger">{{aValidate}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">Node Name*：</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="Node Name" class="form-control" v-model.trim="categorynameen" />
+                                        <span class="text-danger">{{bValidate}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">结点链接：</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="结点链接" class="form-control" v-model.trim="href">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">Node Link：</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="Node Link" class="form-control" v-model.trim="hrefen">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">同级序列*：</label>
+                                    <div class="col-sm-9">
+                                        <input placeholder="同级序列" class="form-control" v-model.number="sortid">
+                                        <span class="text-danger">{{cValidate}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-3 control-label">是否采用链接*：</label>
+                                    <div class="col-sm-9">
+                                        <div class="checkbox-custom pull-left">
+                                            <input type="checkbox" id="ishref" v-model="checked" />
+                                            <label for="ishref">采用链接</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix text-center">
+                                    <button class="btn btn-sm btn-white" type="button" v-on:click="confirm">确定</button>
+                                    <input type="reset" class="btn btn-sm btn-white" value="取消" />
+                                </div>
+                            </form>
+                        </template>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/plugins/treeview/bootstrap-treeview.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                nodename: '',
+                categoryid:0,
+                parentid: 0,
+                control: '',
+                ok: false,
+                categoryname: '',
+                categorynameen: '',
+                href: '',
+                hrefen: '',
+                sortid: '',
+                state: 0,
+                checked:false
+            },
+            mounted: function () {
+                $.post('/Category/NodeList', function (data) { 
+                    $('#treeview12').treeview({
+                        levels: 3,
+                        data: data,
+                        onNodeSelected: function (e, o) {
+                            vm.nodename = o.text;
+                            vm.categoryid = o.categoryid;
+                            vm.parentid = o.parentid;
+                            vm.edit();
+                        }
+                    });
+                })
+            }, methods: {
+                addPeer: function () {
+                    this.categoryname = '';
+                    this.categorynameen = '';
+                    this.href = '';
+                    this.hrefen = '';
+                    this.sortid = '';
+                    this.control = '添加同级';
+                    this.ok = true;
+                    this.state = 0;
+                }, addChild: function () {
+                    this.categoryname = '';
+                    this.categorynameen = '';
+                    this.href = '';
+                    this.hrefen = '';
+                    this.sortid = '';
+                    this.control = '添加子级';
+                    this.ok = true;
+                    this.state = 1;
+                }, edit: function () {
+                    if (this.categoryid == 0) {
+                        this.state = 3;
+                        alert("请选择结点后再编辑");
+                    } else {
+                        $.post('/Category/GetNode', { categoryid: this.categoryid }, function (data) {
+                            //console.log(data);
+                            vm.categoryname = data.categoryName;
+                            vm.categorynameen = data.categoryNameEN;
+                            vm.href = data.href;
+                            vm.hrefen = data.hrefEn;
+                            vm.sortid = data.sortID.toString();
+                            vm.checked = data.isHref;
+                            vm.control = '编辑结点';
+                            vm.ok = true;
+                            vm.state = 2;
+                        })
+                    }
+                }, del: function () {
+                    if (this.categoryid == 0) {
+                        alert("请选择结点后再删除");
+                    } else { 
+                        $.post('/Category/DelNode', { categoryid: this.categoryid }, function (data) { 
+                            if (data) {
+                                $.post('/Category/NodeList', function (data) {
+                                    $('#treeview12').treeview({
+                                        levels: 3,
+                                        data: data,
+                                    });
+                                })
+                            } else { 
+                                alert("删除失败，请确保结点存在且无子节点");
+                            }
+
+                        })
+
+                    }
+
+                }, confirm: function () {
+                    if ((this.href == null||this.href=='') && (this.hrefen == null||this.hrefen=='')) {
+                        this.checked = false;
+                    }
+                    if (this.categoryname != "" && this.categorynameen != "" && this.sortid != "") { 
+                        if (this.state == 0) {
+                            $.post('/Category/AddNodes', { parentid: this.parentid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen,ishref:this.checked }, function () {
+                                $.post('/Category/NodeList', function (data) {
+                                    $('#treeview12').treeview({
+                                        levels: 3,
+                                        data: data,
+                                    });
+                                })
+                            })
+                        }
+                        if (this.state == 1) { 
+                            $.post('/Category/AddNodes', { parentid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen,ishref:this.checked }, function () {
+                                $.post('/Category/NodeList', function (data) {
+                                    $('#treeview12').treeview({
+                                        levels: 3,
+                                        data: data,
+                                    });
+                                })
+                            })
+                        }
+                        if (this.state == 2) { 
+                            $.post('/Category/UpdateNode', { categoryid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen, ishref: this.checked }, function () {
+                                $.post('/Category/NodeList', function (data) {
+                                    $('#treeview12').treeview({
+                                        levels: 3,
+                                        data: data,
+                                    });
+                                })
+                            })
+                        }
+                    }
+                    
+                }
+
+            }, computed: {
+                aValidate: function () {
+                    let msg = "";
+                    if (this.categoryname == "") {
+                        msg = '请输入结点名';
+                    }
+                    return msg;
+                }, bValidate: function () {
+                    let msg = "";
+                    if (this.categorynameen == "") {
+                        msg = '请输入结点名';
+                    }
+                    return msg;
+                }, cValidate: function () {
+                    let msg = '';
+                    if (this.sortid == "") {
+                        msg = '请输入序列号';
+                    }
+                    return msg;
+                }
+
+            }
+
+
+        });
+    </script>
+}
+

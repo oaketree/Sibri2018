@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +37,7 @@ namespace Cms.BLL.login.services
         //    else
         //        return false;
         //}
-        public async Task<bool> addUser(string username, string password)
+        public async Task<bool> addUser(string username, string password,string role)
         {
             var user = await _dbContext.Admins.AsNoTracking().FirstOrDefaultAsync(n => n.UserName == username);
             if (user != null)
@@ -47,16 +48,74 @@ namespace Cms.BLL.login.services
                 _dbContext.Admins.Add(new Admins {
 
                     UserName = username,
-                    Password = password
+                    Password = password,
+                    Role= role
                 });
                 await _dbContext.SaveChangesAsync();
                 return true;
             }
         }
 
-        public async Task<List<Admins>> userList()
+        public async Task<bool> editUser(int id,string username, string password, string role)
         {
-            return await _dbContext.Admins.AsNoTracking().ToListAsync();
+            var user = await _dbContext.Admins.AsNoTracking().FirstOrDefaultAsync(n => n.UserID==id);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (user.UserName == username)
+                {
+                    user.Password = password;
+                    user.Role = role;
+                }
+                else
+                {
+                    var user2= await _dbContext.Admins.AsNoTracking().FirstOrDefaultAsync(n => n.UserName == username);
+                    if (user2 != null)
+                        return false;
+                    else {
+                        user.UserName = username;
+                        user.Password = password;
+                        user.Role = role;
+                    }
+                }
+                _dbContext.Update(user);
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+        }
+
+
+        public async Task<List<Admins>> userList(string key = null)
+        {
+            Expression<Func<Admins, bool>> express = PredicateExtensions.True<Admins>();
+            if (key != null)
+            {
+                express = express.And(n => n.UserName.Contains(key));
+            }
+            return await _dbContext.Admins.AsNoTracking().Where(express).OrderByDescending(r => r.RegDate).ToListAsync();
+        }
+
+        public async Task delUser(int id)
+        {
+            var user = await _dbContext.Admins.AsNoTracking().SingleOrDefaultAsync(m => m.UserID == id);
+            if (user != null) {
+                _dbContext.Admins.Remove(user);
+                await _dbContext.SaveChangesAsync();
+            }
+        }
+
+        public async Task<Admins> getUser(int id)
+        {
+            var user = await _dbContext.Admins.AsNoTracking().SingleOrDefaultAsync(m => m.UserID == id);
+            if (user != null)
+            {
+                return user;
+            }
+            else
+                return null;
         }
 
     }

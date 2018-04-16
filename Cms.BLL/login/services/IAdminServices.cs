@@ -10,7 +10,10 @@ namespace Cms.BLL.login.services
     {
         Task<Admins> getUser(string username,string password);
         //Task<bool> checkUserExist(string username);
-        Task<bool> addUser(string username, string password);
-        Task<List<Admins>> userList();
+        Task<bool> addUser(string username, string password,string role);
+        Task<List<Admins>> userList(string key = null);
+        Task delUser(int id);
+        Task<Admins> getUser(int id);
+        Task<bool> editUser(int id, string username, string password, string role);
     }
 }

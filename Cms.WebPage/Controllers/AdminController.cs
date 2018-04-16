@@ -91,16 +91,44 @@ namespace Cms.WebPage.Controllers
             return View();
         }
         [Authorize]
-        public async Task<bool> AddUser(string username, string password)
+        public async Task<bool> AddUser(string username, string password,string role)
         {
-            return await _adminServices.addUser(username, password);
+            return await _adminServices.addUser(username, password, role);
         }
         [Authorize]
+        [HttpGet]
         public async Task<JsonResult> UserList()
         {
             var result= await _adminServices.userList();
             return Json(result);
         }
+        [Authorize]
+        public async Task DelUser(int id)
+        {
+            await _adminServices.delUser(id);
+            //return Json(result);
+        }
+        [Authorize]
+        [HttpGet]
+        public async Task<JsonResult> EditUser(int id)
+        {
+            var user=await _adminServices.getUser(id);
+            return Json(user);
+        }
+        [Authorize]
+        [HttpPost]
+        public async Task<bool> EditUser(int id,string username, string password, string role)
+        {
+            return await _adminServices.editUser(id,username,password,role);
+        }
+
+        [Authorize]
+        public async Task<JsonResult> SearchUser(string key = null)
+        {
+            var result = await _adminServices.userList(key);
+            return Json(result);
+        }
+
 
 
     }

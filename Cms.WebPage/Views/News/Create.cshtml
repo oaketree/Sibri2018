@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "新闻发布";
+}
+<div class="wrapper wrapper-content fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>新闻发布</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="buttons.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="buttons.html#">选项1</a>
+                            </li>
+                            <li>
+                                <a href="buttons.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-12">
+                        <div class="form-group clearfix">
+                            <label class="col-sm-1 control-label">板块*：</label>
+                            <div class="col-sm-4">
+                                <div class="checkbox-custom pull-left">
+                                    <input type="checkbox" value="0" id="inlineCheckbox1" />
+                                    <label for="inlineCheckbox1">所内新闻</label>
+                                </div>
+                                <div class="checkbox-custom pull-left">
+                                    <input type="checkbox" value="1" id="inlineCheckbox2" />
+                                    <label for="inlineCheckbox2">行业动态</label>
+                                </div>
+                                <div class="checkbox-custom pull-left">
+                                    <input type="checkbox" value="1" id="inlineCheckbox3" />
+                                    <label for="inlineCheckbox3">通知公告</label>
+                                </div>
+                                <div class="checkbox-custom pull-left">
+                                    <input type="checkbox" value="1" id="inlineCheckbox4" />
+                                    <label for="inlineCheckbox4">专题专栏</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group  clearfix">
+                            <label class="col-sm-1 control-label">语言*：</label>
+                            <div class="col-sm-2">
+                                <select v-model="language" class="form-control">
+                                    <option value="0">中文</option>
+                                    <option value="1">English</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-sm-1 control-label">标题*：</label>
+                            <div class="col-sm-6">
+                                <input placeholder="新闻标题" class="form-control" />
+                            </div>
+                            <div class="col-sm-2">
+                                <span class="text-danger">请输入标题</span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-sm-1 control-label">副标题：</label>
+                            <div class="col-sm-6">
+                                <input placeholder="新闻副标题" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <label class="col-sm-1 control-label">内容*：</label>
+                            <div class="col-sm-8">
+                                <textarea name="content" id="editor"></textarea>
+                            </div>
+                            <div class="col-sm-2">
+                                <span class="text-danger">请输入新闻内容</span>
+                            </div>
+                        </div>
+                        <div class="form-group clearfix">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-8 text-center">
+                                <button class="btn btn-lg btn-primary" type="button" v-on:click="confirm">确定</button>
+                                <input type="reset" class="btn btn-lg btn-primary" value="取消" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/ckeditor/build/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                //alignment: {
+                //    options: ['left', 'right']
+                //},
+                //toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'bulletedList', 'numberedList', 'alignment','link', 'insertImage','undo','redo'],
+            })
+            //.then(editor => {
+            //    console.log(editor);
+            //})
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+}

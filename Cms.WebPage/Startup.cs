@@ -1,4 +1,6 @@
-﻿using Cms.BLL.login.services;
+﻿using Cms.BLL.category.services;
+using Cms.BLL.login.services;
+using Cms.Contract.category;
 using Cms.Contract.login;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -25,6 +27,8 @@ namespace Cms.WebPage
             //services.AddMemoryCache();
             services.AddDbContext<LoginDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IAdminServices, AdminServices>();
+            services.AddDbContext<CategoryDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ICategoryService, CategoryService>();
             //services.AddSingleton<ICacheHelper, CacheHelper>();
             services.AddMvc();
 
