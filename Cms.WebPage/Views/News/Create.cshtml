@@ -1,8 +1,11 @@
-﻿
+﻿@model Cms.BLL.news.viewmodels.NewsView
+@using Cms.BLL.category.services
+@inject ICategoryService Options
 @{
     ViewData["Title"] = "新闻发布";
+    var categorylist = await Options.getCategoryByID(8);
 }
-<div class="wrapper wrapper-content fadeInRight">
+<div class="wrapper wrapper-content fadeInRight" id="app">
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
@@ -28,93 +31,133 @@
                         </a>
                     </div>
                 </div>
-                <div class="ibox-content">
-                    <div class="col-sm-12">
-                        <div class="form-group clearfix">
-                            <label class="col-sm-1 control-label">板块*：</label>
-                            <div class="col-sm-4">
-                                <div class="checkbox-custom pull-left">
-                                    <input type="checkbox" value="0" id="inlineCheckbox1" />
-                                    <label for="inlineCheckbox1">所内新闻</label>
+                <form asp-action="Create" onsubmit="return vm.validate()" enctype="multipart/form-data">
+                    <div class="ibox-content">
+                        <div class="col-sm-12">
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">栏目*：</label>
+                                <div class="col-sm-6">
+                                    @foreach (var item in categorylist)
+            {
+                        <div class="checkbox-custom pull-left">
+                            <input type="checkbox" value="@item.SortID" id="ck_@item.CategoryID" name="checkbox" v-model="column" />
+                            <label for="ck_@item.CategoryID">@item.CategoryName</label>
+                        </div>
+}
+                                    <div class="col-sm-3">
+                                        <span class="text-danger">{{vcheckbox}}</span>
+                                    </div>
                                 </div>
-                                <div class="checkbox-custom pull-left">
-                                    <input type="checkbox" value="1" id="inlineCheckbox2" />
-                                    <label for="inlineCheckbox2">行业动态</label>
+                            </div>
+                            <div class="form-group  clearfix">
+                                <label class="col-sm-1 control-label">语言*：</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" asp-for="Language">
+                                        <option value="0">中文</option>
+                                        <option value="1">English</option>
+                                    </select>
+
                                 </div>
-                                <div class="checkbox-custom pull-left">
-                                    <input type="checkbox" value="1" id="inlineCheckbox3" />
-                                    <label for="inlineCheckbox3">通知公告</label>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">标题*：</label>
+                                <div class="col-sm-6">
+                                    <input placeholder="新闻标题" class="form-control" asp-for="Title" v-model="title" />
                                 </div>
-                                <div class="checkbox-custom pull-left">
-                                    <input type="checkbox" value="1" id="inlineCheckbox4" />
-                                    <label for="inlineCheckbox4">专题专栏</label>
+                                <div class="col-sm-2">
+                                    <span class="text-danger">{{vtitle}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">副标题：</label>
+                                <div class="col-sm-6">
+                                    <input placeholder="新闻副标题" class="form-control" asp-for="SubTitle" />
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">内容*：</label>
+                                <div class="col-sm-8">
+                                    @*<script id="container" name="content" type="text/plain">
+                    @Html.Raw(Model.Content)
+                </script>*@
+                                    <textarea asp-for="Content" id="container"></textarea>
+                                </div>
+                                <div class="col-sm-2">
+                                    <span class="text-danger">{{vcontainer}}</span>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">图片新闻：</label>
+                                <div class="col-sm-3">
+                                    <input type="file" asp-for="NewsImg" class="form-control">
+                                </div>
+                                @*<div class="col-sm-2">
+                                    <span class="text-danger" asp-validation-for="NewsImg"></span>
+                                </div>*@
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-1 control-label">发布为图片新闻：</label>
+                                <div class="col-sm-6">
+                                    <div class="checkbox-custom pull-left">
+                                        <input type="checkbox" id="picnews" asp-for="IsPictureNews" />
+                                        <label for="picnews">图片新闻</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <div class="col-sm-1"></div>
+                                <div class="col-sm-8 text-center">
+                                    <button class="btn btn-lg btn-primary" type="submit">确定</button>
+                                    <input type="reset" class="btn btn-lg btn-primary" value="取消" />
                                 </div>
 
                             </div>
                         </div>
-                        <div class="form-group  clearfix">
-                            <label class="col-sm-1 control-label">语言*：</label>
-                            <div class="col-sm-2">
-                                <select v-model="language" class="form-control">
-                                    <option value="0">中文</option>
-                                    <option value="1">English</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-1 control-label">标题*：</label>
-                            <div class="col-sm-6">
-                                <input placeholder="新闻标题" class="form-control" />
-                            </div>
-                            <div class="col-sm-2">
-                                <span class="text-danger">请输入标题</span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-1 control-label">副标题：</label>
-                            <div class="col-sm-6">
-                                <input placeholder="新闻副标题" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <label class="col-sm-1 control-label">内容*：</label>
-                            <div class="col-sm-8">
-                                <textarea name="content" id="editor"></textarea>
-                            </div>
-                            <div class="col-sm-2">
-                                <span class="text-danger">请输入新闻内容</span>
-                            </div>
-                        </div>
-                        <div class="form-group clearfix">
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-8 text-center">
-                                <button class="btn btn-lg btn-primary" type="button" v-on:click="confirm">确定</button>
-                                <input type="reset" class="btn btn-lg btn-primary" value="取消" />
-                            </div>
-
-                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @section Scripts{
-    <script src="~/lib/ckeditor/build/ckeditor.js"></script>
+    <script src="~/lib/ueditor/ueditor.config.js"></script>
+    <script src="~/lib/ueditor/ueditor.all.js"></script>
+    <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                //alignment: {
-                //    options: ['left', 'right']
-                //},
-                //toolbar: ['heading', '|', 'bold', 'italic', 'blockQuote', 'bulletedList', 'numberedList', 'alignment','link', 'insertImage','undo','redo'],
-            })
-            //.then(editor => {
-            //    console.log(editor);
-            //})
-            .catch(error => {
-                console.error(error);
-            });
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                column: [],
+                vcheckbox: "",
+                //container: "",
+                vcontainer: "",
+                title:"",
+                vtitle: "",
+                ue: UE.getEditor("container")
+            }, methods: {
+                validate: function () {
+                    if (this.column.length < 1) { 
+                        //console.log(111);
+                        this.vcheckbox = "请选择栏目";
+                        return false;
+                    }
+                    if (this.title == "") { 
+                        //console.log(222);
+                        this.vtitle = "请选择标题";
+                        return false;
+                    }
+                    if (this.ue.getContentTxt() == "") { 
+                        //console.log(333);
+                        this.vcontainer= "请输入内容";
+                        return false;
+                    }
+                    return true;
+                }
+
+            }
+
+        });
+
     </script>
 }

@@ -16,5 +16,7 @@ namespace Cms.BLL.login.viewmodels
         public string Password { get; set; }
 
         public bool isPersistent { get; set; }
+
+
     }
 }

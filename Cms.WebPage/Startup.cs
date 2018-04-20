@@ -1,7 +1,13 @@
 ﻿using Cms.BLL.category.services;
 using Cms.BLL.login.services;
+using Cms.BLL.news.service;
+using Cms.BLL.upload.service;
+using Cms.BLL.upload.ueditor;
 using Cms.Contract.category;
 using Cms.Contract.login;
+using Cms.Contract.news;
+using Cms.Contract.upload;
+using Core.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +35,30 @@ namespace Cms.WebPage
             services.AddScoped<IAdminServices, AdminServices>();
             services.AddDbContext<CategoryDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddDbContext<NewsDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<UploadDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IUeditorService, UeditorService>();
+            services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IConfigHandler, ConfigHandler>();
+            services.AddScoped<INotSupportedHandler, NotSupportedHandler>();
+            services.AddScoped<IEditorConfig, EditorConfig>();
+            services.AddScoped<IPictureHelper, PictureHelper>();
+            services.AddScoped<IUploadHandler, UploadHandler>();
+            services.AddScoped<IListFileHandler, ListFileHandler>();
+            services.AddScoped<ICrawler, Crawler>();
+            services.AddScoped<ICrawlerHandler, CrawlerHandler>();
+
+
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //services.AddScoped<ICategoryService, CategoryService>();
+
+
+
             //services.AddSingleton<ICacheHelper, CacheHelper>();
             services.AddMvc();
 

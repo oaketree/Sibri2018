@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\lib\ueditor\config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
@@ -16,7 +20,19 @@
   <ItemGroup>
     <ProjectReference Include="..\Cms.BLL\Cms.BLL.csproj" />
     <ProjectReference Include="..\Cms.Contract\Cms.Contract.csproj" />
-    <ProjectReference Include="..\Core.Cache\Core.Cache.csproj" />
+    <ProjectReference Include="..\Core.Cache\Core.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\upload\news\pic\" />
+    <Folder Include="wwwroot\upload\news\files\" />
+    <Folder Include="wwwroot\upload\image\" />
+    <Folder Include="wwwroot\upload\file\" />
+    <Folder Include="wwwroot\upload\video\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\ueditor\config.json" />
   </ItemGroup>
 
 </Project>

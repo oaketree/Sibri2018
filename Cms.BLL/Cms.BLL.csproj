@@ -5,12 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="news\service\" />
-    <Folder Include="news\viewmodels\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Cms.Contract\Cms.Contract.csproj" />
+    <ProjectReference Include="..\Core.Cache\Core.Utility.csproj" />
     <ProjectReference Include="..\Core.DAL\Core.DAL.csproj" />
   </ItemGroup>
 

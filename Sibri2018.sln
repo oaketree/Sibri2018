@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sibri.WebPage", "Sibri.WebP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.DAL", "Core.DAL\Core.DAL.csproj", "{5DD0BF07-9B30-4623-B5D3-3139434B1834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Cache", "Core.Cache\Core.Cache.csproj", "{2145CC15-EA2B-4EF2-8FF4-BCAE79E1C943}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Utility", "Core.Cache\Core.Utility.csproj", "{2145CC15-EA2B-4EF2-8FF4-BCAE79E1C943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

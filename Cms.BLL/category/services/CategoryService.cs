@@ -44,6 +44,12 @@ namespace Cms.BLL.category.services
             return HandleMenu<CategoryView>.SubMenu(list, 0);
         }
 
+        public async Task<List<Category>> getCategoryByID(int id)
+        {
+            var categorys = await _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).ToListAsync();
+            return categorys;
+        }
+
         public async Task<Category> getNode(int categoryid)
         {
             var category = await _dbContext.Categorys.FirstOrDefaultAsync(n => n.CategoryID == categoryid);

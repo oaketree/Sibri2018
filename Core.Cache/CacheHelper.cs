@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Core.Cache
+namespace Core.Utility
 {
     public class CacheHelper:ICacheHelper
     {

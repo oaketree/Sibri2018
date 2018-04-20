@@ -24,6 +24,8 @@ namespace Cms.Contract.login
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? RegDate { get; set; }
 
+        
+
 
 
     }
