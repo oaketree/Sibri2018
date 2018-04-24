@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Core.DAL
 {
-    public class PaginatedList<T> : List<T>
+    public class PaginatedList<T>
     {
-        public int TotalItems { get; set; }
+        //public int TotalItems { get; set; }
         //public int ItemPerPage { get; set; }
         public int PageIndex { get; set; }
         public int TotalPages { get; set; }
         
+        public List<T> Items { get; set; }
         //public IQueryable<T> Entity { get; set; }
 
         public bool HasPreviousPage
@@ -34,7 +35,9 @@ namespace Core.DAL
         {
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            this.AddRange(items);
+            Items = new List<T>();
+            Items.AddRange(items);
+            //this.AddRange(items);
         }
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {

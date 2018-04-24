@@ -1,10 +1,14 @@
 ﻿using Cms.BLL.news.viewmodels;
 using Cms.BLL.upload.service;
 using Cms.Contract.news;
+using Core.DAL;
 using Core.Utility;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Cms.BLL.news.service
@@ -24,7 +28,25 @@ namespace Cms.BLL.news.service
             _pictureHelper = pictureHelper;
         }
 
-        public async Task addNews(NewsView nv,string[] checkbox)
+        public async Task<PaginatedList<News>> GetNewsList(int pageSize, int pageIndex = 1, string keywords = null, string category = null)
+        {
+            Expression<Func<News, bool>> express = PredicateExtensions.True<News>();
+            if (keywords != null)
+            {
+                express = express.And(n => n.Title.Contains(keywords));
+            }
+            if (category != null)
+            {
+                express = express.And(n => n.ColumnID == int.Parse(category));
+            }
+            return await PaginatedList<News>.CreateAsync(_dbContext.News.AsNoTracking().Where(express), pageIndex, pageSize);
+
+        }
+
+
+
+
+        public async Task AddNews(NewsView nv,string[] checkbox)
         {
             if (nv.NewsImg!=null)
             {
@@ -57,7 +79,7 @@ namespace Cms.BLL.news.service
                     _dbContext.News.Add(new News
                     {
                         ColumnID = int.Parse(item),
-                        Language = nv.Language,
+                        Language =(int)nv.Language,
                         Title = nv.Title,
                         SubTitle = nv.SubTitle,
                         NewsDetail = nv.Content,
@@ -76,7 +98,7 @@ namespace Cms.BLL.news.service
                     _dbContext.News.Add(new News
                     {
                         ColumnID = int.Parse(item),
-                        Language = nv.Language,
+                        Language = (int)nv.Language,
                         Title = nv.Title,
                         SubTitle = nv.SubTitle,
                         NewsDetail = nv.Content,

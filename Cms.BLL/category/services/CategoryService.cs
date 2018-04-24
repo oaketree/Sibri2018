@@ -1,10 +1,9 @@
 ﻿using Cms.BLL.category.viewmodels;
 using Cms.Contract.category;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Cms.BLL.category.services
@@ -47,6 +46,15 @@ namespace Cms.BLL.category.services
         public async Task<List<Category>> getCategoryByID(int id)
         {
             var categorys = await _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).ToListAsync();
+            return categorys;
+        }
+
+        public IEnumerable<SelectListItem> getSelectListItemByID(int id)
+        {
+            var categorys = _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).Select(s => new SelectListItem() {
+                Value=s.SortID.ToString(),
+                Text=s.CategoryName
+            }).AsEnumerable();
             return categorys;
         }
 

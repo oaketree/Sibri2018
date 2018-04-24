@@ -10,7 +10,7 @@ namespace Cms.BLL.news.viewmodels
     {
         public string Column { get; set; }
 
-        public int Language { get; set; }
+        public Language Language { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -28,5 +28,12 @@ namespace Cms.BLL.news.viewmodels
 
         public bool IsPictureNews { get; set; }
 
+    }
+    public enum Language
+    {
+        [Display(Name = "中文")]
+        Chinese = 0,
+        [Display(Name = "English")]
+        English = 1
     }
 }

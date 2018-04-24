@@ -28,6 +28,7 @@ namespace Cms.WebPage.Controllers
         {
             return View();
         }
+
         [Authorize]
         public IActionResult Create()
         {
@@ -42,13 +43,19 @@ namespace Cms.WebPage.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _newsServices.addNews(nv, checkbox);
+                await _newsServices.AddNews(nv, checkbox);
                 //return Content();
 
             }
             return View(nv);
         }
+        [Authorize]
+        public async Task<JsonResult> NewsList(int pageSize, int pageIndex = 1, string keywords = null, string category = null)
+        {
 
+            var result = await _newsServices.GetNewsList(pageSize, pageIndex, keywords, category);
+            return Json(result);
+        }
 
     }
 }

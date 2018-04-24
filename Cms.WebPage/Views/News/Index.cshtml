@@ -1,7 +1,251 @@
-﻿
+﻿@using Cms.BLL.category.services
+@inject ICategoryService Options
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "新闻管理";
+    //var categorylist = await Options.getCategoryByID(8);
 }
+<div class="wrapper wrapper-content fadeInRight" id="app">
+    @*<edit :edit-data="parentData"></edit>*@
+    @*<div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+                            新闻发布
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>新闻管理</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="input-group col-sm-7">
+                            <div class="col-sm-3">
+                                @*<select class="form-control" v-model="category">
+                                        <option value="">请选择</option>
+                                        @foreach (var item in categorylist)
+                                        {
+                                            <option value="@item.SortID">@item.CategoryName</option>
+                                        }
+                                    </select>*@
+                                <select class="form-control" asp-items="Options.getSelectListItemByID(8)" v-model="category">
+                                    <option value="">请选择</option>
+                                </select>
 
-<h2>Index</h2>
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords" />
+                            </div>
+                            <div class="col-sm-1">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-sm btn-primary" v-on:click="search"> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>序列</th>
+                                    <th>标题</th>
+                                    <th>栏目</th>
+                                    <th>语言</th>
+                                    <th>点击数</th>
+                                    <th>日期</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(item,index) in pageData.items">
+                                    <td>
+                                        {{index+1}}
+                                        @*<input type="checkbox" class="i-checks" v-bind:value="item.UserID" v-model="userid">*@
+                                    </td>
+                                    <td>{{item.title}}</td>
+                                    <td>
+                                        {{item.columnID}}
+                                    </td>
+                                    <td>{{item.language}}</td>
+                                    <td>{{item.hit}}</td>
+                                    <td>{{item.regDate}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="edit(item.newsID)">修改</button>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.newsID)">删除</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    @*<my-component v-on:show-page="getPageData" v-bind:pager-data="pagerData"></my-component>*@
+                    <paging-component v-bind:page-data="pageData" v-bind:page-size="pageSize" v-on:update-pagedata="updatePageData"></paging-component>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<template id="pagingTpl">
+    <div class="btn-group">
+        <ul class="list-inline">
+            <li>
+                <i>每页</i>
+</li>
+            <li>
+                <select class="form-control input-sm" v-model="sizeList" v-on:change="showPage(sizeList)" number>
+                    <option v-for="item in arrPageSize" v-bind:value="item">{{item}}</option>
+                </select>
+            </li>
+            <li>
+                <i>条记录</i>
+</li>
+            <li v-if="cur>1" class="btn btn-white" v-on:click="pageClick('up')"><a>上一页</a></li>
+            <li v-if="cur==1" class="btn btn-white">上一页</li>
+            <li v-for="index in indexs" class="btn btn-white" v-bind:class="{ 'active': cur == index}" v-on:click="btnClick(index)">
+                <a>{{ index }}</a>
+            </li>
+            <li v-if="cur!=all" class="btn btn-white" v-on:click="pageClick('down')"><a>下一页</a></li>
+            <li v-if="cur==all" class="btn btn-white">下一页</li>
+            <li>共<i>{{all}}</i>页</li>
+        </ul>
+    </div>
+
+</template>
+
+@section Scripts{
+    <script>
+        var vmPaging = {
+            props: ['pageData', 'pageSize'],
+            template: "#pagingTpl",
+            methods: {
+                showPage: function (pageSize) {
+                    this.$emit('update-pagedata', { pageIndex: 1, pageSize: pageSize });
+
+                }, pageClick: function (tp) {
+                    if (tp == 'up')
+                        this.$emit('update-pagedata', { pageIndex: this.cur - 1 });
+                    else
+                        this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
+                }, btnClick: function (idx) {
+                    if (idx != this.cur) { 
+                        this.$emit('update-pagedata', { pageIndex: idx });
+                    }
+                }
+            }, data: function () {
+                return {
+                    //cur: this.pageData.pageIndex,
+                    arrPageSize: [10, 20, 30],
+                    sizeList: this.pageSize,
+                    tempIdx:this.cur
+                }
+            }, computed: {
+                indexs: function () {
+                    var left = 1;
+                    var right = this.all;
+                    var ar = [];
+                    if (this.all >= 5) {
+                        if (this.cur > 3 && this.cur < this.all - 2) {
+                            left = this.cur - 2
+                            right = this.cur + 2
+                        } else {
+                            if (this.cur <= 3) {
+                                left = 1
+                                right = 5
+                            } else {
+                                right = this.all
+                                left = this.all - 4
+                            }
+                        }
+                    }
+                    while (left <= right) {
+                        ar.push(left)
+                        left++
+                    }
+                    return ar
+
+                }, all: function () { 
+                    return this.pageData.totalPages
+                }, cur: {
+                    get: function () {
+                        return this.pageData.pageIndex
+                    }
+                } 
+            }
+        }
+
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                category: "",
+                keywords: "",
+                pageData: {},
+                pageSize: 10,
+                pageIndex: 1,
+            }, methods: {
+                search: function () {
+                    this.updatePageData({ keywords: this.keywords, category: this.category, pageIndex:1})
+                }, edit: function () {
+
+
+
+
+                }, del: function (id) {
+                    if (confirm("是否确定要删除?")) {
+                        $.post('/News/DelNews', { id: id }, function () {
+                            this.updatePageData(this.changeData);
+                        });
+                    }
+
+                }, updatePageData: function (payload) {
+                    if ("pageIndex" in payload)
+                        this.changeData.pageIndex = payload.pageIndex;
+                    if ("pageSize" in payload)
+                        this.changeData.pageSize = payload.pageSize;
+                    if ("keywords" in payload)
+                        this.changeData.keywords = payload.keywords;
+                    if ("category" in payload)
+                        this.changeData.category = payload.category;
+                    $.post("/News/NewsList", this.changeData, function (data) {
+                        vm.pageData = data;
+                    })
+                }
+
+            }, components: {
+                'paging-component': vmPaging
+            }, mounted: function () {
+                $.post("/News/NewsList", { pageSize: this.pageSize }, function (data) {
+                    vm.pageData = data;
+                })
+
+            }, computed:{ 
+                changeData: function () { 
+                    return {
+                        keywords: this.keywords,
+                        category: this.category,
+                        pageSize: this.pageSize,
+                        pageIndex: this.pageIndex,
+                    }
+
+                }
+            }
+        });
+
+    </script>
+
+}
 

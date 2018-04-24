@@ -1,4 +1,5 @@
 ﻿@model Cms.BLL.news.viewmodels.NewsView
+@using Cms.BLL.news.viewmodels
 @using Cms.BLL.category.services
 @inject ICategoryService Options
 @{
@@ -38,12 +39,12 @@
                                 <label class="col-sm-1 control-label">栏目*：</label>
                                 <div class="col-sm-6">
                                     @foreach (var item in categorylist)
-            {
-                        <div class="checkbox-custom pull-left">
-                            <input type="checkbox" value="@item.SortID" id="ck_@item.CategoryID" name="checkbox" v-model="column" />
-                            <label for="ck_@item.CategoryID">@item.CategoryName</label>
-                        </div>
-}
+                                    {
+                                        <div class="checkbox-custom pull-left">
+                                            <input type="checkbox" value="@item.SortID" id="ck_@item.CategoryID" name="checkbox" v-model="column" />
+                                            <label for="ck_@item.CategoryID">@item.CategoryName</label>
+                                        </div>
+                                    }
                                     <div class="col-sm-3">
                                         <span class="text-danger">{{vcheckbox}}</span>
                                     </div>
@@ -52,11 +53,11 @@
                             <div class="form-group  clearfix">
                                 <label class="col-sm-1 control-label">语言*：</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control" asp-for="Language">
-                                        <option value="0">中文</option>
-                                        <option value="1">English</option>
-                                    </select>
-
+                                    @*<select class="form-control" asp-for="Language">
+                                            <option value="0">中文</option>
+                                            <option value="1">English</option>
+                                        </select>*@
+                                    <select class="form-control" asp-items="@Html.GetEnumSelectList<Language>()" asp-for="Language"></select>
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -78,8 +79,8 @@
                                 <label class="col-sm-1 control-label">内容*：</label>
                                 <div class="col-sm-8">
                                     @*<script id="container" name="content" type="text/plain">
-                    @Html.Raw(Model.Content)
-                </script>*@
+                                            @Html.Raw(Model.Content)
+                                        </script>*@
                                     <textarea asp-for="Content" id="container"></textarea>
                                 </div>
                                 <div class="col-sm-2">
@@ -92,8 +93,8 @@
                                     <input type="file" asp-for="NewsImg" class="form-control">
                                 </div>
                                 @*<div class="col-sm-2">
-                                    <span class="text-danger" asp-validation-for="NewsImg"></span>
-                                </div>*@
+                                        <span class="text-danger" asp-validation-for="NewsImg"></span>
+                                    </div>*@
                             </div>
                             <div class="form-group clearfix">
                                 <label class="col-sm-1 control-label">发布为图片新闻：</label>
@@ -132,24 +133,24 @@
                 vcheckbox: "",
                 //container: "",
                 vcontainer: "",
-                title:"",
+                title: "",
                 vtitle: "",
                 ue: UE.getEditor("container")
             }, methods: {
                 validate: function () {
-                    if (this.column.length < 1) { 
+                    if (this.column.length < 1) {
                         //console.log(111);
                         this.vcheckbox = "请选择栏目";
                         return false;
                     }
-                    if (this.title == "") { 
+                    if (this.title == "") {
                         //console.log(222);
                         this.vtitle = "请选择标题";
                         return false;
                     }
-                    if (this.ue.getContentTxt() == "") { 
+                    if (this.ue.getContentTxt() == "") {
                         //console.log(333);
-                        this.vcontainer= "请输入内容";
+                        this.vcontainer = "请输入内容";
                         return false;
                     }
                     return true;

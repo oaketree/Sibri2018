@@ -260,7 +260,7 @@
                     });
 
                 }, del: function (id) {
-                    if (confirm("是否确定要删除")) {
+                    if (confirm("是否确定要删除?")) {
                         $.post('/Admin/DelUser', { id: id }, function () {
                             $.getJSON('/Admin/UserList', function (data) {
                                 vm.adminlists = data;

@@ -80,7 +80,7 @@ namespace Cms.BLL.upload.ueditor
                 
                 //File.WriteAllBytes(localPath, uploadFileBytes);
                 await File.WriteAllBytesAsync(localPath, uploadFileBytes);
-                //File.Copy
+                
                 await _uploadService.addFile(filename,extension,"Ueditor");
 
                 _result.Url = savePath;
