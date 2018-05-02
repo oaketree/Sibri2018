@@ -50,5 +50,13 @@ namespace Cms.WebPage.Controllers
             var result= await _categoryServices.delNode(categoryid);
             return result;
         }
+
+        [Authorize]
+        public async Task<JsonResult> GetCategoryByID(int categoryid)
+        {
+            var result = await _categoryServices.getCategoryByID(categoryid);
+            return Json(result);
+            
+        }
     }
 }

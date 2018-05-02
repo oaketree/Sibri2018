@@ -12,5 +12,7 @@ namespace Cms.Contract.category
 
         }
         public virtual DbSet<Category> Categorys { get; set; }
+
+
     }
 }

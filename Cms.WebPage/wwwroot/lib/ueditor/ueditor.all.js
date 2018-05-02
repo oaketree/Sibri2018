@@ -7307,8 +7307,13 @@ var fillCharReg = new RegExp(domUtils.fillChar, 'g');
          */
         getContentTxt: function () {
             var reg = new RegExp(domUtils.fillChar, 'g');
+            //console.log(this.body);
             //取出来的空格会有c2a0会变成乱码，处理这种情况\u00a0
-            return this.body[browser.ie ? 'innerText' : 'textContent'].replace(reg, '').replace(/\u00a0/g, ' ');
+            if ("body" in this)
+                return this.body[browser.ie ? 'innerText' : 'textContent'].replace(reg, '').replace(/\u00a0/g, ' ');
+            else
+                return "body还不存在";
+            //return 1111;
         },
 
         /**
@@ -27275,7 +27280,8 @@ UE.ui = baidu.editor.ui = {};
                 this.getDom().style.display = '';
 
                 //要高过编辑器的zindxe
-                this.editor.container.style.zIndex && (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 10);
+                this.editor.container.style.zIndex && (this.getDom().style.zIndex = this.editor.container.style.zIndex * 1 + 1055);
+                //console.log(this.editor.container);
                 this._hidden = false;
                 this.fireEvent('show');
                 baidu.editor.ui.uiUtils.getFixedLayer().style.zIndex = this.getDom().style.zIndex - 4;

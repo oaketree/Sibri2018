@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cms.Contract.news;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -32,6 +33,8 @@ namespace Cms.Contract.category
         public DateTime? RegDate { get; set; }
 
         public bool? IsHref { get; set; }
+
+        //public List<News> News { get; set; }
 
 
 

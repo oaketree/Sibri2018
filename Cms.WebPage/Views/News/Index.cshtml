@@ -1,11 +1,12 @@
 ﻿@using Cms.BLL.category.services
+@using Cms.BLL.news.viewmodels
 @inject ICategoryService Options
 @{
     ViewData["Title"] = "新闻管理";
-    //var categorylist = await Options.getCategoryByID(8);
+    var categorylist = await Options.getSelectListItemByID(8);
 }
 <div class="wrapper wrapper-content fadeInRight" id="app">
-    @*<edit :edit-data="parentData"></edit>*@
+    <edit-component :edit-data="editData" ref="c1"></edit-component>
     @*<div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -42,7 +43,7 @@
                                             <option value="@item.SortID">@item.CategoryName</option>
                                         }
                                     </select>*@
-                                <select class="form-control" asp-items="Options.getSelectListItemByID(8)" v-model="category">
+                                <select class="form-control" asp-items="categorylist" v-model="category">
                                     <option value="">请选择</option>
                                 </select>
 
@@ -78,11 +79,11 @@
                                     </td>
                                     <td>{{item.title}}</td>
                                     <td>
-                                        {{item.columnID}}
+                                        {{item.columnID|category}}
                                     </td>
-                                    <td>{{item.language}}</td>
+                                    <td>{{item.language|language}}</td>
                                     <td>{{item.hit}}</td>
-                                    <td>{{item.regDate}}</td>
+                                    <td>{{item.shortRegDate}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-xs" v-on:click="edit(item.newsID)">修改</button>
                                         <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.newsID)">删除</button>
@@ -91,7 +92,6 @@
                             </tbody>
                         </table>
                     </div>
-                    @*<my-component v-on:show-page="getPageData" v-bind:pager-data="pagerData"></my-component>*@
                     <paging-component v-bind:page-data="pageData" v-bind:page-size="pageSize" v-on:update-pagedata="updatePageData"></paging-component>
 
                 </div>
@@ -104,7 +104,7 @@
         <ul class="list-inline">
             <li>
                 <i>每页</i>
-</li>
+            </li>
             <li>
                 <select class="form-control input-sm" v-model="sizeList" v-on:change="showPage(sizeList)" number>
                     <option v-for="item in arrPageSize" v-bind:value="item">{{item}}</option>
@@ -112,7 +112,7 @@
             </li>
             <li>
                 <i>条记录</i>
-</li>
+            </li>
             <li v-if="cur>1" class="btn btn-white" v-on:click="pageClick('up')"><a>上一页</a></li>
             <li v-if="cur==1" class="btn btn-white">上一页</li>
             <li v-for="index in indexs" class="btn btn-white" v-bind:class="{ 'active': cur == index}" v-on:click="btnClick(index)">
@@ -123,11 +123,203 @@
             <li>共<i>{{all}}</i>页</li>
         </ul>
     </div>
-
+</template>
+<template id="editTpl">
+    <div class="modal inmodal" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-lg form-horizontal">
+            <div class="modal-content animated bounceInRight">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{editData.title}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">栏目*：</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" asp-items="categorylist" v-model="editData.column">
+                                @*<option value="">请选择</option>*@
+                            </select>
+                        </div>
+                        @*<div class="col-sm-2">
+                            <span class="text-danger">1111</span>
+                        </div>*@
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-1 control-label">语言*：</label>
+                        <div class="col-sm-2">
+                            <select class="form-control" asp-items="@Html.GetEnumSelectList<Language>()" v-model="editData.language"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">标题*：</label>
+                        <div class="col-sm-6">
+                            <input placeholder="新闻标题" class="form-control" v-model.trim="editData.title" />
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="text-danger">{{vtitle}}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">副标题：</label>
+                        <div class="col-sm-6">
+                            <input placeholder="新闻副标题" class="form-control" v-model.trim="editData.subTitle" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-1 control-label">内容*：</label>
+                        <div class="col-sm-9">
+                            <script id="container" type="text/plain"> 
+                            </script>
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="text-danger">{{vcontent}}</span>
+                        </div>
+                    </div>
+                    <div v-if="!pic" class="form-group">
+                        <label class="col-sm-1">图片新闻：</label>
+                        <div class="col-sm-3">
+                            <input type="file" class="form-control" id="file">
+                            <progress v-if="prg" v-bind:value="prgValue" max="100"></progress>
+                        </div>
+                    </div>
+                    <div v-if="!pic" class="form-group">
+                        <label class="col-sm-1">图片处理：</label>
+                        <div class="col-sm-6">
+                            <div class="checkbox-custom pull-left">
+                                <input type="checkbox" v-model="picnews" id="picnews"/>
+                                <label for="picnews">需要对图片的大小进行处理</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="pic" class="form-group">
+                        <label class="col-sm-1">图片删除：</label>
+                        <div class="col-sm-6">
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="delPic(editData.newsID)">图片删除</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-white" data-dismiss="modal" aria-hidden="true">关闭</button>
+                    <button class="btn btn-sm btn-white" type="button" v-on:click="editConfirm(editData.newsID)">修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
+
+
 @section Scripts{
+    <script src="~/lib/ueditor/ueditor.config.js"></script>
+    <script src="~/lib/ueditor/ueditor.all.js"></script>
+    <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
     <script>
+        var vmEdit = {
+            props: ['editData'],
+            template: "#editTpl",
+            methods: {
+                editConfirm: function (newsid) { 
+                    if (this.validate()) {
+
+                        formdata = new FormData();
+                        formdata.append('file', document.getElementById('file').files[0]);
+                        formdata.append('newsID', newsid);
+                        formdata.append('column', this.editData.column);
+                        formdata.append('language', this.editData.language);
+                        formdata.append('title', this.editData.title);
+                        formdata.append('subTitle', this.editData.subTitle);
+                        formdata.append('content', this.editor.getContent());
+                        formdata.append('picnews', this.picnews);
+                        axios({
+                            url: '/News/UpdateNews2',
+                            method: 'post',
+                            data: formdata,
+                            onUploadProgress: function (progressEvent) { 
+                                if (progressEvent.lengthComputable) { 
+                                    var percent = Math.round(progressEvent.loaded * 100 / progressEvent.total);
+                                    this.prg = true;
+                                    this.prgValue = percent;
+                                }
+
+                            }
+                        })
+                            .then(function (response) {
+                                //console.log(response.data);
+                                $("#editModal").modal("hide");
+                                vm.updatePageData({});
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                         //axios.post('/News/UpdateNews', {
+                    //    newsID:newsid,
+                    //    column: this.editData.column,
+                    //    language: this.editData.language,
+                    //    title: this.editData.title,
+                    //    subTitle: this.editData.subTitle,
+                    //    content: this.editor.getContent()
+                    //})
+                    //    .then(function () {
+                    //        $("#editModal").modal("hide");
+                    //        vm.updatePageData({});
+                    //    })
+                    //    .catch(function (error) {
+                    //        console.log(error);
+                    //    });
+
+                    }
+                }, delPic: function (newsid) {
+                    let self = this;
+                    if (confirm("是否确定要删除图片?")) { 
+                        axios.get('/News/DelNewsImg', {
+                            params: {
+                                id: newsid
+                            }
+                        }).then(function () {
+                            self.editData.imageUrl = '';
+                        })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
+                    }
+                }, setEditor: function (data) {
+                    this.editor.setContent(data);
+                },validate: function () { 
+                    if (this.editData.title == "") {
+                        this.vtitle = "请输入标题";
+                        return false
+                    } else {
+                        this.vtitle = '';
+                    }
+                    if (this.editor.getContentTxt() == '') {
+                        this.vcontent = '请输入内容';
+                        return false;
+                    } else {
+                        this.vcontent = '';
+                    }
+                    return true;
+                }
+            }, data: function () {
+                return {
+                    editor: null,
+                    vcontent: '',
+                    vtitle: '',
+                    picnews: true,
+                    prg: false,
+                    prgValue:0
+                }
+            }, computed: { 
+                pic: function () { 
+                    if (this.editData.imageUrl != null && this.editData.imageUrl != '')
+                        return true;
+                    else
+                        return false;
+                }
+            }, created: function () {
+                this.editor = UE.getEditor('container');
+            }
+        }
+
+
         var vmPaging = {
             props: ['pageData', 'pageSize'],
             template: "#pagingTpl",
@@ -141,7 +333,7 @@
                     else
                         this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
                 }, btnClick: function (idx) {
-                    if (idx != this.cur) { 
+                    if (idx != this.cur) {
                         this.$emit('update-pagedata', { pageIndex: idx });
                     }
                 }
@@ -150,7 +342,6 @@
                     //cur: this.pageData.pageIndex,
                     arrPageSize: [10, 20, 30],
                     sizeList: this.pageSize,
-                    tempIdx:this.cur
                 }
             }, computed: {
                 indexs: function () {
@@ -177,16 +368,15 @@
                     }
                     return ar
 
-                }, all: function () { 
+                }, all: function () {
                     return this.pageData.totalPages
                 }, cur: {
                     get: function () {
                         return this.pageData.pageIndex
                     }
-                } 
+                }
             }
         }
-
 
         var vm = new Vue({
             el: "#app",
@@ -194,23 +384,53 @@
                 category: "",
                 keywords: "",
                 pageData: {},
+                editData: {},
+                categoryData: {},
                 pageSize: 10,
                 pageIndex: 1,
+                //ue: UE.getEditor("container")
             }, methods: {
                 search: function () {
-                    this.updatePageData({ keywords: this.keywords, category: this.category, pageIndex:1})
-                }, edit: function () {
-
-
-
-
+                    this.updatePageData({ keywords: this.keywords, category: this.category, pageIndex: 1 })
+                }, edit: function (id) {
+                    axios.get('/News/Edit', {
+                        params: {
+                            id: id
+                        }
+                    }).then(function (response) {
+                        //console.log(response.data);
+                        vm.editData = response.data;
+                        //this.editor.setContent(vm.editData.content);
+                        vm.$refs.c1.setEditor(vm.editData.content);
+                        //vmEdit.data().editor.setContent(vm.editData.content);
+                        //let ue = UE.getEditor("container");
+                        //ue.ready(function () {
+                        //设置编辑器的内容
+                        //    ue.setContent(vm.editData.content);
+                        //    //获取html内容，返回: <p>hello</p>
+                        //    //var html = ue.getContent();
+                        //    //获取纯文本内容，返回: hello
+                        //    //var txt = ue.getContentTxt();
+                        //});
+                        $("#editModal").modal("show");
+                    })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 }, del: function (id) {
                     if (confirm("是否确定要删除?")) {
-                        $.post('/News/DelNews', { id: id }, function () {
-                            this.updatePageData(this.changeData);
-                        });
+                        axios.get('/News/DelNewsAxios', {
+                            params: {
+                                id: id
+                            }
+                        })
+                            .then(function () {
+                                vm.updatePageData({});
+                            })
+                            .catch(function (error) {
+                                console.log(error);
+                            });
                     }
-
                 }, updatePageData: function (payload) {
                     if ("pageIndex" in payload)
                         this.changeData.pageIndex = payload.pageIndex;
@@ -220,20 +440,43 @@
                         this.changeData.keywords = payload.keywords;
                     if ("category" in payload)
                         this.changeData.category = payload.category;
-                    $.post("/News/NewsList", this.changeData, function (data) {
-                        vm.pageData = data;
-                    })
+                    //$.post("/News/NewsList", this.changeData, function (data) {
+                    //    vm.pageData = data;
+                    //});
+                    axios.post('/News/NewsListAxios', this.changeData)
+                        .then(function (response) {
+                            vm.pageData = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
                 }
-
             }, components: {
-                'paging-component': vmPaging
-            }, mounted: function () {
-                $.post("/News/NewsList", { pageSize: this.pageSize }, function (data) {
-                    vm.pageData = data;
-                })
+                'paging-component': vmPaging,
+                'edit-component': vmEdit
 
-            }, computed:{ 
-                changeData: function () { 
+            }, mounted: function () {
+                axios.post("/News/NewsListAxios", this.changeData)
+                    .then(function (response) {
+                        //console.log(response);
+                        vm.pageData = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                //获取分类目前新闻暂时在分类8，注意修改！！！
+                axios.get("/Category/GetCategoryByID", {
+                    params: {
+                        categoryid: 8
+                    }
+                })
+                    .then(function (response) {
+                        //console.log(response.data);
+                        vm.categoryData = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+            }, computed: {
+                changeData: function () {
                     return {
                         keywords: this.keywords,
                         category: this.category,
@@ -242,10 +485,25 @@
                     }
 
                 }
+            }, filters: {
+                category: function (value) {
+                    let result = '';
+                    //console.log(vm.categoryData);
+                    for (let i in vm.categoryData) {
+                        if (value == vm.categoryData[i].categoryID) {
+                            result = vm.categoryData[i].categoryName;
+                            break;
+                        }
+                    }
+                    return result;
+                }, language: function (value) {
+                    if (value == 0)
+                        return "中文";
+                    else
+                        return "English";
+                }
             }
         });
-
     </script>
-
 }
 

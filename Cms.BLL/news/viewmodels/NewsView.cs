@@ -8,6 +8,7 @@ namespace Cms.BLL.news.viewmodels
 {
     public class NewsView
     {
+        public int NewsID { get; set; }
         public string Column { get; set; }
 
         public Language Language { get; set; }
@@ -25,6 +26,8 @@ namespace Cms.BLL.news.viewmodels
         //[DataType(DataType.Upload)]
         //[FileExtensions(Extensions = ".jpg,.png", ErrorMessage = "图片格式错误")]
         public IFormFile NewsImg { get; set; }
+
+        public string ImageUrl { get; set; }
 
         public bool IsPictureNews { get; set; }
 

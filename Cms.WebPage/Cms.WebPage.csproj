@@ -32,6 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\axios\dist\axios.js" />
+    <None Include="wwwroot\lib\axios\dist\axios.map" />
+    <None Include="wwwroot\lib\axios\dist\axios.min.js" />
+    <None Include="wwwroot\lib\axios\dist\axios.min.map" />
     <None Include="wwwroot\lib\ueditor\config.json" />
   </ItemGroup>
 

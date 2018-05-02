@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cms.Contract.category;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +19,7 @@ namespace Cms.Contract.news
         [StringLength(50)]
         public string SubTitle { get; set; }
 
+        //[ForeignKey("Category")]
         public int ColumnID { get; set; }
 
         public int Hit { get; set; }
@@ -29,8 +31,15 @@ namespace Cms.Contract.news
         [StringLength(50)]
         public string NewsImageName { get; set; }
 
-        public bool IsPictureNews { get; set; }
+        //public bool IsPictureNews { get; set; }
 
+        //public virtual Category Category { get; set; }
+
+        public string ShortRegDate {
+            get{
+                return RegDate.Value.ToString("D");
+            }
+        }
 
 
     }

@@ -49,13 +49,20 @@ namespace Cms.BLL.category.services
             return categorys;
         }
 
-        public IEnumerable<SelectListItem> getSelectListItemByID(int id)
+        //public async Task<Category> getCategoryNameByID(int id)
+        //{
+        //    var categorys = await _dbContext.Categorys.AsNoTracking().FirstOrDefaultAsync(n=>n.CategoryID==id);
+        //    return categorys;
+        //}
+
+
+        public async Task<IEnumerable<SelectListItem>> getSelectListItemByID(int id)
         {
             var categorys = _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).Select(s => new SelectListItem() {
-                Value=s.SortID.ToString(),
+                Value=s.CategoryID.ToString(),
                 Text=s.CategoryName
-            }).AsEnumerable();
-            return categorys;
+            });
+            return await categorys.ToListAsync();
         }
 
         public async Task<Category> getNode(int categoryid)

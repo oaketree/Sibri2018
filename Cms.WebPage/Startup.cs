@@ -51,17 +51,17 @@ namespace Cms.WebPage
             services.AddScoped<ICrawler, Crawler>();
             services.AddScoped<ICrawlerHandler, CrawlerHandler>();
 
-
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             //services.AddScoped<ICategoryService, CategoryService>();
-
-
-
             //services.AddSingleton<ICacheHelper, CacheHelper>();
-            services.AddMvc();
 
+
+            services.AddMvc();
+            //services.AddMvc(options =>
+            //{
+            //    options.InputFormatters.Add(new TextPlainInputFormatter());
+            //});
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options =>
             {

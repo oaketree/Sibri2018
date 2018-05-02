@@ -30,9 +30,30 @@ namespace Cms.WebPage.Controllers
         }
 
         [Authorize]
+        public async Task<JsonResult> Edit(int id)
+        {
+            var newsView = await _newsServices.GetNewsByID(id);
+            return Json(newsView);
+        }
+
+        [Authorize]
+        public async Task DelNewsImg(int id)
+        {
+            await _newsServices.DelNewsImg(id);
+        }
+
+        //[HttpPost]
+        //[Authorize]
+        //public IActionResult Edit(NewsView nv)
+        //{
+        //    //var newsView = await _newsServices.GetNewsByID(id);
+        //    return View();
+        //}
+
+
+        [Authorize]
         public IActionResult Create()
         {
-
             return View();
         }
 
@@ -44,18 +65,37 @@ namespace Cms.WebPage.Controllers
             if (ModelState.IsValid)
             {
                 await _newsServices.AddNews(nv, checkbox);
-                //return Content();
-
+                return RedirectToAction(nameof(Index));
             }
             return View(nv);
         }
+        //[Authorize]
+        //public async Task<JsonResult> NewsList(int pageSize=10, int pageIndex = 1, string keywords = "", string category = "")
+        //{
+        //    var result = await _newsServices.GetNewsList(pageSize, pageIndex, keywords, category);
+        //    return Json(result);
+        //}
         [Authorize]
-        public async Task<JsonResult> NewsList(int pageSize, int pageIndex = 1, string keywords = null, string category = null)
+        public async Task<JsonResult> NewsListAxios([FromBody] Dictionary<string,string> param)
         {
-
-            var result = await _newsServices.GetNewsList(pageSize, pageIndex, keywords, category);
+            var result = await _newsServices.GetNewsList(int.Parse(param["pageSize"]), int.Parse(param["pageIndex"]), param["keywords"], param["category"]);
             return Json(result);
         }
+        //[Authorize]
+        //public async Task UpdateNews([FromBody] Dictionary<string, string> param)
+        //{
+        //    await _newsServices.UpdateNews(int.Parse(param["newsID"]),int.Parse(param["column"]), int.Parse(param["language"]), param["title"], param["subTitle"], param["content"]);
+        //}
+        public async Task UpdateNews2(string newsID,string column,string language,string title,string subTitle,string content,bool picnews)
+        {
+            //return newsID;
+            await _newsServices.UpdateNews(int.Parse(newsID), int.Parse(column), int.Parse(language), title, subTitle, content, picnews);
+        }
 
+        [Authorize]
+        public async Task DelNewsAxios(int id)
+        {
+            await _newsServices.DelNews(id);
+        }
     }
 }
