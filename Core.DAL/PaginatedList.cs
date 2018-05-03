@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.DAL
@@ -13,9 +12,7 @@ namespace Core.DAL
         //public int ItemPerPage { get; set; }
         public int PageIndex { get; set; }
         public int TotalPages { get; set; }
-        
         public List<T> Items { get; set; }
-        //public IQueryable<T> Entity { get; set; }
 
         public bool HasPreviousPage
         {
@@ -39,13 +36,12 @@ namespace Core.DAL
             Items = new List<T>();
             Items.AddRange(items);
         }
+
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
             var count = await source.CountAsync();
             var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-            //var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize);
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
-
     }
 }

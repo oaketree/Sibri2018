@@ -2,27 +2,16 @@
 @using Cms.BLL.category.viewmodels
 @inject ICategoryService Options
 @{
-    ViewData["Title"] = "新闻管理";
-    var categorylist = await Options.getSelectListItemByID(8);
+    ViewData["Title"] = "子页面管理";
+    var categorylist = await Options.getSelectListItemByID(null);
 }
 <div class="wrapper wrapper-content fadeInRight" id="app">
     <edit-component :edit-data="editData" ref="c1"></edit-component>
-    @*<div class="row">
-            <div class="col-sm-12">
-                <div class="ibox float-e-margins">
-                    <div class="ibox-title">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-                            新闻发布
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>*@
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>新闻管理</h5>
+                    <h5>子页面管理</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -35,19 +24,6 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="input-group col-sm-7">
-                            <div class="col-sm-3">
-                                @*<select class="form-control" v-model="category">
-                                        <option value="">请选择</option>
-                                        @foreach (var item in categorylist)
-                                        {
-                                            <option value="@item.SortID">@item.CategoryName</option>
-                                        }
-                                    </select>*@
-                                <select class="form-control" asp-items="categorylist" v-model="category">
-                                    <option value="">请选择</option>
-                                </select>
-
-                            </div>
                             <div class="col-sm-5">
                                 <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords" />
                             </div>
@@ -75,7 +51,6 @@
                                 <tr v-for="(item,index) in pageData.items">
                                     <td>
                                         {{index+1}}
-                                        @*<input type="checkbox" class="i-checks" v-bind:value="item.UserID" v-model="userid">*@
                                     </td>
                                     <td>{{item.title}}</td>
                                     <td>
@@ -85,8 +60,8 @@
                                     <td>{{item.hit}}</td>
                                     <td>{{item.shortRegDate}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="edit(item.newsID)">修改</button>
-                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.newsID)">删除</button>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="edit(item.pageID)">修改</button>
+                                        <button type="button" class="btn btn-primary btn-xs" v-on:click="del(item.pageID)">删除</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -136,12 +111,8 @@
                         <label class="col-sm-1 control-label">栏目*：</label>
                         <div class="col-sm-3">
                             <select class="form-control" asp-items="categorylist" v-model="editData.column">
-                                @*<option value="">请选择</option>*@
                             </select>
                         </div>
-                        @*<div class="col-sm-2">
-                            <span class="text-danger">1111</span>
-                        </div>*@
                     </div>
                     <div class="form-group ">
                         <label class="col-sm-1 control-label">语言*：</label>
@@ -159,15 +130,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-1 control-label">副标题：</label>
-                        <div class="col-sm-6">
-                            <input placeholder="新闻副标题" class="form-control" v-model.trim="editData.subTitle" />
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <label class="col-sm-1 control-label">内容*：</label>
                         <div class="col-sm-9">
-                            <script id="container" type="text/plain"> 
+                            <script id="container" type="text/plain">
                             </script>
                         </div>
                         <div class="col-sm-2">
@@ -187,27 +152,26 @@
                         <label class="col-sm-1">图片处理：</label>
                         <div class="col-sm-6">
                             <div class="checkbox-custom pull-left">
-                                <input type="checkbox" v-model="picnews" id="picnews"/>
-                                <label for="picnews">需要对图片的大小进行处理</label>
+                                <input type="checkbox" v-model="picpage" id="picpage" />
+                                <label for="picpage">需要对图片的大小进行处理</label>
                             </div>
                         </div>
                     </div>
                     <div v-if="pic" class="form-group">
                         <label class="col-sm-1">图片删除：</label>
                         <div class="col-sm-6">
-                            <button type="button" class="btn btn-primary btn-xs" v-on:click="delPic(editData.newsID)">图片删除</button>
+                            <button type="button" class="btn btn-primary btn-xs" v-on:click="delPic(editData.pageID)">图片删除</button>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-white" data-dismiss="modal" aria-hidden="true">关闭</button>
-                    <button class="btn btn-sm btn-white" type="button" v-on:click="editConfirm(editData.newsID)">修改</button>
+                    <button class="btn btn-sm btn-white" type="button" v-on:click="editConfirm(editData.pageID)">修改</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
-
 
 
 @section Scripts{
@@ -219,24 +183,23 @@
             props: ['editData'],
             template: "#editTpl",
             methods: {
-                editConfirm: function (newsid) { 
+                editConfirm: function (pageid) {
                     if (this.validate()) {
                         formdata = new FormData();
                         if (document.getElementById('file') != null)
                             formdata.append('file', document.getElementById('file').files[0]);
-                        formdata.append('newsID', newsid);
+                        formdata.append('pageid', pageid);
                         formdata.append('column', this.editData.column);
                         formdata.append('language', this.editData.language);
                         formdata.append('title', this.editData.title);
-                        formdata.append('subTitle', this.editData.subTitle);
                         formdata.append('content', this.editor.getContent());
-                        formdata.append('picnews', this.picnews);
+                        formdata.append('picpage', this.picpage);
                         axios({
-                            url: '/News/UpdateNews2',
+                            url: '/Page/UpdatePage',
                             method: 'post',
                             data: formdata,
-                            onUploadProgress: function (progressEvent) { 
-                                if (progressEvent.lengthComputable) { 
+                            onUploadProgress: function (progressEvent) {
+                                if (progressEvent.lengthComputable) {
                                     var percent = Math.round(progressEvent.loaded * 100 / progressEvent.total);
                                     this.prgValue = percent;
                                 }
@@ -251,29 +214,13 @@
                             .catch(function (error) {
                                 console.log(error);
                             });
-                         //axios.post('/News/UpdateNews', {
-                    //    newsID:newsid,
-                    //    column: this.editData.column,
-                    //    language: this.editData.language,
-                    //    title: this.editData.title,
-                    //    subTitle: this.editData.subTitle,
-                    //    content: this.editor.getContent()
-                    //})
-                    //    .then(function () {
-                    //        $("#editModal").modal("hide");
-                    //        vm.updatePageData({});
-                    //    })
-                    //    .catch(function (error) {
-                    //        console.log(error);
-                    //    });
-
                     }
-                }, delPic: function (newsid) {
+                }, delPic: function (pageid) {
                     let self = this;
-                    if (confirm("是否确定要删除图片?")) { 
-                        axios.get('/News/DelNewsImg', {
+                    if (confirm("是否确定要删除图片?")) {
+                        axios.get('/Page/DelPageImg', {
                             params: {
-                                id: newsid
+                                id: pageid
                             }
                         }).then(function () {
                             self.editData.imageUrl = '';
@@ -284,7 +231,7 @@
                     }
                 }, setEditor: function (data) {
                     this.editor.setContent(data);
-                },validate: function () { 
+                }, validate: function () {
                     if (this.editData.title == "") {
                         this.vtitle = "请输入标题";
                         return false
@@ -304,12 +251,12 @@
                     editor: null,
                     vcontent: '',
                     vtitle: '',
-                    picnews: true,
+                    picpage: true,
                     prg: true,
-                    prgValue:0
+                    prgValue: 0
                 }
-            }, computed: { 
-                pic: function () { 
+            }, computed: {
+                pic: function () {
                     if (this.editData.imageUrl != null && this.editData.imageUrl != '')
                         return true;
                     else
@@ -319,6 +266,7 @@
                 this.editor = UE.getEditor('container');
             }
         }
+
 
 
         var vmPaging = {
@@ -340,7 +288,6 @@
                 }
             }, data: function () {
                 return {
-                    //cur: this.pageData.pageIndex,
                     arrPageSize: [10, 20, 30],
                     sizeList: this.pageSize,
                 }
@@ -382,45 +329,33 @@
         var vm = new Vue({
             el: "#app",
             data: {
-                category: "",
                 keywords: "",
                 pageData: {},
                 editData: {},
                 categoryData: {},
                 pageSize: 10,
                 pageIndex: 1,
-                //ue: UE.getEditor("container")
             }, methods: {
                 search: function () {
-                    this.updatePageData({ keywords: this.keywords, category: this.category, pageIndex: 1 })
+                    this.updatePageData({ keywords: this.keywords, pageIndex: 1 })
                 }, edit: function (id) {
-                    axios.get('/News/Edit', {
+                    axios.get('/Page/Edit', {
                         params: {
                             id: id
                         }
                     }).then(function (response) {
                         //console.log(response.data);
                         vm.editData = response.data;
-                        //this.editor.setContent(vm.editData.content);
-                        vm.$refs.c1.setEditor(vm.editData.content);
-                        //vmEdit.data().editor.setContent(vm.editData.content);
-                        //let ue = UE.getEditor("container");
-                        //ue.ready(function () {
-                        //设置编辑器的内容
-                        //    ue.setContent(vm.editData.content);
-                        //    //获取html内容，返回: <p>hello</p>
-                        //    //var html = ue.getContent();
-                        //    //获取纯文本内容，返回: hello
-                        //    //var txt = ue.getContentTxt();
-                        //});
+                        vm.$refs.c1.setEditor(vm.editData.pContent);
                         $("#editModal").modal("show");
                     })
                         .catch(function (error) {
                             console.log(error);
                         });
+                   
                 }, del: function (id) {
                     if (confirm("是否确定要删除?")) {
-                        axios.get('/News/DelNewsAxios', {
+                        axios.get('/Page/DelPageAxios', {
                             params: {
                                 id: id
                             }
@@ -439,12 +374,7 @@
                         this.changeData.pageSize = payload.pageSize;
                     if ("keywords" in payload)
                         this.changeData.keywords = payload.keywords;
-                    if ("category" in payload)
-                        this.changeData.category = payload.category;
-                    //$.post("/News/NewsList", this.changeData, function (data) {
-                    //    vm.pageData = data;
-                    //});
-                    axios.post('/News/NewsListAxios', this.changeData)
+                    axios.post('/Page/PageListAxios', this.changeData)
                         .then(function (response) {
                             vm.pageData = response.data;
                         })
@@ -454,22 +384,18 @@
                 }
             }, components: {
                 'paging-component': vmPaging,
-                'edit-component': vmEdit
+                'edit-component': vmEdit,
 
             }, mounted: function () {
-                axios.post("/News/NewsListAxios", this.changeData)
+                axios.post("/Page/PageListAxios", this.changeData)
                     .then(function (response) {
-                        //console.log(response);
+                        //console.log(response.data);
                         vm.pageData = response.data;
                     }).catch(function (error) {
                         console.log(error);
                     });
-                //获取分类目前新闻暂时在分类8，注意修改！！！
-                axios.get("/Category/GetCategoryByID", {
-                    params: {
-                        categoryid: 8
-                    }
-                })
+                ////获取分类目前新闻暂时在分类8，注意修改！！！
+                axios.get("/Category/GetCategoryByID")
                     .then(function (response) {
                         //console.log(response.data);
                         vm.categoryData = response.data;
@@ -480,11 +406,9 @@
                 changeData: function () {
                     return {
                         keywords: this.keywords,
-                        category: this.category,
                         pageSize: this.pageSize,
                         pageIndex: this.pageIndex,
                     }
-
                 }
             }, filters: {
                 category: function (value) {
@@ -505,6 +429,6 @@
                 }
             }
         });
+
     </script>
 }
-

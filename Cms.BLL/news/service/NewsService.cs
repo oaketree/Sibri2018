@@ -1,4 +1,5 @@
 ﻿using Cms.BLL.category.services;
+using Cms.BLL.category.viewmodels;
 using Cms.BLL.news.viewmodels;
 using Cms.BLL.upload.service;
 using Cms.Contract.news;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Cms.BLL.news.service
 {
-    public class NewsService:INewsService
+    public class NewsService : INewsService
     {
         private readonly NewsDBContext _dbContext;
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -78,7 +79,7 @@ namespace Cms.BLL.news.service
             }
             else
                 return null;
-            
+
         }
 
         public async Task DelNewsImg(int id)
@@ -86,7 +87,8 @@ namespace Cms.BLL.news.service
             var news = await _dbContext.News.FirstOrDefaultAsync(n => n.NewsID == id);
             if (news != null)
             {
-                if (news.NewsImageName != null && news.NewsImageName != string.Empty) {
+                if (news.NewsImageName != null && news.NewsImageName != string.Empty)
+                {
                     File.Delete(Path.Combine($"{_hostingEnvironment.WebRootPath}/upload/image/", news.NewsImageName));
                     news.NewsImageName = string.Empty;
                     _dbContext.Update(news);
@@ -94,58 +96,59 @@ namespace Cms.BLL.news.service
                 }
             }
         }
-        public async Task UpdateNews(int newsid,int column,int language,string title,string subTitle,string content,bool picnews)
+        public async Task UpdateNews(int newsid, int column, int language, string title, string subTitle, string content, bool picnews)
         {
-            var fileName = string.Empty;
-            var file = _accessor.HttpContext.Request.Form.Files["file"];
-            if (file!=null) {
-                var fileExtension = Path.GetExtension(file.FileName);
-                fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
-                string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
-
-                if (picnews)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await file.CopyToAsync(memoryStream);
-                        _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
-                        {
-                            Width = 200,
-                            Height = 255,
-                            Mode = "Cut"
-                        });
-                        
-                    }
-                }
-                else {
-                    using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                }
-                await _uploadService.addFile(fileName, fileExtension, "News");
-
-            }
-            
-
             var news = await _dbContext.News.AsNoTracking().FirstOrDefaultAsync(n => n.NewsID == newsid);
-            if (news != null) {
+            if (news != null)
+            {
+                var fileName = string.Empty;
+                var file = _accessor.HttpContext.Request.Form.Files["file"];
+                if (file != null)
+                {
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
+                    string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
+
+                    if (picnews)
+                    {
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await file.CopyToAsync(memoryStream);
+                            _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
+                            {
+                                Width = 200,
+                                Height = 255,
+                                Mode = "Cut"
+                            });
+
+                        }
+                    }
+                    else
+                    {
+                        using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                    }
+                    await _uploadService.addFile(fileName, fileExtension, "News");
+                    news.NewsImageName = fileName;
+
+                }
                 news.ColumnID = column;
                 news.Language = language;
                 news.Title = title;
                 news.SubTitle = subTitle;
                 news.NewsDetail = content;
-                news.NewsImageName = fileName;
-            }
-            _dbContext.Update(news);
-            await _dbContext.SaveChangesAsync();
+                _dbContext.Update(news);
+                await _dbContext.SaveChangesAsync();
 
+            }
         }
 
 
-        public async Task AddNews(NewsView nv,string[] checkbox)
+        public async Task AddNews(NewsView nv, string[] checkbox)
         {
-            if (nv.NewsImg!=null)
+            if (nv.NewsImg != null)
             {
                 var fileExtension = Path.GetExtension(nv.NewsImg.FileName);
                 var fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
@@ -177,7 +180,7 @@ namespace Cms.BLL.news.service
                     _dbContext.News.Add(new News
                     {
                         ColumnID = int.Parse(item),
-                        Language =(int)nv.Language,
+                        Language = (int)nv.Language,
                         Title = nv.Title,
                         SubTitle = nv.SubTitle,
                         NewsDetail = nv.Content,
@@ -187,7 +190,7 @@ namespace Cms.BLL.news.service
                     });
                     await _dbContext.SaveChangesAsync();
                 }
-                await _uploadService.addFile(fileName, fileExtension,"News");
+                await _uploadService.addFile(fileName, fileExtension, "News");
             }
             else
             {

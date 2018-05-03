@@ -52,7 +52,7 @@ namespace Cms.WebPage.Controllers
         }
 
         [Authorize]
-        public async Task<JsonResult> GetCategoryByID(int categoryid)
+        public async Task<JsonResult> GetCategoryByID(int? categoryid=null)
         {
             var result = await _categoryServices.getCategoryByID(categoryid);
             return Json(result);

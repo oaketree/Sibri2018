@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Cms.BLL.news.viewmodels
+namespace Cms.BLL.pages.viewmodels
 {
-    public class NewsView
+    public class PageView
     {
-        public int NewsID { get; set; }
+        public int PageID { get; set; }
         public string Column { get; set; }
 
         public Language Language { get; set; }
@@ -18,19 +18,15 @@ namespace Cms.BLL.news.viewmodels
         [StringLength(50)]
         public string Title { get; set; }
 
-        [StringLength(50)]
-        public string SubTitle { get; set; }
-
         [Required]
-        public string Content { get; set; }
+        public string PContent { get; set; }
 
         //[DataType(DataType.Upload)]
         //[FileExtensions(Extensions = ".jpg,.png", ErrorMessage = "图片格式错误")]
-        public IFormFile NewsImg { get; set; }
+        public IFormFile PageImg { get; set; }
 
         public string ImageUrl { get; set; }
 
-        public bool IsPictureNews { get; set; }
-
+        public bool IsPicturePage { get; set; }
     }
 }

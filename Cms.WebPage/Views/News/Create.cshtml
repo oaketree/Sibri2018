@@ -1,5 +1,5 @@
 ﻿@model Cms.BLL.news.viewmodels.NewsView
-@using Cms.BLL.news.viewmodels
+@using Cms.BLL.category.viewmodels
 @using Cms.BLL.category.services
 @inject ICategoryService Options
 @{
@@ -142,15 +142,21 @@
                     if (this.column.length < 1) {
                         this.vcheckbox = "请选择栏目";
                         return false;
+                    } else { 
+                        this.vcheckbox = "";
                     }
                     if (this.title == "") {
                         //console.log(222);
                         this.vtitle = "请选择标题";
                         return false;
+                    } else { 
+                        this.vtitle = "";
                     }
                     if (this.ue.getContentTxt() == "") {
                         this.vcontainer = "请输入内容";
                         return false;
+                    } else { 
+                        this.vcontainer = "";
                     }
                     return true;
                 }

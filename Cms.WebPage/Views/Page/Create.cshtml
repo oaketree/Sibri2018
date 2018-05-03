@@ -1,0 +1,170 @@
+﻿@model Cms.BLL.pages.viewmodels.PageView
+@using Cms.BLL.category.viewmodels
+@{
+    ViewData["Title"] = "子页面发布";
+}
+<div class="wrapper wrapper-content fadeInRight" id="app">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>网站菜单</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="buttons.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="buttons.html#">选项1</a>
+                            </li>
+                            <li>
+                                <a href="buttons.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-4">
+                        <div id="treeview12" class="test"></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h5>添加子页面</h5>
+                        <hr>
+                        <template v-if="ok">
+                            <form asp-action="Create" onsubmit="return vm.validate()" enctype="multipart/form-data">
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-4 control-label">菜单名称：{{nodename}}</label>
+                                    <div class="col-sm-2">
+                                        <span class="text-danger">{{vnodename}}</span>
+                                    </div>
+                                    <input type="hidden" asp-for="Column" v-model="categoryid">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-1 control-label">语言*：</label>
+                                    <div class="col-sm-2">
+                                        <select class="form-control" asp-items="@Html.GetEnumSelectList<Language>()" asp-for="Language"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-1 control-label">标题*：</label>
+                                    <div class="col-sm-6">
+                                        <input placeholder="页面标题" class="form-control" asp-for="Title" v-model="title" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span class="text-danger">{{vtitle}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-1 control-label">内容*：</label>
+                                    <div class="col-sm-8">
+                                        <textarea asp-for="PContent" id="container"></textarea>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span class="text-danger">{{vcontainer}}</span>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-1 control-label">页面新闻：</label>
+                                    <div class="col-sm-3">
+                                        <input type="file" asp-for="PageImg" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-1 control-label">图片处理：</label>
+                                    <div class="col-sm-6">
+                                        <div class="checkbox-custom pull-left">
+                                            <input type="checkbox" id="picpage" asp-for="IsPicturePage" v-model="picpage" />
+                                            <label for="picpage">需要对图片的大小进行处理</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-8 text-center">
+                                        <button class="btn btn-lg btn-primary" type="submit">确定</button>
+                                        <input type="reset" class="btn btn-lg btn-primary" value="取消" />
+                                    </div>
+                                </div>
+                            </form>
+                        </template>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/ueditor/ueditor.config.js"></script>
+    <script src="~/lib/ueditor/ueditor.all.js"></script>
+    <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="~/js/plugins/treeview/bootstrap-treeview.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                nodename: "",
+                vnodename: "",
+                vcontainer: "",
+                title: "",
+                vtitle: "",
+                categoryid: 0,
+                picpage: true,
+                ok: true,
+                editor: UE.getEditor("container")
+            }, mounted: function () {
+                axios.get('/Category/NodeList').then(function (response) {
+                    $('#treeview12').treeview({
+                        levels: 3,
+                        data: response.data,
+                        onNodeSelected: function (e, o) {
+                            vm.nodename = o.text;
+                            vm.categoryid = o.categoryid;
+                        }
+                    });
+
+                })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
+            }, methods: {
+                validate: function () {
+                    if (this.nodename == "") {
+                        this.vnodename = "请选择栏目";
+                        return false;
+                    }
+                    else {
+                        this.vnodename = "";
+                    }
+                    if (this.title == "") {
+                        this.vtitle = "请选择标题";
+                        return false;
+                    } else {
+                        this.vtitle = "";
+                    }
+                    if (this.editor.getContentTxt() == "") {
+                        this.vcontainer = "请输入内容";
+                        return false;
+                    } else {
+                        this.vcontainer = "";
+                    }
+                    return true;
+                }
+
+            }
+
+
+        });
+
+    </script>
+}

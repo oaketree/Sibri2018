@@ -43,12 +43,19 @@ namespace Cms.BLL.category.services
             return HandleMenu<CategoryView>.SubMenu(list, 0);
         }
 
-        public async Task<List<Category>> getCategoryByID(int id)
+        public async Task<List<Category>> getCategoryByID(int? id)
         {
-            var categorys = await _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).ToListAsync();
+            List<Category> categorys = null;
+            if (id != null)
+            {
+                categorys = await _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).ToListAsync();
+            }
+            else
+            {
+                categorys = await _dbContext.Categorys.AsNoTracking().ToListAsync();
+            }
             return categorys;
         }
-
         //public async Task<Category> getCategoryNameByID(int id)
         //{
         //    var categorys = await _dbContext.Categorys.AsNoTracking().FirstOrDefaultAsync(n=>n.CategoryID==id);
@@ -56,12 +63,25 @@ namespace Cms.BLL.category.services
         //}
 
 
-        public async Task<IEnumerable<SelectListItem>> getSelectListItemByID(int id)
+        public async Task<IEnumerable<SelectListItem>> getSelectListItemByID(int? id=null)
         {
-            var categorys = _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).Select(s => new SelectListItem() {
-                Value=s.CategoryID.ToString(),
-                Text=s.CategoryName
-            });
+            IQueryable<SelectListItem> categorys = null;
+            if (id != null)
+            {
+                categorys = _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).Select(s => new SelectListItem()
+                {
+                    Value = s.CategoryID.ToString(),
+                    Text = s.CategoryName
+                });
+            }
+            else {
+                categorys = _dbContext.Categorys.AsNoTracking().Select(s => new SelectListItem()
+                {
+                    Value = s.CategoryID.ToString(),
+                    Text = s.CategoryName
+                });
+            }
+      
             return await categorys.ToListAsync();
         }
 

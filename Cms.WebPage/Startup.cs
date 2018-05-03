@@ -1,11 +1,13 @@
 ﻿using Cms.BLL.category.services;
 using Cms.BLL.login.services;
 using Cms.BLL.news.service;
+using Cms.BLL.pages.service;
 using Cms.BLL.upload.service;
 using Cms.BLL.upload.ueditor;
 using Cms.Contract.category;
 using Cms.Contract.login;
 using Cms.Contract.news;
+using Cms.Contract.pages;
 using Cms.Contract.upload;
 using Core.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -37,11 +39,12 @@ namespace Cms.WebPage
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddDbContext<NewsDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<UploadDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            services.AddDbContext<PageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IUeditorService, UeditorService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IPageService, PageService>();
             services.AddScoped<IConfigHandler, ConfigHandler>();
             services.AddScoped<INotSupportedHandler, NotSupportedHandler>();
             services.AddScoped<IEditorConfig, EditorConfig>();
