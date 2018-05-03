@@ -41,7 +41,7 @@ namespace Cms.BLL.news.service
             Expression<Func<News, bool>> express = PredicateExtensions.True<News>();
             if (keywords != "")
             {
-                express = express.And(n => n.Title.Contains(keywords));
+                express = express.And(n => n.Title.Contains(keywords)||n.NewsDetail.Contains(keywords));
             }
             if (category != "")
             {

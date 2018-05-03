@@ -45,7 +45,7 @@ namespace Cms.BLL.pages.service
             Expression<Func<Pages, bool>> express = PredicateExtensions.True<Pages>();
             if (keywords != "")
             {
-                express = express.And(n => n.Title.Contains(keywords));
+                express = express.And(n => n.Title.Contains(keywords)||n.PContent.Contains(keywords));
             }
             return await PaginatedList<Pages>.CreateAsync(_dbContext.Pages.AsNoTracking().Where(express).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
         }
