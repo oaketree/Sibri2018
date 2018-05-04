@@ -12,7 +12,7 @@ namespace Cms.Contract.news
     {
         [Key]
         public int NewsID { get; set; }
-        [StringLength(50)]
+        [StringLength(100)]
         public string Title { get; set; }
 
         public string NewsDetail { get; set; }
@@ -27,7 +27,7 @@ namespace Cms.Contract.news
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime? RegDate { get; set; }
 
-        public int Language { get; set; }
+        public int? Language { get; set; }
         [StringLength(50)]
         public string NewsImageName { get; set; }
 

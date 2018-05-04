@@ -16,7 +16,7 @@ namespace Cms.Contract.category
         [StringLength(50)]
         public string CategoryName { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string CategoryNameEN { get; set; }
 
         [StringLength(50)]

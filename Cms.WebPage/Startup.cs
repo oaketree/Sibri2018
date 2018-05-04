@@ -90,7 +90,9 @@ namespace Cms.WebPage
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();

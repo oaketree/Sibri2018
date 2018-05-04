@@ -15,7 +15,6 @@ namespace Cms.BLL.news.viewmodels
         public Language Language { get; set; }
 
         [Required]
-        [StringLength(50)]
         public string Title { get; set; }
 
         [StringLength(50)]

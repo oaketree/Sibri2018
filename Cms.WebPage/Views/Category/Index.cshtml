@@ -81,7 +81,7 @@
                                 <div class="form-group clearfix">
                                     <label class="col-sm-3 control-label">同级序列*：</label>
                                     <div class="col-sm-9">
-                                        <input placeholder="同级序列" class="form-control" v-model.number="sortid">
+                                        <input placeholder="同级序列" class="form-control" v-model="sortid">
                                         <span class="text-danger">{{cValidate}}</span>
                                     </div>
                                 </div>
@@ -130,7 +130,7 @@
             mounted: function () {
                 $.post('/Category/NodeList', function (data) { 
                     $('#treeview12').treeview({
-                        levels: 3,
+                        levels: 2,
                         data: data,
                         onNodeSelected: function (e, o) {
                             vm.nodename = o.text;

@@ -3,7 +3,7 @@
 @inject ICategoryService Options
 @{
     ViewData["Title"] = "新闻管理";
-    var categorylist = await Options.getSelectListItemByID(8);
+    var categorylist = await Options.getSelectListItemByID(7);
 }
 <div class="wrapper wrapper-content fadeInRight" id="app">
     <edit-component :edit-data="editData" ref="c1"></edit-component>
@@ -467,7 +467,7 @@
                 //获取分类目前新闻暂时在分类8，注意修改！！！
                 axios.get("/Category/GetCategoryByID", {
                     params: {
-                        categoryid: 8
+                        categoryid: 7
                     }
                 })
                     .then(function (response) {

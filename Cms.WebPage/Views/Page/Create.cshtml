@@ -8,7 +8,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>网站菜单</h5>
+                    <h5>子页面发布</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -124,7 +124,7 @@
             }, mounted: function () {
                 axios.get('/Category/NodeList').then(function (response) {
                     $('#treeview12').treeview({
-                        levels: 3,
+                        levels: 2,
                         data: response.data,
                         onNodeSelected: function (e, o) {
                             vm.nodename = o.text;
