@@ -48,7 +48,8 @@ namespace Cms.BLL.upload.service
                 AllowExtensions = _editorConfig.GetStringList("imageAllowFiles"),
                 PathFormat = _editorConfig.GetString("imagePathFormat"),
                 SizeLimit = _editorConfig.GetInt("imageMaxSize"),
-                UploadFieldName = _editorConfig.GetString("imageFieldName")
+                UploadFieldName = _editorConfig.GetString("imageFieldName"),
+                ActionName= _editorConfig.GetString("imageActionName")
             });
         }
 
@@ -61,7 +62,8 @@ namespace Cms.BLL.upload.service
                 SizeLimit = _editorConfig.GetInt("scrawlMaxSize"),
                 UploadFieldName = _editorConfig.GetString("scrawlFieldName"),
                 Base64 = true,
-                Base64Filename = "scrawl.png"
+                Base64Filename = "scrawl.png",
+                ActionName = _editorConfig.GetString("scrawlActionName")
             });
         }
 
@@ -72,7 +74,8 @@ namespace Cms.BLL.upload.service
                 AllowExtensions = _editorConfig.GetStringList("videoAllowFiles"),
                 PathFormat = _editorConfig.GetString("videoPathFormat"),
                 SizeLimit = _editorConfig.GetInt("videoMaxSize"),
-                UploadFieldName = _editorConfig.GetString("videoFieldName")
+                UploadFieldName = _editorConfig.GetString("videoFieldName"),
+                ActionName = _editorConfig.GetString("videoActionName")
             });
         }
         public async Task uploadFileHandler()
@@ -82,7 +85,8 @@ namespace Cms.BLL.upload.service
                 AllowExtensions = _editorConfig.GetStringList("fileAllowFiles"),
                 PathFormat = _editorConfig.GetString("filePathFormat"),
                 SizeLimit = _editorConfig.GetInt("fileMaxSize"),
-                UploadFieldName = _editorConfig.GetString("fileFieldName")
+                UploadFieldName = _editorConfig.GetString("fileFieldName"),
+                ActionName = _editorConfig.GetString("fileActionName")
             });
         }
 

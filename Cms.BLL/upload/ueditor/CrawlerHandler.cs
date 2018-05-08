@@ -14,16 +14,17 @@ namespace Cms.BLL.upload.ueditor
         private ICrawler _crawler;
 
         private string[] Sources;
-        private List<Crawler> Crawlers;
+        //private List<Crawler> Crawlers;
 
         public CrawlerHandler(IHttpContextAccessor accessor, ICrawler crawler) : base(accessor)
         {
             this._crawler = crawler;
-            this.Crawlers = new List<Crawler>();
+            //this.Crawlers = new List<Crawler>();
         }
         public async Task Process()
         {
             Sources = _accessor.HttpContext.Request.Form["source[]"];
+
             if (Sources == null || Sources.Length == 0)
             {
                 await WriteJson(new
@@ -33,22 +34,35 @@ namespace Cms.BLL.upload.ueditor
                 return;
             }
             //Crawlers = Sources.Select( x => _crawler.Fetch(x)).ToArray();
-            var temp = Sources.Select(async x =>
-             {
-                 return await _crawler.Fetch(x);
-             });
-            foreach (var item in temp) {
-                this.Crawlers.Add(await item);
-            }
+            //var temp = Sources.Select(async x =>
+            // {
+            //     return await _crawler.Fetch(x);
+            // });
+            //foreach (var item in temp)
+            //{
+            //    this.Crawlers.Add(await item);
+            //}
             await WriteJson(new
             {
                 state = "SUCCESS",
-                list = Crawlers.Select(x => new
-                {
-                    state = x.State,
-                    source = x.SourceUrl,
-                    url = x.ServerUrl
-                })
+                //list = temp.Select(async x => {
+                //    var item = await x;
+                //    return new
+                //    {
+                //        state = item.State,
+                //        source = item.SourceUrl,
+                //        url = item.ServerUrl
+                //    };
+                //}),
+                list = Sources.Select(async x => {
+                    var item = await _crawler.Fetch(x);
+                    return new
+                    {
+                        state = item.State,
+                        source = item.SourceUrl,
+                        url = item.ServerUrl
+                    };
+                }),
             });
         }
 

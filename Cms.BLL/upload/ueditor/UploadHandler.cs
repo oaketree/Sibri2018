@@ -1,4 +1,5 @@
 ﻿using Cms.BLL.upload.service;
+using Core.Utility;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -15,12 +16,14 @@ namespace Cms.BLL.upload.ueditor
         private UploadResult _result;
         private UploadConfig _uploadConfig;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IPictureHelper _pictureHelper;
 
         private readonly IUploadService _uploadService;
-        public UploadHandler(IHttpContextAccessor accessor, IHostingEnvironment hostingEnvironment, IUploadService uploadService) : base(accessor)
+        public UploadHandler(IHttpContextAccessor accessor, IHostingEnvironment hostingEnvironment, IUploadService uploadService, IPictureHelper pictureHelper) : base(accessor)
         {
             this._hostingEnvironment = hostingEnvironment;
             this._uploadService = uploadService;
+            this._pictureHelper = pictureHelper;
             this._result= new UploadResult() { State = UploadState.Unknown };
         }
         
@@ -51,11 +54,28 @@ namespace Cms.BLL.upload.ueditor
                     await WriteResult();
                     return;
                 }
-                uploadFileBytes = new byte[file.Length];
+                //uploadFileBytes = new byte[file.Length];
                 try
                 {
+                    var memoryStream = new MemoryStream();
+                    await file.CopyToAsync(memoryStream);
+                    if (_uploadConfig.ActionName == "uploadimage")
+                    {
+                        _pictureHelper.ProcessByStream(memoryStream, new PictureSize
+                        {
+                            Width = 700,
+                            Mode = "W"
+                        });
+                        memoryStream.Dispose();
+                        memoryStream = _pictureHelper.Ms;
+                    }
+                    uploadFileBytes = new byte[memoryStream.Length];
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    memoryStream.Read(uploadFileBytes, 0, uploadFileBytes.Length);
+                    memoryStream.Dispose();
                     //file.InputStream.Read(uploadFileBytes, 0, file.Length);
-                    file.OpenReadStream().Read(uploadFileBytes, 0, uploadFileBytes.Length);
+                    //file.OpenReadStream().Read(uploadFileBytes, 0, uploadFileBytes.Length);
+
                 }
                 catch (Exception)
                 {
@@ -80,9 +100,9 @@ namespace Cms.BLL.upload.ueditor
                 
                 //File.WriteAllBytes(localPath, uploadFileBytes);
                 await File.WriteAllBytesAsync(localPath, uploadFileBytes);
-                
-                await _uploadService.addFile(filename,extension,"Ueditor");
+                await _uploadService.SaveToRemotePath(uploadFileBytes, savePath);//保存到远程路径
 
+                await _uploadService.addFile(filename,extension,"Ueditor");
                 _result.Url = savePath;
                 _result.State = UploadState.Success;
             }

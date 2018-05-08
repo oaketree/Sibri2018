@@ -56,29 +56,36 @@ namespace Cms.BLL.pages.service
             {
                 var fileExtension = Path.GetExtension(pv.PageImg.FileName);
                 var fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
-                //var imgPath = Path.Combine("pic", fileName);
-                string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
+                string webRootPath = _hostingEnvironment.WebRootPath;//获取物理地址
+                string path = $"upload/image/{fileName}";
                 //string contentRootPath = _hostingEnvironment.ContentRootPath;
+                
+                var memoryStream = new MemoryStream();
+                await pv.PageImg.CopyToAsync(memoryStream);
                 if (pv.IsPicturePage)
                 {
-                    using (var memoryStream = new MemoryStream())
+                    _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                     {
-                        await pv.PageImg.CopyToAsync(memoryStream);
-                        _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
-                        {
-                            Width = 300,
-                            Height = 255,
-                            Mode = "Cut"
-                        });
-                    }
+                        Width = 200,
+                        Height = 255,
+                        Mode = "Cut"
+                    });
+                    memoryStream.Dispose();
+                    memoryStream = _pictureHelper.Ms;
                 }
-                else
-                {
-                    using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
-                    {
-                        await pv.PageImg.CopyToAsync(stream);
-                    }
-                }
+                byte[] bytes = new byte[memoryStream.Length];
+                // 设置当前流的位置为流的开始
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                memoryStream.Read(bytes, 0, bytes.Length);
+                memoryStream.Dispose();
+                //用下面的就不需要先seek
+                //nv.NewsImg.OpenReadStream().Read(bytes, 0, bytes.Length);
+                await File.WriteAllBytesAsync(Path.Combine(webRootPath, path), bytes);
+                await _uploadService.SaveToRemotePath(bytes, path);//保存到远程路径
+                //memoryStream.Dispose();
+
+
+
                 _dbContext.Pages.Add(new Pages
                 {
                     ColumnID = int.Parse(pv.Column),
@@ -150,29 +157,29 @@ namespace Cms.BLL.pages.service
                 {
                     var fileExtension = Path.GetExtension(file.FileName);
                     fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
-                    string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
-
+                    string webRootPath =_hostingEnvironment.WebRootPath;//获取物理地址
+                    string path = $"upload/image/{fileName}";
+                    var memoryStream = new MemoryStream();
+                    await file.CopyToAsync(memoryStream);
                     if (picpage)
                     {
-                        using (var memoryStream = new MemoryStream())
+                        _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                         {
-                            await file.CopyToAsync(memoryStream);
-                            _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
-                            {
-                                Width = 200,
-                                Height = 255,
-                                Mode = "Cut"
-                            });
+                            Width = 200,
+                            Height = 255,
+                            Mode = "Cut"
+                        });
+                        memoryStream.Dispose();
+                        memoryStream = _pictureHelper.Ms;
+                    }
+                    byte[] bytes = new byte[memoryStream.Length];
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    memoryStream.Read(bytes, 0, bytes.Length);
+                    memoryStream.Dispose();
+                    await File.WriteAllBytesAsync(Path.Combine(webRootPath, path), bytes);
+                    await _uploadService.SaveToRemotePath(bytes, path);//保存到远程路径
+                    
 
-                        }
-                    }
-                    else
-                    {
-                        using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-                    }
                     await _uploadService.addFile(fileName, fileExtension, "Page");
                     page.PageImageName = fileName;
 

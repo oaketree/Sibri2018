@@ -41,7 +41,7 @@ namespace Cms.BLL.news.service
             Expression<Func<News, bool>> express = PredicateExtensions.True<News>();
             if (keywords != "")
             {
-                express = express.And(n => n.Title.Contains(keywords)||n.NewsDetail.Contains(keywords));
+                express = express.And(n => n.Title.Contains(keywords) || n.NewsDetail.Contains(keywords));
             }
             if (category != "")
             {
@@ -107,29 +107,28 @@ namespace Cms.BLL.news.service
                 {
                     var fileExtension = Path.GetExtension(file.FileName);
                     fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
-                    string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
-
+                    string webRootPath = _hostingEnvironment.WebRootPath;//获取物理地址
+                    string path = $"upload/image/{fileName}";
+                    var memoryStream = new MemoryStream();
+                    await file.CopyToAsync(memoryStream);
                     if (picnews)
                     {
-                        using (var memoryStream = new MemoryStream())
+                        _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                         {
-                            await file.CopyToAsync(memoryStream);
-                            _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
-                            {
-                                Width = 200,
-                                Height = 255,
-                                Mode = "Cut"
-                            });
+                            Width = 200,
+                            Height = 255,
+                            Mode = "Cut"
+                        });
+                        memoryStream.Dispose();
+                        memoryStream = _pictureHelper.Ms;
+                    }
+                    byte[] bytes = new byte[memoryStream.Length];
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    memoryStream.Read(bytes, 0, bytes.Length);
+                    memoryStream.Dispose();
+                    await File.WriteAllBytesAsync(Path.Combine(webRootPath, path), bytes);
+                    await _uploadService.SaveToRemotePath(bytes, path);//保存到远程路径
 
-                        }
-                    }
-                    else
-                    {
-                        using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-                    }
                     await _uploadService.addFile(fileName, fileExtension, "News");
                     news.NewsImageName = fileName;
 
@@ -153,28 +152,33 @@ namespace Cms.BLL.news.service
                 var fileExtension = Path.GetExtension(nv.NewsImg.FileName);
                 var fileName = $"{DateTime.Now.ToString("yyMMddHHmmssfff")}{fileExtension}";
                 //var imgPath = Path.Combine("pic", fileName);
-                string webRootPath = $"{_hostingEnvironment.WebRootPath}/upload/image/";//获取物理地址
+                string webRootPath =_hostingEnvironment.WebRootPath;//获取物理地址
                 //string contentRootPath = _hostingEnvironment.ContentRootPath;
+                string path = $"upload/image/{fileName}";
+                var memoryStream = new MemoryStream();
+                await nv.NewsImg.CopyToAsync(memoryStream);
                 if (nv.IsPictureNews)
                 {
-                    using (var memoryStream = new MemoryStream())
+                    _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                     {
-                        await nv.NewsImg.CopyToAsync(memoryStream);
-                        _pictureHelper.ProcessByStream(memoryStream, Path.Combine(webRootPath, fileName), new Size
-                        {
-                            Width = 200,
-                            Height = 255,
-                            Mode = "Cut"
-                        });
-                    }
+                        Width = 200,
+                        Height = 255,
+                        Mode = "Cut"
+                    });
+                    memoryStream.Dispose();
+                    memoryStream = _pictureHelper.Ms;
                 }
-                else
-                {
-                    using (var stream = new FileStream(Path.Combine(webRootPath, fileName), FileMode.CreateNew))
-                    {
-                        await nv.NewsImg.CopyToAsync(stream);
-                    }
-                }
+                byte[] bytes = new byte[memoryStream.Length];
+                // 设置当前流的位置为流的开始
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                memoryStream.Read(bytes, 0, bytes.Length);
+                memoryStream.Dispose();
+                //用下面的就不需要先seek
+                //nv.NewsImg.OpenReadStream().Read(bytes, 0, bytes.Length);
+                await File.WriteAllBytesAsync(Path.Combine(webRootPath, path), bytes);
+                await _uploadService.SaveToRemotePath(bytes, path);//保存到远程路径
+                
+
                 foreach (var item in checkbox)
                 {
                     _dbContext.News.Add(new News

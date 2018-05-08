@@ -35,5 +35,8 @@ namespace Cms.BLL.upload.ueditor
         /// Base64 字符串所表示的文件名
         /// </summary>
         public string Base64Filename { get; set; }
+
+        public string ActionName { get; set; }
+
     }
 }

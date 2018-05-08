@@ -34,7 +34,7 @@ namespace Cms.BLL.category.services
         {
             var categorys = _dbContext.Categorys.AsNoTracking().Select(s => new CategoryView
             {
-                text = $"{s.CategoryName}|{ s.CategoryNameEN}",
+                text = $"{s.CategoryName}|{ s.CategoryNameEN} ID:{s.CategoryID}",
                 categoryid = s.CategoryID,
                 parentid = s.ParentID,
                 sortid = s.SortID

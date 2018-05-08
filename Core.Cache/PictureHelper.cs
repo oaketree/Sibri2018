@@ -9,8 +9,8 @@ namespace Core.Utility
 {
     public class PictureHelper:IPictureHelper
     {
-        private string originalImagePath;
-        private string thumbnailPath;
+        //private string originalImagePath;
+        //private string thumbnailPath;
         private int width;
         private int height;
         private string mode;
@@ -22,30 +22,43 @@ namespace Core.Utility
         private int y;
         private int ow;
         private int oh;
+        public MemoryStream Ms { get; set; }
 
-
-        public void ProcessByFile(string originalImagePath, string thumbnailPath, Size size)
+        public PictureHelper()
         {
-            this.originalImagePath = originalImagePath;
-            this.thumbnailPath = thumbnailPath;
+            Ms = new MemoryStream();
+        }
+
+        //public void ProcessByFile(string originalImagePath, string thumbnailPath, PictureSize size)
+        //{
+        //    this.originalImagePath = originalImagePath;
+        //    this.thumbnailPath = thumbnailPath;
+        //    this.width = size.Width;
+        //    this.height = size.Height;
+        //    this.mode = size.Mode;
+        //    Process(Image.FromFile(this.originalImagePath));
+        //}
+
+        //public void ProcessByStream(Stream s, string thumbnailPath, PictureSize size)
+        //{
+        //    this.thumbnailPath = thumbnailPath;
+        //    this.width = size.Width;
+        //    this.height = size.Height;
+        //    this.mode = size.Mode;
+        //    Process(Image.FromStream(s));
+        //}
+
+        public void ProcessByStream(Stream s, PictureSize size)
+        {
+            //this.thumbnailPath = thumbnailPath;
             this.width = size.Width;
             this.height = size.Height;
             this.mode = size.Mode;
-            Process(Image.FromFile(this.originalImagePath));
+            Process(s);
         }
-
-        public void ProcessByStream(Stream s, string thumbnailPath, Size size)
+        private void Process(Stream s)
         {
-            this.thumbnailPath = thumbnailPath;
-            this.width = size.Width;
-            this.height = size.Height;
-            this.mode = size.Mode;
-            Process(Image.FromStream(s));
-        }
-
-
-        private void Process(Image im)
-        {
+            var im = Image.FromStream(s);
             originalImage = im;
             towidth = width;
             toheight = height;
@@ -67,8 +80,7 @@ namespace Core.Utility
                     }
                     else
                     {
-                        im.Save(thumbnailPath);
-                        //File.Copy(originalImagePath, thumbnailPath, true);
+                        im.Save(Ms, ImageFormat.Jpeg);
                     }
                     break;
                 case "H"://指定高，宽按比例
@@ -79,8 +91,8 @@ namespace Core.Utility
                     }
                     else
                     {
-                        im.Save(thumbnailPath);
-                        //File.Copy(originalImagePath, thumbnailPath, true);
+                        //im.Save(thumbnailPath);
+                        im.Save(Ms, ImageFormat.Jpeg);
                     }
                     break;
                 case "Cut"://指定高宽裁减（不变形）  
@@ -104,14 +116,84 @@ namespace Core.Utility
                     }
                     else
                     {
-                        im.Save(thumbnailPath);
-                        //File.Copy(originalImagePath, thumbnailPath, true);
+                        im.Save(Ms, ImageFormat.Jpeg);
+                        //im.Save()
                     }
                     break;
                 default:
                     break;
             }
         }
+
+        //private void Process(Image im)
+        //{
+        //    originalImage = im;
+        //    towidth = width;
+        //    toheight = height;
+
+        //    x = 0;
+        //    y = 0;
+        //    ow = originalImage.Width;
+        //    oh = originalImage.Height;
+        //    switch (mode)
+        //    {
+        //        case "HW"://指定高宽缩放（可能变形）
+        //            drawing();
+        //            break;
+        //        case "W"://指定宽，高按比例
+        //            if (ow > towidth)
+        //            {
+        //                toheight = originalImage.Height * width / originalImage.Width;
+        //                drawing();
+        //            }
+        //            else
+        //            {
+        //                im.Save(thumbnailPath);
+        //                //File.Copy(originalImagePath, thumbnailPath, true);
+        //            }
+        //            break;
+        //        case "H"://指定高，宽按比例
+        //            if (oh > toheight)
+        //            {
+        //                towidth = originalImage.Width * height / originalImage.Height;
+        //                drawing();
+        //            }
+        //            else
+        //            {
+        //                im.Save(thumbnailPath);
+        //                //File.Copy(originalImagePath, thumbnailPath, true);
+        //            }
+        //            break;
+        //        case "Cut"://指定高宽裁减（不变形）  
+        //            if (ow > towidth || oh > toheight)
+        //            {
+        //                if ((double)originalImage.Width / (double)originalImage.Height > (double)towidth / (double)toheight)
+        //                {
+        //                    oh = originalImage.Height;
+        //                    ow = originalImage.Height * towidth / toheight;
+        //                    y = 0;
+        //                    x = (originalImage.Width - ow) / 2;
+        //                }
+        //                else
+        //                {
+        //                    ow = originalImage.Width;
+        //                    oh = originalImage.Width * height / towidth;
+        //                    x = 0;
+        //                    y = (originalImage.Height - oh) / 2;
+        //                }
+        //                drawing();
+        //            }
+        //            else
+        //            {
+        //                im.Save(thumbnailPath);
+        //                //im.Save()
+        //                //File.Copy(originalImagePath, thumbnailPath, true);
+        //            }
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
         private void drawing()
         {
             //新建一个bmp图片 
@@ -127,48 +209,63 @@ namespace Core.Utility
             //在指定位置并且按指定大小绘制原图片的指定部分 
             g.DrawImage(originalImage, new Rectangle(0, 0, towidth, toheight),
                 new Rectangle(x, y, ow, oh), GraphicsUnit.Pixel);
-            if (KiSaveAsJPEG(bitmap, thumbnailPath, 100))
-            {
-                originalImage.Dispose();
-                bitmap.Dispose();
-                g.Dispose();
-            }
+
+            //EncoderParameter p;
+            //EncoderParameters ps;
+            //ps = new EncoderParameters(1);
+            //p = new EncoderParameter(Encoder.Quality, 100);
+            //ps.Param[0] = p;
+
+            //bitmap.Save(s, GetCodecInfo(ImageFormat.Jpeg), ps);
+
+            //s.Seek(0, SeekOrigin.Begin);
+            bitmap.Save(Ms, ImageFormat.Jpeg);
+            originalImage.Dispose();
+            bitmap.Dispose();
+            g.Dispose();
+            //if (KiSaveAsJPEG(bitmap, thumbnailPath, 100))
+            //{
+            //    originalImage.Dispose();
+            //    bitmap.Dispose();
+            //    g.Dispose();
+            //}
 
         }
-        private bool KiSaveAsJPEG(Image bmp, string FileName, int Qty)
-        {
-            try
-            {
-                EncoderParameter p;
-                EncoderParameters ps;
-                ps = new EncoderParameters(1);
-                p = new EncoderParameter(Encoder.Quality, Qty);
-                ps.Param[0] = p;
-                bmp.Save(FileName, GetCodecInfo(ImageFormat.Jpeg), ps);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+        //private bool KiSaveAsJPEG(Image bmp, string FileName, int Qty)
+        //{
+        //    try
+        //    {
+        //        EncoderParameter p;
+        //        EncoderParameters ps;
+        //        ps = new EncoderParameters(1);
+        //        p = new EncoderParameter(Encoder.Quality, Qty);
+        //        ps.Param[0] = p;
+        //        bmp.Save(FileName, GetCodecInfo(ImageFormat.Jpeg), ps);
+        //        return true;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
         /// <summary>
         /// 保存JPG时用
         /// </summary>
         /// <param name="mimeType"></param>
         /// <returns>得到指定mimeType的ImageCodecInfo</returns>
-        private ImageCodecInfo GetCodecInfo(ImageFormat format)
-        {
-            ImageCodecInfo[] CodecInfo = ImageCodecInfo.GetImageEncoders();
-            foreach (ImageCodecInfo ici in CodecInfo)
-            {
-                if (ici.FormatID == format.Guid) return ici;
-            }
-            return null;
-        }
+        //private ImageCodecInfo GetCodecInfo(ImageFormat format)
+        //{
+        //    ImageCodecInfo[] CodecInfo = ImageCodecInfo.GetImageEncoders();
+        //    foreach (ImageCodecInfo ici in CodecInfo)
+        //    {
+        //        if (ici.FormatID == format.Guid)
+        //            return ici;
+        //    }
+        //    return null;
+        //}
     }
-    public class Size
+    public class PictureSize
     {
         public int Width { get; set; }
         public int Height { get; set; }

@@ -66,6 +66,7 @@ namespace Cms.WebPage.Controllers
             {
                 await _newsServices.AddNews(nv, checkbox);
                 return RedirectToAction(nameof(Index));
+                //return Content("<script>alert('发布成功！');window.close();</script>");
             }
             return View(nv);
         }

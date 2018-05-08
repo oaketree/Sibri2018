@@ -35,7 +35,7 @@ namespace Cms.WebPage.Controllers
             if (ModelState.IsValid)
             {
                 await _pageServices.AddPages(pv);
-                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             return View(pv);
         }

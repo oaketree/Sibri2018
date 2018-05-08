@@ -34,10 +34,5 @@ namespace Sibri.WebPage.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Index2()
-        {
-            return View();
-        }
-
     }
 }
