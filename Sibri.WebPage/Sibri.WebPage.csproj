@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\nav.js" />
+    <Content Remove="wwwroot\js\screennei.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
   </ItemGroup>
@@ -19,9 +24,12 @@
     <Folder Include="Areas\English\Models\" />
     <Folder Include="Areas\English\Views\" />
     <Folder Include="wwwroot\upload\image\" />
+    <Folder Include="wwwroot\upload\file\" />
+    <Folder Include="wwwroot\upload\video\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sibri.BLL\Sibri.BLL.csproj" />
     <ProjectReference Include="..\Sibri.Contract\Sibri.Contract.csproj" />
   </ItemGroup>
 

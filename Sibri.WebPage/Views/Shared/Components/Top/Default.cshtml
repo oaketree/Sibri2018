@@ -4,14 +4,16 @@
         <div id="mid_top02" class="padtop12">
             <div class="borderright10 mtop02div">
                 <div class="topright00top padtop05 paderro">
-                    <div class="smallfont fontweightbold"><a href="#">中文</a>&nbsp; <a href="#">ENGLISH</a>&nbsp; <a href="#" class="topemail">企业邮箱</a>&nbsp; </div>
-                    <div><img src="/Content/images/phone.gif" /></div>
+                    <div class="smallfont fontweightbold"><a href="/Home">中文</a>&nbsp; <a href="/Home/English">ENGLISH</a>&nbsp; <a href="mailto:gyglyjs@163.com" class="topemail">企业邮箱</a>&nbsp; </div>
+                    <div><img src="/images/phone.gif"/></div>
                     <div>021-34781959</div>
                 </div>
-                <div class="topright00top padtop05 clearboth00">
-                    <div><input name="" type="text" class="inputtopss" /></div>
-                    <div><img src="/Content/images/sebut.gif" /></div>
-                </div>
+                <form asp-controller="News" asp-action="Search" onsubmit="return $.validate()" method="get">
+                    <div class="topright00top padtop05 clearboth00">
+                        <div><input type="text" class="inputtopss" placeholder=" 新闻搜索" id="search" name="search"/></div>
+                        <div><input type="image" src="/images/sebut.gif" /></div>
+                    </div>
+                </form>
             </div>
         </div>
         <div id="mid_top02_turn" class="padtop12_turn">
@@ -23,85 +25,92 @@
         <div class="top02">
             <div id="mid_dh" class="top02_center nav">
                 <ul>
-                    <li id="m1" class="m"><a href="/Views/Home/index.asp" class="aa1 mmm dhtit navlineheight">首页</a></li>
+                    <li id="m1" class="m"><a href="/Home/index" class="aa1 mmm dhtit navlineheight">首页</a></li>
+
                     <li id="m3" class="m">
-                        <a href="/Views/Static/introduction.asp" class="aa3 mmm dhtit navlineheight">公司简介</a>
+                        <a href="/News/List/48" class="aa3 mmm dhtit navlineheight">新闻</a>
                         <div class="sub">
                             <div class="nav_xiao">
                                 <div class="xiao_three">
                                     <ul>
-                                        <li><a href="/Views/Static/history.asp"><img src="/Content/images/dhimages/nav_web.jpg" />发展历史</a></li>
-                                        <li><a href="/Views/Static/news.asp"><img src="/Content/images/dhimages/nav_web2.jpg" />研究所新闻</a></li>
-                                        <li><a href="/Views/Static/introduction.asp"><img src="/Content/images/dhimages/nav_web3.jpg" />基本情况</a></li>
-                                        <li><a href="/Views/Static/organization.asp"><img src="/Content/images/dhimages/nav_web4.jpg" />组织结构</a></li>
+                                        <li><a href="/News/List/48"><img src="/images/dhimages/gsjj02.gif" />公司新闻</a></li>
+                                        <li><a href="/News/List/52"><img src="/images/dhimages/cpjs02.gif" />科研成果</a></li>
+                                        <li><a href="/News/List/50"><img src="/images/dhimages/nav_web3.jpg" />通知公告</a></li>
+                                        <li><a href="/News/List/51"><img src="/images/dhimages/nav_web4.jpg" />专题专栏</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li id="m6" class="m"><a href="/Views/Static/platform.asp" class="aa6 mmm dhtit navlineheight">平台建设</a></li>
+
+                    <li id="m3" class="m">
+                        <a href="/Static/History" class="aa3 mmm dhtit navlineheight">公司简介</a>
+                        <div class="sub">
+                            <div class="nav_xiao">
+                                <div class="xiao_three">
+                                    <ul>
+                                        <li><a href="/Static/History"><img src="/images/dhimages/gsjj01.gif" />发展历程</a></li>
+                                        <li><a href="/Static/BriefIntroduction"><img src="/images/dhimages/gsjj03.gif" />基本情况</a></li>
+                                        <li><a href="/Page/PageInfo/12"><img src="/images/dhimages/gsjj04.gif" />组织结构</a></li>
+                                        <li><a href="/Page/PageInfo/53"><img src="/images/dhimages/gsjj05.jpg" />公司领导</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="m6" class="m"><a href="/Page/PageInfo/3" class="aa6 mmm dhtit navlineheight">平台建设</a></li>
                     <li id="m4" class="m">
-                        <a href="/Views/Static/secretariat.asp" class="aa4 mmm dhtit navlineheight">行业服务</a>
+                        <a href="/Page/PageInfo/13" class="aa4 mmm dhtit navlineheight">行业服务</a>
                         <div class="sub">
                             <div class="nav_xiao">
                                 <div class="xiao_five">
-                                    <a href="#"><img src="/Content/images/dhimages/cr_img1.png"></a>
-                                    <a href="#"><img src="/Content/images/dhimages/cr_img2.png"></a>
+                                    <a href="#"><img src="/images/dhimages/hyfw01.gif"></a>
+                                    <a href="#"><img src="/images/dhimages/hyfw02.gif"></a>
                                 </div>
                                 <div class="xiao_five2">
-                                    <p><a href="/Views/Static/secretariat.asp">工业锅炉分会秘书处</a><a href="/Views/Static/energy-saving.asp">工业锅炉节能减排专委会秘书处</a></p>
-                                    <p><a href="/Views/Static/magazine.asp">《工业锅炉》杂志编辑部</a><a href="/Views/Static/web.asp">中国锅炉网</a></p>
-                                    <p><a href="/Views/Static/service.asp">其他行业服务</a></p>
+                                    <p><a href="/Page/PageInfo/13">工业锅炉分会秘书处</a><a href="/Page/PageInfo/14">工业锅炉节能减排专委会秘书处</a></p>
+                                    <p><a href="/Page/PageInfo/15">《工业锅炉》杂志编辑部</a><a href="/Page/PageInfo/16">中国锅炉网</a></p>
+                                    <p><a href="/Page/PageInfo/17">其他行业服务</a></p>
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li id="m2" class="m">
-                        <a href="/Views/Static/inspection.asp" class="aa2 mmm dhtit navlineheight">检测与能审</a>
+                        <a href="/Page/PageInfo/18" class="aa2 mmm dhtit navlineheight">检测与能审</a>
                         <div class="sub">
                             <div class="nav_xiao">
                                 <div class="xiao_five">
-                                    <a href="#"><img src="/Content/images/dhimages/cr_img1.png"></a>
-                                    <a href="#"><img src="/Content/images/dhimages/cr_img2.png"></a>
+                                    <a href="#"><img src="/images/dhimages/jc01.gif"></a>
+                                    <a href="#"><img src="/images/dhimages/jc02.gif"></a>
                                 </div>
                                 <div class="xiao_five2">
-                                    <p><a href="/Views/Static/inspection.asp">机构简介</a><a href="/Views/Static/aptitude.asp">相关资质</a></p>
-                                    <p><a href="/Views/Static/equipment.asp">主要设备</a><a href="/Views/Static/content.asp">主要服务内容</a></p>
-                                    <p><a href="/Views/Static/achievement.asp">主要业绩</a></p>
+                                    <p><a href="/Page/PageInfo/18">机构简介</a><a href="/Static/Qualifications">相关资质</a></p>
+                                    <p><a href="/Static/Equipment">主要设备</a><a href="/Static/Service">主要服务内容</a></p>
+                                    <p><a href="/Page/PageInfo/22">主要测试业绩</a></p>
                                 </div>
                             </div>
                         </div>
                     </li>
 
                     <li id="m5" class="m">
-                        <a href="/Views/Product/product.asp" class="aa5 mmm dhtit navlineheight">产品与技术</a>
+                        <a href="/Product" class="aa5 mmm dhtit navlineheight">产品与技术</a>
                         <div class="sub">
                             <div class="nav_xiao">
                                 <div class="xiao_three">
                                     <ul>
-                                        <li><a href="/Views/Product/present.asp"><img src="/Content/images/dhimages/nav_news.jpg" />基本介绍</a></li>
-                                        <li><a href="/Views/Product/research.asp"><img src="/Content/images/dhimages/nav_news2.jpg" />科研成果</a></li>
-                                        <li><a href="/Views/Product/product.asp"><img src="/Content/images/dhimages/nav_news3.jpg" />技术开发</a></li>
-
+                                        <li><a href="/Product"><img src="/images/dhimages/cpjs01.gif" width="172" height="38" />基本介绍</a></li>
+                                        @*<li><a href="/Views/Product/research.asp"><img src="/images/dhimages/nav_news2.jpg" width="172" height="38" />科研成果</a></li>*@
+                                        <li><a href="/Product/List/24"><img src="/images/dhimages/cpjs03.gif" width="172" height="38" />技术开发</a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </li>
-
-                    <li id="m9" class="m"><a href="/Views/Static/job.asp" class="aa8 mmm dhtit navlineheight">人才招聘</a></li>
-                    <li id="m7" class="m"><a href="/Views/Static/contact.asp" class="aa7 mmm dhtit navlineheight">联系我们</a></li>
+                    <li id="m9" class="m"><a href="/Static/Job" class="aa8 mmm dhtit navlineheight">人才招聘</a></li>
+                    <li id="m7" class="m"><a href="/Static/Contact" class="aa7 mmm dhtit navlineheight">联系我们</a></li>
                 </ul>
             </div>
-
         </div>
         <div class="linehei1"></div>
     </div>
 </div>
-
-    <script type="text/javascript">
-        jQuery(".nav").slide({ type: "menu", titCell: ".m", targetCell: ".sub", effect: "slideDown", delayTime: 300, triggerTime: 100, returnDefault: true });
-    </script>
-
-
-

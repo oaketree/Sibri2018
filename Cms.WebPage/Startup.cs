@@ -34,13 +34,13 @@ namespace Cms.WebPage
         {
             //services.AddMemoryCache();
             services.AddDbContext<LoginDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IAdminServices, AdminServices>();
             services.AddDbContext<CategoryDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<ICategoryService, CategoryService>();
             services.AddDbContext<NewsDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<UploadDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<PageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddScoped<IAdminServices, AdminServices>();
+            services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IUeditorService, UeditorService>();
             services.AddScoped<IUploadService, UploadService>();
@@ -72,12 +72,7 @@ namespace Cms.WebPage
                 options.AccessDeniedPath = new PathString("/Admin/Denied");
             });
 
-            //services.AddDistributedMemoryCache();
-            //services.AddSession(options =>
-            //{
-            //    options.Cookie.Name = ".cms2018.Session";
-            //    //options.IdleTimeout = TimeSpan.FromSeconds(50);
-            //});
+            services.Configure<RemoteSave>(this.Configuration.GetSection("RemoteSave"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

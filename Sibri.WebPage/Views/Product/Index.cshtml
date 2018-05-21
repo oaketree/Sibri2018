@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "基本介绍";
+}
+@section Header{
+    @await Component.InvokeAsync("Top")
+}
+@section Footer{
+    @await Component.InvokeAsync("Bottom")
+}
+@await Component.InvokeAsync("Banner", new { categoryid = 23 })
+@await Component.InvokeAsync("Product",new { categoryid=6, direction=1 })
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync("Left", new { view = "Product", categoryid = 23 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">基本介绍</div>
+            <div>
+                <p>
+                    公司一直专注于锅炉及辅机产品的技术研发和产业化推广应用，通过30多年的发展，积累了一批具有代表性的产品技术。
+                    2010年，随着原四方锅炉厂核心技术团队的加入，更加增强了我所在技术 研发、产品设计和工程管理领域的实力，有效扩充了公司产品系列和技术储备。
+                    目前公司拥有原上海四方锅炉厂的注册商标：<img src="/images/logo001.png" /> 全部专利、知识产权和所有积累的技术及资料。
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"> </div>
+
+
+
+

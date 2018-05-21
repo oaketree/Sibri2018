@@ -1,0 +1,15 @@
+﻿@model List<Sibri.Contract.category.Category>
+<div id="nei10_011_left" class="zuolieradiussh">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            var link = $"/News/List/{item.CategoryID}";
+            if (item.IsHref.Value)
+            {
+                link = item.Href;
+            }
+            <div class="boxbottom01" onclick="window.location.href='@link'"><img src="/images/dotarrow.png" />@item.CategoryName</div>
+        }
+    }
+</div>

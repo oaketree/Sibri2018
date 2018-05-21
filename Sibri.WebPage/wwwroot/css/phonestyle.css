@@ -1,0 +1,51 @@
+
+@media only screen and (min-device-width : 321px) {
+    /* 横 */
+}
+
+@media only screen and (max-device-width : 320px) {
+    /* Styles */
+}
+
+#q_neiprokong {
+    height: 74px;
+}
+
+#q_neipro01 {
+    height: 150px;
+    /*	background-image:url(/Content/images/nei01.jpg);
+	background-repeat:no-repeat;
+	position:left bottom;
+	background-color:#d3d9d5;*/
+}
+
+#nei10_01_left {
+    width: 90%;
+}
+
+.zuolieradiussh {
+    margin-top: 80px
+}
+
+.nei50 {
+    display: none;
+}
+
+#nei10_01_left {
+    width: 400px;
+    margin: 0 auto;
+    clear: both;
+}
+
+#q_neipro_bu50 {
+    height: 50px;
+}
+
+#nei10_01_right {
+    padding: 0 60px;
+}
+
+
+#nei10_01_right02 {
+    padding: 0 60px;
+}

@@ -39,7 +39,7 @@ namespace Cms.BLL.category.services
                 parentid = s.ParentID,
                 sortid = s.SortID
             });
-            var list= await categorys.ToListAsync();
+            var list= await categorys.OrderBy(o=>o.parentid).ThenBy(t=>t.sortid).ToListAsync();
             return HandleMenu<CategoryView>.SubMenu(list, 0);
         }
 
@@ -63,11 +63,10 @@ namespace Cms.BLL.category.services
         //}
 
 
-        public async Task<IEnumerable<SelectListItem>> getSelectListItemByID(int? id=null)
+        public Task<List<SelectListItem>> getSelectListItemByID(int? id = null)
         {
             IQueryable<SelectListItem> categorys = null;
-            if (id != null)
-            {
+            if (id != null){
                 categorys = _dbContext.Categorys.AsNoTracking().Where(n => n.ParentID == id).Select(s => new SelectListItem()
                 {
                     Value = s.CategoryID.ToString(),
@@ -81,13 +80,12 @@ namespace Cms.BLL.category.services
                     Text = s.CategoryName
                 });
             }
-      
-            return await categorys.ToListAsync();
+            return categorys.ToListAsync();
         }
 
-        public async Task<Category> getNode(int categoryid)
+        public Task<Category> getNode(int categoryid)
         {
-            var category = await _dbContext.Categorys.FirstOrDefaultAsync(n => n.CategoryID == categoryid);
+            var category = _dbContext.Categorys.FirstOrDefaultAsync(n => n.CategoryID == categoryid);
             return category;
         }
 

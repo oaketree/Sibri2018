@@ -8,8 +8,9 @@ namespace Sibri.WebPage.ViewComponents
 {
     public class BottomViewComponent: ViewComponent
     {
-        public IViewComponentResult InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync()
         {
+            await Task.Delay(10);
             return View();
         }
     }

@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="pages\service\" />
+    <ProjectReference Include="..\Core.DAL\Core.DAL.csproj" />
+    <ProjectReference Include="..\Sibri.Contract\Sibri.Contract.csproj" />
   </ItemGroup>
 
 </Project>

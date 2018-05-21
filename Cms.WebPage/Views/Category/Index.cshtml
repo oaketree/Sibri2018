@@ -181,22 +181,23 @@
                     if (this.categoryid == 0) {
                         alert("请选择结点后再删除");
                     } else { 
-                        $.post('/Category/DelNode', { categoryid: this.categoryid }, function (data) { 
-                            if (data) {
-                                $.post('/Category/NodeList', function (data) {
-                                    $('#treeview12').treeview({
-                                        levels: 3,
-                                        data: data,
-                                    });
-                                })
-                            } else { 
-                                alert("删除失败，请确保结点存在且无子节点");
-                            }
+                        if (confirm("是否确定要删除结点?")) { 
+                            $.post('/Category/DelNode', { categoryid: this.categoryid }, function (data) {
+                                if (data) {
+                                    $.post('/Category/NodeList', function (data) {
+                                        $('#treeview12').treeview({
+                                            levels: 3,
+                                            data: data,
+                                        });
+                                    })
+                                } else {
+                                    alert("删除失败，请确保结点存在且无子节点");
+                                }
 
-                        })
+                            })
 
+                        }
                     }
-
                 }, confirm: function () {
                     if ((this.href == null||this.href=='') && (this.hrefen == null||this.hrefen=='')) {
                         this.checked = false;

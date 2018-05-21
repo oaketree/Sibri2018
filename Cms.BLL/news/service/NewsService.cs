@@ -36,7 +36,7 @@ namespace Cms.BLL.news.service
             _accessor = accessor;
         }
 
-        public async Task<PaginatedList<News>> GetNewsList(int pageSize = 10, int pageIndex = 1, string keywords = "", string category = "")
+        public  Task<PaginatedList<News>> GetNewsList(int pageSize = 10, int pageIndex = 1, string keywords = "", string category = "")
         {
             Expression<Func<News, bool>> express = PredicateExtensions.True<News>();
             if (keywords != "")
@@ -47,7 +47,7 @@ namespace Cms.BLL.news.service
             {
                 express = express.And(n => n.ColumnID == int.Parse(category));
             }
-            return await PaginatedList<News>.CreateAsync(_dbContext.News.AsNoTracking().Where(express).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
+            return  PaginatedList<News>.CreateAsync(_dbContext.News.AsNoTracking().Where(express).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
         }
 
         public async Task DelNews(int id)
@@ -115,8 +115,8 @@ namespace Cms.BLL.news.service
                     {
                         _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                         {
-                            Width = 200,
-                            Height = 255,
+                            Width = 170,
+                            Height = 130,
                             Mode = "Cut"
                         });
                         memoryStream.Dispose();
@@ -161,8 +161,8 @@ namespace Cms.BLL.news.service
                 {
                     _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                     {
-                        Width = 200,
-                        Height = 255,
+                        Width = 170,
+                        Height = 130,
                         Mode = "Cut"
                     });
                     memoryStream.Dispose();

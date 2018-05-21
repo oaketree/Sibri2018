@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "相关资质";
+}
+@section Header{
+    @await Component.InvokeAsync("Top")
+}
+@section Footer{
+    @await Component.InvokeAsync("Bottom")
+}
+@await Component.InvokeAsync("Banner", new { categoryid = 19 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync("Left", new { view = "Page", categoryid = 19 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">相关资质</div>
+            <div id="zz">
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569836908727900419.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        经国家认证认可监督管理委员会认证并批准（证书号：160008220218）,可以向社会出具具有证明作用的数据和结果，拥有在检测报告上使用CMA标志的资格。
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569875908796918921.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        2011年取得了中国合格评定国家认可委员会实验室认可证书[证书编号：CNAS L4911]。
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569894628822918105.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        2013年取得了中国合格评定国家认可委员会检查机构认可证书[证书编号：CNAS IB0344]。
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569907108844267804.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        2006年检测中心取得了中国环保产业协会批准的第一批环保产品检测机构资格（原证书编号：中环协认检（2006）03号）。
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569922708876074166.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        2010年取得了国家技术监督总局第二批认可的在用工业锅炉能效测试机构。
+                    </li>
+                </ul>
+            </div>
+            <div class="height30kong"> </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+@section Scripts{
+    <script src="~/js/zoomify.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.zz01 img').zoomify();
+        });
+    </script>
+}
+
+

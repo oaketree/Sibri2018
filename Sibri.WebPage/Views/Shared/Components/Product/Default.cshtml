@@ -1,0 +1,26 @@
+﻿@model List<Sibri.Contract.category.Category>
+<div id="q_neipro_dh">
+    <div id="mid_neipro02">
+        <div id="tit" class="neidaohang">
+            <div class="select" onClick="window.location.href='/Product'">基本介绍</div>
+            @*<div class="linedhzuo" onClick="window.location.href='/Views/Product/research.asp'">科研成果</div>*@
+            <div class="linedhzuo" onClick="window.location.href='/Product/List/24'">技术开发</div>
+        </div>
+    </div>
+</div>
+<div id="q_neipro_dh02">
+    <div id="mid_neipro02">
+        <div id="con">
+            <div></div>
+            @*<div class="chanpindh"><a href="/Views/Product/researchfi.asp">已完成科研成果</a><a href="/Views/Product/research.asp">正进行的科研项目</a></div>*@
+            <div class="chanpindh">
+                @foreach (var item in Model)
+                {
+                    <a href="/Product/List/@item.CategoryID">@item.CategoryName</a>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="linehei1 hideline" id="neidaohangline">
+    </div>
+</div>

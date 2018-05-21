@@ -34,7 +34,7 @@ namespace Sibri.Contract.pages
 
         public string ShortRegDate {
             get{
-                return RegDate.Value.ToString("D");
+                return RegDate.Value.ToString("yyyy-MM-dd");
             }
         }
 

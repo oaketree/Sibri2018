@@ -1,7 +1,13 @@
-﻿<div id="q_bottom_01">
+﻿@using Sibri.BLL.news.services
+@inject INewsService Service
+@{ 
+    var insideNews = await Service.GetNewsList(48, 4, 0);
+    var projectResults = await Service.GetNewsList(52, 4, 0);
+}
+<div id="q_bottom_01">
     <div id="mid_bottom_01">
         <div class="bottomrightline">
-            <div class="bottomline"><img src="/Content/images/bottom01.gif" /></div>
+            <div class="bottomline"><img src="/images/bottom01.gif" /></div>
             <div class="bottomaddr">
                 上海市闵行区浦江镇新骏环路138号<br />
                 浦江高科技园区4幢1-3楼
@@ -11,45 +17,57 @@
                 Email : <a href="mailto:">mail@example.com</a>
             </div>
             <div class="bottompicleft">
-                <div><img src="/Content/images/bottompic01.gif" /> </div>
-                <div class="bottompicleftmargin20"><img src="/Content/images/bottompic02.gif" /> </div>
+                <div><img src="/images/bottompic01.gif" /> </div>
+                <div class="bottompicleftmargin20"><img src="/images/bottompic02.gif" /> </div>
             </div>
         </div>
         <div class="bottomrightline bottomleft10">
-            <div>项目成果—进行中</div>
+            <div>公司新闻</div>
             <div class="bottomxiangmuline">
                 <div></div>
             </div>
             <div class="bottomxm01">
                 <ul>
-                    <li><img src="/Content/images/dot02.gif" />超细煤粉悬浮燃烧应用关键技术</li>
-                    <li><img src="/Content/images/dot02.gif" />燃煤工业锅炉湿法脱硫关键技术</li>
-                    <li><img src="/Content/images/dot02.gif" />燃煤链条炉排锅炉炉排送风系统</li>
-                    <li><img src="/Content/images/dot02.gif" />燃油燃气锅炉尾部节能装置的研</li>
+                    @foreach (var item in insideNews)
+                    {
+                        var title = item.Title;
+                        if (title.Length > 14) {
+                            title = title.Substring(0, 14);
+                        }
+                        <li><img src="/images/dot02.gif" />
+                            <a href="/News/Detail/@item.NewsID" target="_blank">@title</a>
+                    </li>
+                    }
                 </ul>
             </div>
             <div>
-                <div class="bottombutton01">READ MORE</div>
+                <div class="bottombutton01"><a href="/News/List/48">READ MORE</a></div>
 
             </div>
         </div>
         <div class="bottomrightline bottomleft10">
-            <div>项目成果——已完成</div>
+            <div>项目成果</div>
             <div class="bottomxiangmuline">
                 <div></div>
             </div>
             <div class="bottomxm01">
                 <ul>
-                    <li>
-                        <img src="/Content/images/dot02.gif" />我所研发锅炉辅机设备及锅炉节
-                    </li>
-                    <li><img src="/Content/images/dot02.gif" />我所研发立式水管自然循环冷凝</li>
-                    <li><img src="/Content/images/dot02.gif" />我所研发角管式锅炉系列</li>
-                    <li><img src="/Content/images/dot02.gif" />我所开发水管式燃油、燃气、油气</li>
+                    @foreach (var item in projectResults)
+                    {
+                        var title = item.Title;
+                        if (title.Length > 14)
+                        {
+                            title = title.Substring(0, 14);
+                        }
+                        <li>
+                            <img src="/images/dot02.gif" />
+                            <a href="/News/Detail/@item.NewsID" target="_blank">@title</a>
+                        </li>
+                    }
                 </ul>
             </div>
             <div>
-                <div class="bottombutton01">READ MORE</div>
+                <div class="bottombutton01"><a href="/News/List/52">READ MORE</a></div>
             </div>
         </div>
         <div class="bottomleft10">
@@ -59,35 +77,21 @@
             </div>
             <div class="bottomxm01 qyfc">
                 <ul>
-                    <li><img src="/Content/images/bottompicfengcai01.gif" /></li>
-                    <li><img src="/Content/images/bottompicfengcai02.gif" /></li>
-                    <li><img src="/Content/images/bottompicfengcai03.gif" /></li>
+                    <li><img src="/images/bottompicfengcai01.gif" /></li>
+                    <li><img src="/images/bottompicfengcai02.gif" /></li>
+                    <li><img src="/images/bottompicfengcai03.gif" /></li>
                 </ul>
                 <ul>
-                    <li><img src="/Content/images/bottompicfengcai04.gif" /></li>
-                    <li><img src="/Content/images/bottompicfengcai05.gif" /></li>
-                    <li><img src="/Content/images/bottompicfengcai06.gif" /></li>
+                    <li><img src="/images/bottompicfengcai04.gif" /></li>
+                    <li><img src="/images/bottompicfengcai05.gif" /></li>
+                    <li><img src="/images/bottompicfengcai06.gif" /></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
-
-
 <div id="q_bottom_02">
     <div id="mid_bottom_02">
         Copyright @@ 1998-2018 All Right Reserved. 版权所有 国机集团 上海工业锅炉研究所有限公司 网络备案号:沪ICP备09086544号
     </div>
 </div>
-
-<script>
-    $(".bottombutton01").hover(
-        function () {
-            $(this).addClass("bottombutton01hover");
-        },
-        function () {
-            $(this).removeClass("bottombutton01hover");
-        }
-    );
-</script>

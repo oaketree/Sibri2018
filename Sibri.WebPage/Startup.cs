@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Sibri.BLL.category.services;
+using Sibri.BLL.news.services;
+using Sibri.BLL.pages.services;
+using Sibri.Contract.category;
 using Sibri.Contract.pages;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace Sibri.WebPage
 {
@@ -25,8 +27,17 @@ namespace Sibri.WebPage
         {
             services.AddDbContext<NewsDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<PageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<CategoryDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
+
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<INewsService, NewsService>();
+            services.AddScoped<IPageService, PageService>();
+
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
+
+            services.AddMemoryCache();
             services.AddMvc();
         }
 
@@ -40,7 +51,9 @@ namespace Sibri.WebPage
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();

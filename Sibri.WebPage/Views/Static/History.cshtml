@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "发展历程";
+    //await Component.InvokeAsync("Category", new { view = "Name", categoryid = 10 })
+}
+@section Css{
+    <link href="~/css/history.css" rel="stylesheet" />
+}
+@section Header{
+    @await Component.InvokeAsync("Top")
+}
+@section Footer{
+    @await Component.InvokeAsync("Bottom")
+}
+@await Component.InvokeAsync("Banner", new { categoryid = 10 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync("Left", new { view = "Page", categoryid = 10 })
+        <div id="nei10_01_right">
+            @*<div class="protit01 margintop20">发展历程</div>*@
+            <!--历程开始-->
+            <div id="arrow">
+                <ul>
+                    <li class="arrowup"></li>
+                    <li class="arrowdown"></li>
+                </ul>
+            </div>
+            <div id="history">
+                <div class="title">
+                    <div id="circle">
+                        <div class="cmsk"></div>
+                        <div class="circlecontent">
+                            <div thisyear="2017" class="timeblock">
+                                <span class="numf"></span>
+                                <span class="nums"></span>
+                                <span class="numt"></span>
+                                <span class="numfo"></span>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="timeyear">YEAR</div>
+                        </div>
+                        <a href="#" class="clock"></a>
+                    </div>
+                </div>
+                <div id="content">
+                    <ul class="list">
+                        <li>
+                            <div class="liwrap">
+                                <div class="lileft">
+                                    <div class="date">
+                                        <span class="year">8月</span>
+                                        <span class="md">2017年</span>
+                                    </div>
+                                </div>
+                                <div class="point"><b></b></div>
+                                <div class="liright">
+                                    <div class="histt"><a>整建制进入国机集团</a></div>
+                                    <div class="hisct">整建制正式进入国机集团</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liwrap">
+                                <div class="lileft">
+                                    <div class="date">
+                                        <span class="year">6月</span>
+                                        <span class="md">2008年</span>
+                                    </div>
+                                </div>
+
+                                <div class="point"><b></b></div>
+                                <div class="liright">
+                                    <div class="histt"><a>整建制划转上海电气</a></div>
+                                    <div class="hisct">整建制划转上海电气(集团)总公司管理</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liwrap">
+                                <div class="lileft">
+                                    <div class="date">
+                                        <span class="md">1999年</span>
+                                    </div>
+                                </div>
+                                <div class="point"><b></b></div>
+                                <div class="liright">
+                                    <div class="histt"><a>转制&nbsp; 成为科技服务型企业</a></div>
+                                    <div class="hisct">随242家研究所转制到地方，成为科技服务型企业</div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="liwrap">
+                                <div class="lileft">
+                                    <div class="date">
+                                        <span class="md">1984年</span>
+                                    </div>
+                                </div>
+                                <div class="point"><b></b></div>
+                                <div class="liright">
+                                    <div class="histt"><a>独立建制</a></div>
+                                    <div class="hisct">独立建制，隶属于原机械工业部,定位在行业归口所</div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!--  <div>
+              <img src="/Content/images/his.jpg" /> </div>-->
+        </div>
+    </div>
+</div>
+<div class="height30kong"> </div>
+@section Scripts{
+    <script src="~/js/history.js"></script>
+}

@@ -1,0 +1,164 @@
+﻿@model string
+@{
+    ViewData["Title"] = "新闻搜索";
+}
+@section Header{
+    @await Component.InvokeAsync("Top")
+}
+@section Footer{
+    @await Component.InvokeAsync("Bottom")
+}
+@await Component.InvokeAsync("Banner", new { categoryid = 48 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync("Left", new { view = "News", categoryid = 48 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">搜索结果：@Model</div>
+
+            <div class="clearboth00" id="jwen_newslie">
+                <ul v-for="item in newsData.items">
+                    <li><div class="newsneilieleft "><img src="/images/dotpic.gif" /><a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(35)}}</a></div><div class="newsneilieright">[{{item.shortRegDate}}]</div></li>
+                </ul>
+            </div>
+            @*导航开始*@
+            <paging-component v-if="show" v-bind:page-data="newsData" v-on:update-pagedata="updatePageData"></paging-component>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+<template id="pagingTpl">
+    <div class="tcdPageCode">
+        <span v-if="cur>1" v-on:click="pageClick('up')">上一页</span>
+        <span v-if="cur==1" class="disabled">上一页</span>
+        <span v-for="index in indexs" v-on:click="btnClick(index)" v-bind:class="{ 'active': cur == index}">{{ index }}</span>
+        <span v-if="cur!=all" v-on:click="pageClick('down')">下一页</span>
+        <span v-if="cur==all" class="disabled">下一页</span>
+    </div>
+</template>
+
+
+@section Scripts{
+    <script src="~/js/axios.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script>
+            var vmPaging = {
+                props: ['pageData'],
+                template: "#pagingTpl",
+                methods: {
+                     pageClick: function (tp) {
+                        if (tp == 'up')
+                            this.$emit('update-pagedata', { pageIndex: this.cur - 1 });
+                        else
+                            this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
+                    }, btnClick: function (idx) {
+                        if (idx != this.cur) {
+                            this.$emit('update-pagedata', { pageIndex: idx });
+                        }
+                    }
+                }, computed: {
+                    indexs: function () {
+                        var left = 1;
+                        var right = this.all;
+                        var ar = [];
+                        if (this.all >= 5) {
+                            if (this.cur > 3 && this.cur < this.all - 2) {
+                                left = this.cur - 2
+                                right = this.cur + 2
+                            } else {
+                                if (this.cur <= 3) {
+                                    left = 1
+                                    right = 5
+                                } else {
+                                    right = this.all
+                                    left = this.all - 4
+                                }
+                            }
+                        }
+                        while (left <= right) {
+                            ar.push(left)
+                            left++
+                        }
+
+
+                        return ar
+
+                    }, all: function () {
+                        return this.pageData.totalPages
+                    }, cur: {
+                        get: function () {
+                            return this.pageData.pageIndex
+                        }
+                    }
+                }
+            }
+
+        var vm = new Vue({
+            el: "#q_neipro_10",
+            data: {
+                picNewsData: {},
+                newsData: {},
+                pageSize: 20,
+                pageIndex: 1,
+                keywords:"@Model",
+                show: false
+            }, methods:{
+                updatePageData: function (payload) {
+                    if ("pageIndex" in payload)
+                        this.changeData.pageIndex = payload.pageIndex;
+                    //console.log(this.changeData);
+                    axios.get('/News/NewsSearch', {
+                        params: this.changeData
+                    })
+                        .then(function (response) {
+                            vm.newsData = response.data;
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            }, mounted: function () {
+                axios.get("/News/NewsSearch", {
+                    params: this.changeData
+                })
+                    .then(function (response) {
+                        console.log(vm.keywords);
+                        console.log(response.data);
+                        if (response.data.items.length!=0) {
+                            
+                            vm.show = true;
+                            vm.newsData = response.data;
+                        }
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
+            }, filters: {
+                link: function (value) {
+                    let Url = `/News/Detail/${value}`;
+                    return Url;
+                }, changeLength: function (value, length) {
+                    return value.substr(0,length);
+                }
+            }, computed: {
+                changeData: function () {
+                    return {
+                        keywords: this.keywords,
+                        pageSize: this.pageSize,
+                        pageIndex: this.pageIndex,
+                        language: 0
+                    }
+                }
+
+            }, components: {
+                'paging-component': vmPaging,
+            }
+        });
+    </script>
+}
+
+

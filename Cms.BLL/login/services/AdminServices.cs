@@ -17,13 +17,13 @@ namespace Cms.BLL.login.services
         {
             _dbContext = dbContext;
         }
-        public async Task<Admins> getUser(string username, string password)
+        public  Task<Admins> getUser(string username, string password)
         {
             //return await _dbContext.Admins.FindAsync(username, password);
             //return await Task.Run(() => {
             //    return _dbContext.Admins.SingleOrDefault(n => n.UserName == username && n.Password == password);
             //});
-            return await _dbContext.Admins.AsNoTracking().FirstOrDefaultAsync(n => n.UserName == username && n.Password == password);
+            return  _dbContext.Admins.AsNoTracking().FirstOrDefaultAsync(n => n.UserName == username && n.Password == password);
         }
 
         //public async Task<bool> checkUserExist(string username)
@@ -88,14 +88,14 @@ namespace Cms.BLL.login.services
         }
 
 
-        public async Task<List<Admins>> userList(string key = null)
+        public Task<List<Admins>> userList(string key = null)
         {
             Expression<Func<Admins, bool>> express = PredicateExtensions.True<Admins>();
             if (key != null)
             {
                 express = express.And(n => n.UserName.Contains(key));
             }
-            return await _dbContext.Admins.AsNoTracking().Where(express).OrderByDescending(r => r.RegDate).ToListAsync();
+            return  _dbContext.Admins.AsNoTracking().Where(express).OrderByDescending(r => r.RegDate).ToListAsync();
         }
 
         public async Task delUser(int id)
@@ -111,9 +111,7 @@ namespace Cms.BLL.login.services
         {
             var user = await _dbContext.Admins.AsNoTracking().SingleOrDefaultAsync(m => m.UserID == id);
             if (user != null)
-            {
                 return user;
-            }
             else
                 return null;
         }

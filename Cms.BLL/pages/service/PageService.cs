@@ -40,14 +40,14 @@ namespace Cms.BLL.pages.service
             }
         }
 
-        public async Task<PaginatedList<Pages>> GetPageList(int pageSize = 10, int pageIndex = 1, string keywords = "")
+        public  Task<PaginatedList<Pages>> GetPageList(int pageSize = 10, int pageIndex = 1, string keywords = "")
         {
             Expression<Func<Pages, bool>> express = PredicateExtensions.True<Pages>();
             if (keywords != "")
             {
                 express = express.And(n => n.Title.Contains(keywords)||n.PContent.Contains(keywords));
             }
-            return await PaginatedList<Pages>.CreateAsync(_dbContext.Pages.AsNoTracking().Where(express).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
+            return  PaginatedList<Pages>.CreateAsync(_dbContext.Pages.AsNoTracking().Where(express).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
         }
 
         public async Task AddPages(PageView pv)

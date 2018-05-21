@@ -1,0 +1,34 @@
+div[id^=m] {
+    width: 1150px;
+}
+
+#q_neiprokong {
+    height: 165px;
+}
+
+#q_neipro01 {
+    height: 200px;
+    /*	background-image:url(/Content/images/nei01.jpg);
+	background-repeat:no-repeat;
+	position:left bottom;
+	background-color:#d3d9d5;
+	*/
+}
+
+#nei10_01_left {
+    min-width: 235px;
+    margin: 0 auto;
+}
+
+.zuolieradiussh {
+    margin-top: 50px
+}
+
+#mid_nei10_01 > div {
+    float: left
+}
+
+#nei10_01_right {
+    max-width: 750px;
+    padding: 0 70px;
+}

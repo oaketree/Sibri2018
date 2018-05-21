@@ -49,7 +49,7 @@
 
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords" />
+                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model.trim="keywords" />
                             </div>
                             <div class="col-sm-1">
                                 <span class="input-group-btn">
@@ -291,7 +291,7 @@
                     } else {
                         this.vtitle = '';
                     }
-                    if (this.editor.getContentTxt() == '') {
+                    if (this.editor.getContent() == '') {
                         this.vcontent = '请输入内容';
                         return false;
                     } else {
