@@ -85,7 +85,8 @@ namespace Cms.BLL.upload.ueditor
                 {
                     WebClient webClient = new WebClient();
                     webClient.Credentials = CredentialCache.DefaultCredentials;
-                    byte[] bytes = webClient.DownloadData(this.sourceUrl);
+                    byte[] bytes = await webClient.DownloadDataTaskAsync(this.sourceUrl);
+                    //byte[] bytes = webClient.DownloadData(this.sourceUrl);
                     webClient.Dispose();
                     //var memoryStream = response.GetResponseStream();
                     //_pictureHelper.ProcessByStream(memoryStream, new PictureSize

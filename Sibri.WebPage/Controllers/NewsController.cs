@@ -40,9 +40,21 @@ namespace Sibri.WebPage.Controllers
             var result = await _newsService.GetPicNewsList(categoryid, count, language);
             return Json(result);
         }
+        public async Task<JsonResult> NewsPicList2(int count, int language)
+        {
+            var result = await _newsService.GetPicNewsList(count, language);
+            return Json(result);
+        }
+
         public async Task<JsonResult> NewsList(int categoryid, int language, int pageSize, int pageIndex)
         {
             var result = await _newsService.GetNewsList(categoryid, language, pageSize, pageIndex);
+            return Json(result);
+        }
+
+        public async Task<JsonResult> NewsList2(int count, int language)
+        {
+            var result = await _newsService.GetNewsList(count, language);
             return Json(result);
         }
 

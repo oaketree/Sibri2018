@@ -1,10 +1,391 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "首页";
+}
+@section Css{
+    <link href="~/css/pictopcss.css" rel="stylesheet" />
+    <link href="~/css/comstyleindex.css" rel="stylesheet" />
 }
 @section Header{
-    @await Component.InvokeAsync("Top");
+    @await Component.InvokeAsync("Top")
 }
 @section Footer{
     @await Component.InvokeAsync("Bottom")
 }
-测试
+<div id="q_top05">
+    <div id="mid_top05" class="wrapper">
+        <div class="content">
+            <div id="color_list" class="bg_colors">
+                <div class="bgs_box bgs_1">
+                    <div class="wp">
+                        <div class="img_area">
+                            <div class="shadow png">
+                                <div class="s_img"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                    </div>
+                </div>
+                <div class="bgs_box bgs_2">
+                    <div class="wp">
+                        <div class="img_area">
+                            <div class="shadow png">
+                                <div class="s_img"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                    </div>
+                </div>
+                <div class="bgs_box bgs_3">
+                    <div class="wp">
+                        <div class="img_area">
+                            <div class="shadow png">
+                                <div class="s_img"></div>
+                            </div>
+                            <div class="shadow01 png">
+                                <div class="s_img01"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer">
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div id="txt_list" class="item_txt_box">
+                    <div class="item_txt item_txt_1">
+                        <div>
+                            <span class="toptith01">专业权威</span><br />
+                            <span class="toptet01">
+                                我国唯一从事工业锅炉行业节能新产品、新技术研发和推广，产品热工性能测试和环保性能测试、锅炉辅机产品性能评定、行业情报和标准工作的应用型研究所。
+                            </span>
+                        </div>
+                        <div class="detail">
+                            <a href="/Static/BriefIntroduction" class="download_btn png">详情介绍</a>
+                        </div>
+                    </div>
+                    <div class="item_txt item_txt_2">
+                        <div>
+                            <span class="toptith01">技术研发</span><br />
+                            <span class="toptet01">
+                                专注于锅炉及辅机产品的技术研发和产业化推广应用，通过30多年的发展，积累了一批具有代表性的产品技术。
+                            </span>
+                        </div>
+                        <div class="detail other">
+                            <a href="/Product" class="download_btn png">详情介绍</a>
+                        </div>
+                    </div>
+                    <div class="item_txt item_txt_3">
+                        <div>
+                            <span class="toptith01">低氮锅炉改造</span><br />
+                            <span class="toptet01">2018年1月，我所在金钟广场顺利实施了一台5t/h德标锅炉的低氮改造工作，经测试全负荷排放小于50mg/m3。</span>
+                        </div>
+                        <div class="detail other">
+                            <a href="/Product/List/30" class="download_btn png">详情介绍</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="switch_box" class="switch_list"> <span class="on"></span> <span class=""></span> <span class=""></span> </div>
+        </div>
+    </div>
+</div>
+<div id="q_top06">
+    <div id="mid_top06">
+        <img src="/images/topbutton01.png" />
+    </div>
+</div>
+<!--待测结束-->
+<div id="q_center01">
+    <div id="mid_center01_01">
+        <div id="news_indexleft">
+            <ul>
+                <li v-for="item in picNewsData">
+                    <div class="news_indexleftimg"><img v-bind:src="item.newsImageName|photo" width="100"></div>
+                    <div class="news_indexjd">
+                        <div class="news_wenjd wbold"><a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(20)}}</a></div>
+                        <div class="wcol"><img src="/images/wen.gif" width="13" height="14">{{item.shortRegDate}}</div>
+                        <div class="news_2linejd whui"><a v-bind:href="item.newsID|link" target="_blank">{{item.newsDetail|clean|changeLength(52)}}</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div id="news_indexright">
+            <div class="newsindextitbg"><img src="/images/newsyjs.gif" width="120" height="19"> </div>
+            <div class="newsmainindex">
+                <ul>
+                    <li v-for="item in newsData">
+                        [{{item.shortRegDate}}]&nbsp; &nbsp; <a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(30)}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bottombuttonindex01"><a href="/News/List/48" target="_blank">READ MORE</a></div>
+        </div>
+    </div>
+</div>
+<div id="q_center02">
+    <div id="mid_center01_02">
+        <div class="titindexfuwu">
+            <div class="indexfuwu">
+                <div>我们的服务</div>
+            </div>
+        </div>
+        <div class="linefuwutit"></div>
+        <div class="tit04jvzhong">
+            <!-- normal -->
+            <div class="ih-item circle effect1">
+                <a href="/Page/PageInfo/13" target="_blank">
+                    <div class="spinner"></div>
+                    <div class="img"><img src="/images/indexfw01.jpg"></div>
+                    <div class="info">
+                        <div>
+                            <h3>行业服务</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- end normal -->
+            <!-- norma2 -->
+            <div class="ih-item circle effect1">
+                <a href="/Page/PageInfo/18" target="_blank">
+                    <div class="spinner"></div>
+                    <div class="img"><img src="/images/indexfw02.jpg"></div>
+                    <div class="info">
+                        <div>
+                            <h3>检测<br />与能审</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- end norma2 -->
+            <!-- norma3 -->
+            <div class="ih-item circle effect1">
+                <a href="/Product" target="_blank">
+                    <div class="spinner"></div>
+                    <div class="img"><img src="/images/indexfw03.jpg"></div>
+                    <div class="info">
+                        <div>
+                            <h3>产品<br />与技术</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- end norma3 -->
+            <!-- norma4 -->
+            <div class="ih-item circle effect1">
+                <a href="/Page/PageInfo/3" target="_blank">
+                    <div class="spinner"></div>
+                    <div class="img"><img src="/images/indexfw04.jpg"></div>
+                    <div class="info">
+                        <div>
+                            <h3>平台建设</h3>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- end norma4 -->
+        </div>
+        <div id="indexlie04">
+            <ul id="con">
+                <li class="show">
+                    <div><img src="/images/indexfuwu02.jpg" width="299" height="342"></div>
+                    <div class="showcenter">
+                        <div class="showcentertit01">行业工作</div>
+                        <div class="showcentertit02">机构简介</div>
+                        <div>
+                            <p>行业工作部由中国电器工业协会工业锅炉分会秘书处、《工业锅炉》杂志编辑部、“中国锅炉网”网站、全国锅炉压力容器标准化技术委员会工业锅炉节能减排专业委员会等机构组成，专业从事工业锅炉行业情报资料的收集、整理和分析，行业技术、经济数据的</p>
+                        </div>
+                        <div>
+                            <div class="button_showcenter"><a href="/Page/PageInfo/13">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexfuwuyou">
+                        <div class="indexfuwuyoudh">
+                            <ul>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/13">工业锅炉分会秘书处</a></li>
+
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/14">工业锅炉节能减排专委会秘书处</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/15">《工业锅炉》杂志编辑部</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/16">中国锅炉网</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/17">其他行业服务</a></li>
+                            </ul>
+                        </div>
+                        <div class="indexlxfs">
+                            <div class="indexlx"><a href="javascript:void(0);"><img src="/images/phome.gif" width="32" height="32"></a></div>
+                            <div class="indexlxfsphone">021-34781959（总机）</div>
+                            <div><a href="mailto:"><img src="/images/indexemail.gif" width="33" height="32"></a></div>
+                        </div>
+                    </div>
+                </li>
+                <!-- <li>内容222</li>-->
+                <li>
+                    <div><img src="/images/indexfuwu02.jpg" width="299" height="342"></div>
+                    <div class="showcenter">
+                        <div class="showcentertit01">机械工业锅炉及环保产品质量监督检测中心</div>
+                        <div class="showcentertit02">机构简介</div>
+                        <div>
+                            <p>机械工业锅炉及环保产品质量监督检测中心（以下简称“检测中心”）的前身为由原机械工业部批准成立、始建于1985年的机械工业部工业锅炉产品质量监督检测中心。随着国家机构改革的深入，检测中心几经整合和更名，现在的检测中心是在“机械工业部工业锅</p>
+                        </div>
+                        <div>
+                            <div class="button_showcenter"><a href="/Page/PageInfo/18">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexfuwuyou">
+                        <div class="indexfuwuyoudh">
+                            <ul>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/18">机构简介</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Static/Qualifications">相关资质</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Static/Equipment">主要设备</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Static/Service">主要服务内容</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/22">主要测试业绩</a></li>
+                            </ul>
+                        </div>
+                        <div class="indexlxfs">
+                            <div class="indexlx"><a href="javascript:void(0);"><img src="/images/phome.gif" width="32" height="32"></a></div>
+                            <div class="indexlxfsphone">021-34781959（总机）</div>
+                            <div><a href="mailto:"><img src="/images/indexemail.gif" width="33" height="32"></a></div>
+                        </div>
+                    </div>
+                </li>
+                <!--<li>内容333</li>-->
+                <li>
+                    <div><img src="/images/indexfuwu02.jpg" width="299" height="342"></div>
+                    <div class="showcenter">
+                        <div class="showcentertit01">技术开发</div>
+                        <div class="showcentertit02">机构简介</div>
+                        <div>
+                            <p>公司一直专注于锅炉及辅机产品的技术研发和产业化推广应用，通过30多年的发展，积累了一批具有代表性的产品技术。 2010年，随着原四方锅炉厂核心技术团队的加入，更加增强了我所在技术 研发、产品设计和工程管理领域的实力，有效扩充了公司产品系列和技术储备。 目前公司拥有原上海四方锅炉厂的注册商</p>
+                        </div>
+                        <div>
+                            <div class="button_showcenter"><a href="/Product">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexfuwuyou">
+                        <div class="indexfuwuyoudh">
+                            <ul>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Product">基本介绍</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Product/List/24">技术开发</a></li>
+                            </ul>
+                        </div>
+                        <div class="indexlxfs">
+                            <div class="indexlx"><a href="javascript:void(0);"><img src="/images/phome.gif" width="32" height="32"></a></div>
+                            <div class="indexlxfsphone">021-34781959（总机）</div>
+                            <div><a href="mailto:"><img src="/images/indexemail.gif" width="33" height="32"></a></div>
+                        </div>
+                    </div>
+                </li>
+                <!-- <li>内容444</li>-->
+                <li>
+                    <div><img src="/images/indexfuwu02.jpg" width="299" height="342"></div>
+                    <div class="showcenter">
+                        <div class="showcentertit01">上海工业锅炉研究所</div>
+                        <div class="showcentertit02">机构简介</div>
+                        <div>
+                            <p>上海工业锅炉研究所有限公司是我国唯一从事工业锅炉行业节能新产品、新技术研发和推广，产品热工性能测试和环保性能测试、锅炉辅机产品性能评定、行业情报和标准工作的应用型研究所。</p>
+                        </div>
+                        <div>
+                            <div class="button_showcenter"><a href="/Page/PageInfo/18">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexfuwuyou">
+                        <div class="indexfuwuyoudh">
+                            <ul>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Static/History">发展历史</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Static/BriefIntroduction">基本情况</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/53">现任领导</a></li>
+                                <li><img src="/images/dot04.gif" width="31" height="10"><a href="/Page/PageInfo/12">组织结构</a></li>
+                            </ul>
+                        </div>
+                        <div class="indexlxfs">
+                            <div class="indexlx"><a href="javascript:void(0);"><img src="/images/phome.gif" width="32" height="32"></a></div>
+                            <div class="indexlxfsphone">021-34781959（总机）</div>
+                            <div><a href="mailto:"><img src="/images/indexemail.gif" width="33" height="32"></a></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="q_center03">
+    <div id="mid_center01_03">
+
+        <div id="spjz_indexcenter01_03">
+            <div class="indexcenter01_03_tit">上海工业<span class="indexyjs">锅炉研究所</span>有限公司</div>
+            <div id="spjz_lanindexcenter01_03"></div>
+            <div id="spjz_huiindexcenter01_03"></div>
+        </div>
+        <div id="yjs_index">
+            <div id="yjs_indexleft">
+                <div></div>
+                <div>
+                    <p>
+                        上海工业锅炉研究所有限公司是我国唯一从事工业锅炉行业节能新产品、
+                        新技术研发和推广，产品热工性能测试和环保性能测试、锅炉辅机产品性能评
+                        定、行业情报和标准工作的应用型研究所。
+                        本所现有员工100人，工程技术人员占70%，其中教授级高工及国家有突
+                        出贡献专家4人，高级工程师15人，工程师22人，博士1人，硕士7人。
+                        本所是中国电器工业协会工业锅炉分会理事长单位和秘书长单位，也是
+                        全国锅炉压力容器标准化技术委员会工业锅炉节能减排专业委员会挂靠单位、
+                        中国锅炉水处理协会副理事长单位。
+                    </p>
+                </div>
+                <div>
+                    <div class="button_showcenter"><a href="/Static/BriefIntroduction">MORE</a></div>
+                </div>
+            </div>
+            <div><img src="/images/index05.jpg" width="535" height="355"></div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/js/axios.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#mid_center01_01",
+            data: {
+                picNewsData: {},
+                newsData: {},
+            }, mounted: function () {
+                axios.get("/News/NewsPicList2", {
+                    params: {
+                        count: 4,
+                        language: 0
+                    }
+                })
+                    .then(function (response) {
+                        //console.log(response.data);
+                        vm.picNewsData = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                axios.get("/News/NewsList2", {
+                    params: {
+                        count: 10,
+                        language: 0
+                    }
+                })
+                    .then(function (response) {
+                        vm.newsData = response.data;
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+
+            }, filters: {
+                photo: function (value) {
+                    let imgUrl = `/upload/image/${value}`;
+                    return imgUrl;
+                }, link: function (value) {
+                    let Url = `/News/Detail/${value}`;
+                    return Url;
+                }, changeLength: function (value, length) {
+                    return value.substr(0, length);
+                }, clean: function (value) {
+                    return value.replace(/<\/?.+?>/g, "");
+                }
+            }
+        });
+    </script>
+}

@@ -167,8 +167,8 @@
 }
 
 #con div {
-    display: none;
-    text-align: center;
+    /*display: none;*/
+    /*text-align: center;*/
 }
 
     #con div.show {

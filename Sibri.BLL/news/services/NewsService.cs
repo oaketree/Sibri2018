@@ -45,11 +45,39 @@ namespace Sibri.BLL.news.services
             }
         }
 
+        public async Task<List<News>> GetPicNewsList(int count, int language)
+        {
+            var list = await _dbContext.News.AsNoTracking().Where(n => !string.IsNullOrEmpty(n.NewsImageName) && n.Language == language).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
+            if (list != null)
+            {
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
         public Task<PaginatedList<News>> GetNewsList(int categoryid, int language, int pageSize, int pageIndex)
         {
             return PaginatedList<News>.CreateAsync(_dbContext.News.AsNoTracking().Where(n=>n.ColumnID==categoryid&&n.Language==language).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
 
         }
+
+        public async Task<List<News>> GetNewsList(int count, int language)
+        {
+            var list = await _dbContext.News.AsNoTracking().Where(n => n.Language == language).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
+            if (list != null)
+            {
+                return list;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public Task<PaginatedList<News>> GetNewsSearchList(string keywords, int language, int pageSize, int pageIndex)
         {
             var key = Regex.Unescape(keywords);

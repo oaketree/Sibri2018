@@ -11,7 +11,9 @@ namespace Sibri.BLL.news.services
     {
         Task<List<News>> GetNewsList(int categoryid, int count, int language);
         Task<List<News>> GetPicNewsList(int categoryid, int count,int language);
+        Task<List<News>> GetPicNewsList(int count, int language);
         Task<PaginatedList<News>> GetNewsList(int categoryid, int language, int pageSize, int pageIndex);
+        Task<List<News>> GetNewsList(int count, int language);
         Task<PaginatedList<News>> GetNewsSearchList(string keywords, int language, int pageSize, int pageIndex);
         Task<News> GetNews(int newsid);
     }
