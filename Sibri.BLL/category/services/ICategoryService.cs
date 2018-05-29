@@ -1,4 +1,5 @@
-﻿using Sibri.Contract.category;
+﻿using Sibri.BLL.category.viewmodels;
+using Sibri.Contract.category;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Sibri.BLL.category.services
         Task<List<Category>> GetCategoryListByID(int? id, int direction);
         Task<Category> GetCategoryByID(int id);
         Task<Category> GetParentByID(int id);
+        Task<List<CategoryView>> GetProductCategoryListCn(int topid);
+        Task<List<CategoryView>> GetProductCategoryListEn(int topid);
     }
 }

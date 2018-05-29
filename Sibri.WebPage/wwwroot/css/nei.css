@@ -237,8 +237,11 @@
     .zuolieradiussh > div {
         text-indent: 1em;
         font-size: 0.95em;
-        height: 50px;
+        /*height: 50px;*/
         line-height: 50px;
+        max-width: 260px;
+        padding: 10px;
+        cursor:pointer;
     }
 
 .boxbottom01 {
@@ -254,12 +257,10 @@
 */
 
 
-
-
 .protit01 {
     color: #000a89;
     font-size: 1.6em;
-    padding: 20px 0 40px 0;
+    padding: 20px 0 20px 0;
 }
 
 .protit01_02 {
@@ -505,7 +506,7 @@ table {
         float: left;
         overflow: hidden;
         padding-bottom: 30px;
-        padding-top: 30px;
+        /*padding-top: 30px;*/
     }
 
 .newspic_left img {

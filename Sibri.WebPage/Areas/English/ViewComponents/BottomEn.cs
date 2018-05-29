@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Sibri.WebPage.ViewComponents
+namespace Sibri.WebPage.Areas.English.ViewComponents
 {
-    public class TopViewComponent: ViewComponent
+    public class BottomEn : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            await Task.Delay(10);
+            await Task.FromResult(0);
             return View();
         }
     }

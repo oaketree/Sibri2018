@@ -1,14 +1,14 @@
-﻿
+﻿@using Sibri.WebPage.ViewComponents
 @{
     ViewData["Title"] = "联系我们";
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = 9 })
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = 9 })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -34,13 +34,13 @@
                     </tr>
                     <tr>
                         <th> E-mail</th>
-                        <td colspan="3">sibri@public1.sta.net.cn</td>
+                        <td colspan="3"><a href="mailto:sibri@public1.sta.net.cn">sibri@public1.sta.net.cn</a></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="padleftcontact">
-                            开户银行：工行上海市天目东路支行<br />
-                            户&nbsp; &nbsp; 名：上海工业锅炉研究所<br />
-                            账&nbsp; &nbsp; 号：1001215509300553939
+                            开户银行：工行上海市天目东路支行 1001215509300553939<br />
+                            户&nbsp; &nbsp; 名：上海工业锅炉研究所有限公司 51020808<br />
+                            税&nbsp; &nbsp; 号：91310106425014109E
                         </td>
                     </tr>
                 </table>

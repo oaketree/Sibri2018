@@ -1,13 +1,14 @@
-﻿@{
+﻿@using Sibri.WebPage.ViewComponents
+@{
     ViewData["Title"] = "相关资质";
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = 19 })
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = 19 })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -15,7 +16,7 @@
 <div id="q_neipro_bu50" class="nei50"></div>
 <div id="q_neipro_10">
     <div id="mid_nei10_01" class="top50">
-        @await Component.InvokeAsync("Left", new { view = "Page", categoryid = 19 })
+        @await Component.InvokeAsync(nameof(Left), new { view = "Page", categoryid = 19 })
         <div id="nei10_01_right">
             <div class="protit01 margintop20">相关资质</div>
             <div id="zz">

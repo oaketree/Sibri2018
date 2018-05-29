@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Sibri.BLL.category.viewmodels;
 using Sibri.BLL.share;
 using Sibri.Contract.category;
 using System;
@@ -69,6 +70,34 @@ namespace Sibri.BLL.category.services
             else
                 return null;
         }
+
+        public async Task<List<CategoryView>> GetProductCategoryListCn(int topid)
+        {
+            var categoryList = await GetCategoryCache();
+            var list = categoryList.Select(s => new CategoryView
+            {
+                text = s.CategoryName,
+                categoryid = s.CategoryID,
+                parentid = s.ParentID,
+                sortid = s.SortID
+            }).OrderBy(o => o.parentid).ThenBy(t => t.sortid).ToList();
+            return HandleMenu.SubMenu(list, topid);
+
+        }
+        public async Task<List<CategoryView>> GetProductCategoryListEn(int topid)
+        {
+            var categoryList = await GetCategoryCache();
+            var list = categoryList.Select(s => new CategoryView
+            {
+                text = s.CategoryNameEN,
+                categoryid = s.CategoryID,
+                parentid = s.ParentID,
+                sortid = s.SortID
+            }).OrderBy(o => o.parentid).ThenBy(t => t.sortid).ToList();
+            return HandleMenu.SubMenu(list, topid);
+        }
+
+
         public async Task<Category> GetParentByID(int id)
         {
             var categoryList = await GetCategoryCache();

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Sibri.WebPage.ViewComponents
 {
-    public class BannerViewComponent : ViewComponent
+    public class Banner : ViewComponent
     {
         private readonly ICategoryService _categoryService;
 
-        public BannerViewComponent(ICategoryService categoryService)
+        public Banner(ICategoryService categoryService)
         {
             this._categoryService = categoryService;
         }

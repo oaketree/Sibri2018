@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Sibri.WebPage.ViewComponents
+@{
     ViewData["Title"] = "首页";
 }
 @section Css{
@@ -6,10 +7,10 @@
     <link href="~/css/comstyleindex.css" rel="stylesheet" />
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
 <div id="q_top05">
     <div id="mid_top05" class="wrapper">
@@ -104,7 +105,7 @@
                 <li v-for="item in picNewsData">
                     <div class="news_indexleftimg"><img v-bind:src="item.newsImageName|photo" width="100"></div>
                     <div class="news_indexjd">
-                        <div class="news_wenjd wbold"><a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(20)}}</a></div>
+                        <div class="news_wenjd wbold"><a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(18)}}</a></div>
                         <div class="wcol"><img src="/images/wen.gif" width="13" height="14">{{item.shortRegDate}}</div>
                         <div class="news_2linejd whui"><a v-bind:href="item.newsID|link" target="_blank">{{item.newsDetail|clean|changeLength(52)}}</a></div>
                     </div>
@@ -115,8 +116,7 @@
             <div class="newsindextitbg"><img src="/images/newsyjs.gif" width="120" height="19"> </div>
             <div class="newsmainindex">
                 <ul>
-                    <li v-for="item in newsData">
-                        [{{item.shortRegDate}}]&nbsp; &nbsp; <a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(30)}}</a>
+                    <li v-for="item in newsData">[{{item.shortRegDate}}]&nbsp; &nbsp; <a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(30)}}</a>
                     </li>
                 </ul>
             </div>
@@ -363,7 +363,7 @@
                     });
                 axios.get("/News/NewsList2", {
                     params: {
-                        count: 10,
+                        count: 12,
                         language: 0
                     }
                 })

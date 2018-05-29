@@ -1,14 +1,15 @@
-﻿@model Sibri.Contract.pages.Pages
+﻿@using Sibri.WebPage.ViewComponents
+@model Sibri.Contract.pages.Pages
 @{
     ViewData["Title"] = Model.Title;
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = Model.ColumnID })
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = Model.ColumnID })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -16,14 +17,14 @@
 <div id="q_neipro_bu50" class="nei50"></div>
 <div id="q_neipro_10">
     <div id="mid_nei10_01" class="top50">
-        @await Component.InvokeAsync("Left", new { view = "Page", categoryid = Model.ColumnID })
+        @await Component.InvokeAsync(nameof(Left), new { view = "Page", categoryid = Model.ColumnID })
         <div id="nei10_01_right">
             <div class="protit01 margintop20">@Model.Title</div>
             <div>
                 @Html.Raw(@Model.PContent)
+            </div>
         </div>
     </div>
-</div>
 </div>
 <div class="height30kong"> </div>
 

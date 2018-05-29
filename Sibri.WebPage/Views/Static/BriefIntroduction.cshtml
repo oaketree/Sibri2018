@@ -1,4 +1,5 @@
-﻿@{
+﻿@using Sibri.WebPage.ViewComponents
+@{
     ViewData["Title"] = "基本情况";
     //await Component.InvokeAsync("Category", new { view = "Name", categoryid = 11 })
 }
@@ -7,12 +8,12 @@
     <link href="~/css/zoomify.min.css" rel="stylesheet" />
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = 11 })
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = 11 })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -20,7 +21,7 @@
 <div id="q_neipro_bu50" class="nei50"></div>
 <div id="q_neipro_10">
     <div id="mid_nei10_01" class="top50">
-        @await Component.InvokeAsync("Left", new { view = "Page", categoryid = 11 })
+        @await Component.InvokeAsync(nameof(Left), new { view = "Page", categoryid = 11 })
         <div id="nei10_01_right">
             <div class="protit01 margintop20">基本情况</div>
             <div>

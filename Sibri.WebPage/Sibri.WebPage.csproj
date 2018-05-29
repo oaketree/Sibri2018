@@ -19,13 +19,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\English\Controllers\" />
     <Folder Include="Areas\English\Data\" />
-    <Folder Include="Areas\English\Models\" />
-    <Folder Include="Areas\English\Views\" />
+    <Folder Include="wwwroot\english\images\" />
+    <Folder Include="wwwroot\english\mobile\" />
     <Folder Include="wwwroot\upload\image\" />
     <Folder Include="wwwroot\upload\file\" />
     <Folder Include="wwwroot\upload\video\" />
+    <Folder Include="wwwroot\mobile\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Sibri.WebPage.ViewComponents
 {
-    public class ProductViewComponent : ViewComponent
+    public class Product : ViewComponent
     {
         private readonly ICategoryService _categoryService;
 
-        public ProductViewComponent(ICategoryService categoryService)
+        public Product(ICategoryService categoryService)
         {
             this._categoryService = categoryService;
         }

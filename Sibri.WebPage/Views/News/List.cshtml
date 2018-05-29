@@ -1,17 +1,18 @@
-﻿@model int
+﻿@using Sibri.WebPage.ViewComponents
 @using Sibri.BLL.category.services
+@model int
 @inject ICategoryService ca
 @{
     var category = await ca.GetCategoryByID(Model);
     ViewData["Title"] = category.CategoryName;
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = Model })
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = Model })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -19,7 +20,7 @@
 <div id="q_neipro_bu50" class="nei50"></div>
 <div id="q_neipro_10">
     <div id="mid_nei10_01" class="top50">
-        @await Component.InvokeAsync("Left", new { view = "News", categoryid = Model })
+        @await Component.InvokeAsync(nameof(Left), new { view = "News", categoryid = Model })
         <div id="nei10_01_right">
             <div class="protit01 margintop20">@category.CategoryName</div>
 
@@ -29,7 +30,7 @@
                     <div class="newspic_right">
                         <div><a v-bind:href="item.newsID|link" target="_blank" class="jwen">{{item.title|changeLength(30)}}</a></div>
                         <div class="coloror">[{{item.shortRegDate}}]</div>
-                        <div class="newsnei">{{item.newsDetail|clean|changeLength(110)}}</div>
+                        <div class="newsnei">{{item.newsDetail|clean|changeLength(108)}}</div>
                     </div>
                 </div>
                 <div class="ling00"></div>

@@ -8,7 +8,7 @@ div[id^=m] {
 
 #q_neipro01 {
     height: 200px;
-    /*	background-image:url(/Content/images/nei01.jpg);
+    /*	background-image:url(/images/nei01.jpg);
 	background-repeat:no-repeat;
 	position:left bottom;
 	background-color:#d3d9d5;
@@ -30,5 +30,5 @@ div[id^=m] {
 
 #nei10_01_right {
     max-width: 750px;
-    padding: 0 50px;
+    padding: 0 70px;
 }

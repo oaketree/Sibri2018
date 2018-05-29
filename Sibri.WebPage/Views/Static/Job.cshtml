@@ -1,13 +1,14 @@
-﻿@{
+﻿@using Sibri.WebPage.ViewComponents
+@{
     ViewData["Title"] = "人才招聘";
 }
 @section Header{
-    @await Component.InvokeAsync("Top")
+    @await Component.InvokeAsync(nameof(Top))
 }
 @section Footer{
-    @await Component.InvokeAsync("Bottom")
+    @await Component.InvokeAsync(nameof(Bottom))
 }
-@await Component.InvokeAsync("Banner", new { categoryid = 8})
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = 8 })
 <div id="q_common" class="topcommon">
     <div id="mid_common">
     </div>
@@ -79,8 +80,8 @@
                     <div>
                         <img src="/images/DOT03.gif" />请有意者通过电邮或邮寄方式联系我们<span class="coloror">（简历中请标明应聘职位）</span>：<br />
                         <span class="colorbl">
-                            联系地址：上海市新骏环路138号上海临港浦江国际科技城4幢1-3楼<br />
-                            联系电话：021-34781959--226<br />
+                            联系地址：上海市闵行区浦江镇新骏环路138号浦江高科技园区4幢1-3楼<br />
+                            联系电话：021-34781959—226<br />
                             E-mail：<a href="mailto:gyglyjs@163.com">gyglyjs@163.com</a>
                         </span>
                     </div>

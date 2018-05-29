@@ -1,0 +1,15 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@{
+    ViewData["Title"] = "Home";
+}
+@section Css{
+    <link href="~/english/css/pictopcss.css" rel="stylesheet" />
+    <link href="~/english/css/comstyleindex.css" rel="stylesheet" />
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+
