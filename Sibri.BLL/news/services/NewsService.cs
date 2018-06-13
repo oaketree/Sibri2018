@@ -88,6 +88,9 @@ namespace Sibri.BLL.news.services
             var news = await _dbContext.News.AsNoTracking().FirstOrDefaultAsync(n=>n.NewsID==newsid);
             if (news != null)
             {
+                news.Hit = news.Hit + 1;
+                _dbContext.Update(news);
+                await _dbContext.SaveChangesAsync();
                 return news;
             }
             else

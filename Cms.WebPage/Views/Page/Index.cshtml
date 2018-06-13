@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="input-group col-sm-7">
                             <div class="col-sm-5">
-                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords" />
+                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model="keywords" v-on:keydown="search2" />
                             </div>
                             <div class="col-sm-1">
                                 <span class="input-group-btn">
@@ -110,8 +110,7 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">栏目*：</label>
                         <div class="col-sm-3">
-                            <select class="form-control" asp-items="categorylist" v-model="editData.column">
-                            </select>
+                            <select class="form-control" asp-items="categorylist" v-model="editData.column"></select>
                         </div>
                     </div>
                     <div class="form-group ">
@@ -175,6 +174,7 @@
 
 
 @section Scripts{
+    <script src="~/js/polyfill.js"></script>
     <script src="~/lib/ueditor/ueditor.config.js"></script>
     <script src="~/lib/ueditor/ueditor.all.js"></script>
     <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -352,7 +352,7 @@
                         .catch(function (error) {
                             console.log(error);
                         });
-                   
+
                 }, del: function (id) {
                     if (confirm("是否确定要删除?")) {
                         axios.get('/Page/DelPageAxios', {
@@ -381,6 +381,10 @@
                         .catch(function (error) {
                             console.log(error);
                         });
+                }, search2: function (event) {
+                    if (event.keyCode == "13") {
+                        this.search();
+                    }
                 }
             }, components: {
                 'paging-component': vmPaging,

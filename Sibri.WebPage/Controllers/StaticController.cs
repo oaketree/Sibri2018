@@ -12,7 +12,10 @@ namespace Sibri.WebPage.Controllers
         {
             return View();
         }
-
+        public IActionResult Platform()
+        {
+            return View();
+        }
         public IActionResult BriefIntroduction()
         {
             return View();

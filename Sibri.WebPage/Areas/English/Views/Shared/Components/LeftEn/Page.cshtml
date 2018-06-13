@@ -1,0 +1,20 @@
+﻿@model List<Sibri.Contract.category.Category>
+<div id="nei10_011_left" class="zuolieradiussh">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            var link = $"/English/Page/PageInfo/{item.CategoryID}";
+            if (item.IsHref.Value)
+            {
+                link = item.HrefEn;
+            }
+            //var title = item.CategoryNameEN;
+            //if (title.Length > 18)
+            //{
+            //    title = title.Substring(0, 18);
+            //}
+    <div class="boxbottom01" onclick="window.location.href='@link'" title="@item.CategoryNameEN"><img src="/images/dotarrow.png" />@item.CategoryNameEN</div>
+        }
+    }
+</div>

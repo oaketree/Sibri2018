@@ -696,38 +696,30 @@ and (max-width : 360px) {
 	
 #q_center02 {
 
-	background-image:url(/content/images/indexbg02.jpg);
+	background-image:url(/images/indexbg02.jpg);
 	background-repeat:no-repeat;
 	background-position:center;
 	background-color:#000;
 	
 	}
-	
 
-	
-	
-	
-	
-	
+
+
+
+
+
+
 .tit04jvzhong {
-
-	position: absolute;
-    left: 50%;
-
-	
-	
- 
-	
-	transform: translate(-50%,10px);
-	-ms-transform: translate(-50%,10px);		/* IE 9 */
-	-webkit-transform: translate(-50%,10px);	/* Safari and Chrome */
-	-o-transform: translate(-50%,10px);		/* Opera */
-	-moz-transform: translate(-50%,10px);		/* Firefox */
-	
-	
-	
-	
-	}	
+    width: 680px;
+    overflow: hidden;
+    float: left;
+    padding-left: 1100px;
+    transform: translate(-50%,10px);
+    -ms-transform: translate(-50%,10px); /* IE 9 */
+    -webkit-transform: translate(-50%,10px); /* Safari and Chrome */
+    -o-transform: translate(-50%,10px); /* Opera */
+    -moz-transform: translate(-50%,10px); /* Firefox */
+}	
 	
 	
 .tit04jvzhong>div {
@@ -1044,11 +1036,71 @@ div[class^=indexlxfs] img {
 	
 #yjs_indexleft {
 	padding:0 60px 0 20px;
-	width:45%;}	
-	
-	
-	
-<!------------>	
+	width:45%;}
+
+
+#mid_bottom_03 > div {
+    float: left;
+}
+
+
+
+#q_bottom_03 {
+    background-color: #1a1a1a;
+    height: 144px;
+}
+
+
+.mid_bottom_03_01 > img {
+    float: left;
+    padding: 3px;
+}
+
+
+#q_bottom_03 > div {
+    padding-top: 20px;
+}
+
+
+.mid_bottom_03_02_01 > div {
+    float: left;
+    color: #888;
+}
+
+.mid_bottom_03_02 {
+    padding: 0 20px;
+}
+
+.mid_bottom_03_02_02 > div > div {
+    clear: both;
+}
+
+    .mid_bottom_03_02_02 > div > div > div {
+        float: left;
+    }
+
+
+
+.mid_bottom_03_02 > div {
+    clear: both;
+}
+
+.mid_bottom_03_02_02 > div {
+    float: left;
+    color: #c5c5c5;
+}
+
+
+
+    .mid_bottom_03_02_02 > div a {
+        color: #c5c5c5;
+    }
+
+
+        .mid_bottom_03_02_02 > div a:hover {
+            color: #fff;
+        }	
+
 
 	
 

@@ -22,7 +22,7 @@ namespace Sibri.WebPage.Controllers
         }
         public async Task<IActionResult> PageInfo(int id)
         {
-            var page =await _pageService.GetPage(id);
+            var page =await _pageService.GetPage(id,0);
             return View(page);
         }
        

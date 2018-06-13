@@ -1,0 +1,68 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@{
+    ViewData["Title"] = "Qualifications";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+@await Component.InvokeAsync(nameof(BannerEn), new { categoryid = 19 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync(nameof(LeftEn), new { view = "Page", categoryid = 19 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">Qualifications</div>
+            <div id="zz">
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569836908727900419.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        Certified and approved by National Certification and Accreditation Administration Committee (certificate number: 160008220218), can issue the proven data and results and use the CMA logo on the test report.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569875908796918921.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        Obtain the Laboratory Approval Certificate (certificate number: CNAS L4911) by China National Accreditation Board for Conformity Assessment in 2011.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569894628822918105.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        In 2013 obtain the Approval Certificate of inspection organization (certificate number: CNAS IB0344) by China National Accreditation Board for Conformity Assessment.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569907108844267804.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        The first batch of testing agencies for environmental protection products approved by China Environmental Protection Industry Association in 2006 [document no. (2006) 03]
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/upload/image/20180516/6366206569922708876074166.jpg" width="300" /></li>
+                    <li class="zz02 zztextleft">
+                        The second batch of energy efficiency testing institutions for in-use industrial boilers approved by State Administration of Technical Supervision in 2010.
+                    </li>
+                </ul>
+            </div>
+            <div class="height30kong"> </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+@section Scripts{
+    <script src="~/js/zoomify.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.zz01 img').zoomify();
+        });
+    </script>
+}
+
+

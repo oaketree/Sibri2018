@@ -49,7 +49,7 @@
 
                             </div>
                             <div class="col-sm-5">
-                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model.trim="keywords" />
+                                <input type="text" placeholder="请输入关键词" class="input-sm form-control" v-model.trim="keywords" v-on:keydown="search2" />
                             </div>
                             <div class="col-sm-1">
                                 <span class="input-group-btn">
@@ -77,7 +77,7 @@
                                         {{index+1}}({{item.newsID}})
                                         @*<input type="checkbox" class="i-checks" v-bind:value="item.UserID" v-model="userid">*@
                                     </td>
-                                    <td>{{item.title}}</td>
+                                    <td>{{item.title|changeLength(50)}}</td>
                                     <td>
                                         {{item.columnID|category}}
                                     </td>
@@ -140,8 +140,8 @@
                             </select>
                         </div>
                         @*<div class="col-sm-2">
-                            <span class="text-danger">1111</span>
-                        </div>*@
+                                <span class="text-danger">1111</span>
+                            </div>*@
                     </div>
                     <div class="form-group ">
                         <label class="col-sm-1 control-label">语言*：</label>
@@ -167,7 +167,7 @@
                     <div class="form-group">
                         <label class="col-sm-1 control-label">内容*：</label>
                         <div class="col-sm-9">
-                            <script id="container" type="text/plain"> 
+                            <script id="container" type="text/plain">
                             </script>
                         </div>
                         <div class="col-sm-2">
@@ -187,7 +187,7 @@
                         <label class="col-sm-1">图片处理：</label>
                         <div class="col-sm-6">
                             <div class="checkbox-custom pull-left">
-                                <input type="checkbox" v-model="picnews" id="picnews"/>
+                                <input type="checkbox" v-model="picnews" id="picnews" />
                                 <label for="picnews">需要对图片的大小进行处理</label>
                             </div>
                         </div>
@@ -211,6 +211,7 @@
 
 
 @section Scripts{
+    <script src="~/js/polyfill.js"></script>
     <script src="~/lib/ueditor/ueditor.config.js"></script>
     <script src="~/lib/ueditor/ueditor.all.js"></script>
     <script src="~/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -219,7 +220,7 @@
             props: ['editData'],
             template: "#editTpl",
             methods: {
-                editConfirm: function (newsid) { 
+                editConfirm: function (newsid) {
                     if (this.validate()) {
                         formdata = new FormData();
                         if (document.getElementById('file') != null)
@@ -235,8 +236,8 @@
                             url: '/News/UpdateNews2',
                             method: 'post',
                             data: formdata,
-                            onUploadProgress: function (progressEvent) { 
-                                if (progressEvent.lengthComputable) { 
+                            onUploadProgress: function (progressEvent) {
+                                if (progressEvent.lengthComputable) {
                                     var percent = Math.round(progressEvent.loaded * 100 / progressEvent.total);
                                     this.prgValue = percent;
                                 }
@@ -251,26 +252,26 @@
                             .catch(function (error) {
                                 console.log(error);
                             });
-                         //axios.post('/News/UpdateNews', {
-                    //    newsID:newsid,
-                    //    column: this.editData.column,
-                    //    language: this.editData.language,
-                    //    title: this.editData.title,
-                    //    subTitle: this.editData.subTitle,
-                    //    content: this.editor.getContent()
-                    //})
-                    //    .then(function () {
-                    //        $("#editModal").modal("hide");
-                    //        vm.updatePageData({});
-                    //    })
-                    //    .catch(function (error) {
-                    //        console.log(error);
-                    //    });
+                        //axios.post('/News/UpdateNews', {
+                        //    newsID:newsid,
+                        //    column: this.editData.column,
+                        //    language: this.editData.language,
+                        //    title: this.editData.title,
+                        //    subTitle: this.editData.subTitle,
+                        //    content: this.editor.getContent()
+                        //})
+                        //    .then(function () {
+                        //        $("#editModal").modal("hide");
+                        //        vm.updatePageData({});
+                        //    })
+                        //    .catch(function (error) {
+                        //        console.log(error);
+                        //    });
 
                     }
                 }, delPic: function (newsid) {
                     let self = this;
-                    if (confirm("是否确定要删除图片?")) { 
+                    if (confirm("是否确定要删除图片?")) {
                         axios.get('/News/DelNewsImg', {
                             params: {
                                 id: newsid
@@ -284,7 +285,7 @@
                     }
                 }, setEditor: function (data) {
                     this.editor.setContent(data);
-                },validate: function () { 
+                }, validate: function () {
                     if (this.editData.title == "") {
                         this.vtitle = "请输入标题";
                         return false
@@ -306,10 +307,10 @@
                     vtitle: '',
                     picnews: true,
                     prg: true,
-                    prgValue:0
+                    prgValue: 0
                 }
-            }, computed: { 
-                pic: function () { 
+            }, computed: {
+                pic: function () {
                     if (this.editData.imageUrl != null && this.editData.imageUrl != '')
                         return true;
                     else
@@ -451,6 +452,10 @@
                         .catch(function (error) {
                             console.log(error);
                         });
+                }, search2: function (event) {
+                    if (event.keyCode == "13") {
+                        this.search();
+                    }
                 }
             }, components: {
                 'paging-component': vmPaging,
@@ -502,6 +507,8 @@
                         return "中文";
                     else
                         return "English";
+                }, changeLength: function changeLength(value, length) {
+                    return value.substr(0, length);
                 }
             }
         });

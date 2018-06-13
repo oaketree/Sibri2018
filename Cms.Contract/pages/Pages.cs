@@ -12,7 +12,7 @@ namespace Cms.Contract.pages
         [Key]
         public int PageID { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         public string Title { get; set; }
 
         public int ColumnID { get; set; }

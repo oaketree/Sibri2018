@@ -23,7 +23,7 @@ $(function () {
         $(this).addClass('select02').siblings().removeClass('select02');
     });
     $.product();
-    $.piccro();
+    //$.piccro();
     //首页中部切换
     $('.tit04jvzhong>div').hover(function () {
         var i = $(this).index();
@@ -66,7 +66,7 @@ $(function () {
 $.extend({
     changeImg: function () {
         let imgArr = ["topimg01.jpg", "topimg02.jpg", "topimg03.jpg"];
-        let imgIndex = 0;
+        let imgIndex = parseInt(Math.random() * (imgArr.length));
         let change = function () {
             if (imgIndex >= imgArr.length - 1) {
                 imgIndex = 0;
@@ -79,8 +79,8 @@ $.extend({
             });
             $(".topbackground").animate({ opacity: "1" }, 200);
         }
+        $(".topbackground").css("background-image", "url(/images/" + imgArr[imgIndex] + ")");
         setInterval(change, 3000);
-        //$(".topbackground").animate({opacity: "1"}, 200);
     }, meun: function () {
         let li = $('.nav ul .m');
         li.eq(0).find('a').eq(0).hover(function () {
@@ -172,17 +172,17 @@ $.extend({
         //});
     }, product: function () {
         $('#tit>div').hover(function () {
-            var i = $(this).index();//下标第一种写法			
+            //var i = $(this).index();//下标第一种写法			
             //var i = $('tit').index(this);//下标第二种写法
             //var bkong = i;
             $(this).addClass('select').siblings().removeClass('select');
-            $('#con div').eq(i).show().siblings().hide();
-            if (i == 0) {
-                $('#neidaohangline').hide();
-            }
-            else {
-                $('#neidaohangline').show();
-            }
+            //$('#con div').eq(i).show().siblings().hide();
+            //if (i == 0) {
+            //    $('#neidaohangline').hide();
+            //}
+            //else {
+            //    $('#neidaohangline').show();
+            //}
         });
 
     }, validate: function () {

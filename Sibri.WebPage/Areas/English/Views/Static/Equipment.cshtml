@@ -1,0 +1,83 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@{
+    ViewData["Title"] = "Main Equipment";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+@await Component.InvokeAsync(nameof(BannerEn), new { categoryid = 20 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync(nameof(LeftEn), new { view = "Page", categoryid = 20 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">Main Equipment</div>
+            <div>
+                Inspection Center has 200 units (sets) diversified laboratory and on-site instruments and equipment to carry out inspection and testing. The main equipment includes:
+            </div>
+            <div class="height30kong"></div>
+            <div id="zz">
+                <ul>
+                    <li class="zz01 "><img src="/images/sb01.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        ADM6275 type high-temperature ultrasonic flow-meter produced in Germany，is mainly used for the measurement of liquid flow, such as water and heat conduction oil. It can measure the liquid up to 400℃ above, which solves the difficult problem that the flow of heat conduction oil of thermal medium boiler is not easy to measure.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb02.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        MGA5 type portable infrared flue gas analyzer produced by German York Co., is mainly used to test the composition of flue gas in boiler and environmental protection testing. Its main features are high precision, wide range of measurement and many measuring items.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb03.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        350 type portable gas analyzer produced by Germany Testo Co., is mainly used to test the composition of flue gas in boiler and environmental protection testing. Its main features are high precision, wide range of measurement and many measuring items.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb04.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        NHR-8700 48 ways color data acquisition paperless recorder (high speed and high performance 32 bit microprocessor) produced by HongRun, it can carry out the paperless one-key record of flue gas temperatures in the testing of mesh method for power plant boilers.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb05.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        Ti10 type infrared thermal imaging device produced in US, is mainly used to measure the distribution of heat dissipation of the boiler. It records the heat dissipation of the boiler by pictures, which can reflect the problem objectively and quickly.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb06.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        IKAC2000 type calorimeter produced in Germany, is mainly used for the analysis of fuel heat. It can fully automatic to record and analyze the results of measurement by computer.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb07.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        CHNS element analyzer produced in Germany, is mainly used for the analysis of carbon, hydrogen, oxygen, nitrogen and sulfur in fuel. It can analyze all the elements in the fuel at a time.
+                    </li>
+                </ul>
+                <ul>
+                    <li class="zz01 "><img src="/images/sb08.jpg" /></li>
+                    <li class="zz02 zztextleft">
+                        Ash meltability testing furnace produced in British, it can heat the ash samples up to the max. temperature 1600℃, and analyze and record the changing of the samples by controlling the reducing gas and taking photos by camera.
+                    </li>
+                </ul>
+            </div>
+            <div class="height30kong"> </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"> </div>
+
+
+

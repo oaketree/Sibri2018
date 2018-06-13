@@ -23980,6 +23980,10 @@ UE.plugin.register('autosave', function (){
             },
 
             'contentchange': function () {
+                //新增加的代码
+                if (!me.getOpt('enableAutoSave')) {
+                    return;
+                }
 
                 if ( !saveKey ) {
                     return;

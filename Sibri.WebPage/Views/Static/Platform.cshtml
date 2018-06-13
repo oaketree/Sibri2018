@@ -1,0 +1,62 @@
+﻿@using Sibri.WebPage.ViewComponents
+@{
+    ViewData["Title"] = "平台建设";
+    //await Component.InvokeAsync("Category", new { view = "Name", categoryid = 10 })
+}
+@section Css{
+    <link href="~/css/zoomify.min.css" rel="stylesheet" />
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(Top))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(Bottom))
+}
+@await Component.InvokeAsync(nameof(Banner), new { categoryid = 3 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        <div id="nei10_01_right02">
+            <div class="margintop20"></div>
+            <div class="bigbox">
+                <div class="imgbox">
+                    <img src="/images/platform/plat01.jpg" class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat02.jpg" class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat03.jpg" class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat04.jpg"  class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat05.jpg"  class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat06.jpg"  class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat08.jpg"  class="zoomify">
+                </div>
+                <div class="imgbox">
+                    <img src="/images/platform/plat07.jpg"  class="zoomify">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+@section Scripts{
+    <script src="~/js/zoomify.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.zoomify').zoomify();
+        });
+    </script>
+}

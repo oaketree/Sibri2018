@@ -9,12 +9,12 @@
             {
                 link = item.Href;
             }
-            var title = item.CategoryName;
-            if (title.Length > 14)
-            {
-                title = title.Substring(0, 14);
-            }
-    <div class="boxbottom01" onclick="window.location.href='@link'" title="@item.CategoryName"><img src="/images/dotarrow.png" />@title</div>
+            //var title = item.CategoryName;
+            //if (title.Length > 14)
+            //{
+            //    title = title.Substring(0, 14);
+            //}
+    <div class="boxbottom01" onclick="window.location.href='@link'" title="@item.CategoryName"><img src="/images/dotarrow.png" />@item.CategoryName</div>
         }
     }
 </div>

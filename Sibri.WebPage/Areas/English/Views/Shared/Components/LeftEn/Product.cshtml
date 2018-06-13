@@ -1,0 +1,27 @@
+﻿@model List<Sibri.BLL.category.viewmodels.CategoryView>
+<div id="nei10_01_left" class="zuolieradiussh panel">
+    @foreach (var item in Model)
+    {
+        if (item.nodes ==null)
+        {
+            <div class="boxbottom01" onclick="window.location.href='/English/Product/List/@item.categoryid'">
+                <img src="/images/dotarrow.png" />@item.text
+            </div>
+        }
+        else
+        {
+            <div class="boxbottom01 panel-header">
+                <img src="/images/dotarrow.png" />@item.text
+            </div>
+            <div class="panel-body" id="panel_body_@item.categoryid">
+                <ul>
+                    @foreach (var subItem in @item.nodes)
+                    {
+                        <li onclick="window.location.href='/English/Product/List/@subItem.categoryid'" id="panel_li_@subItem.categoryid"><img src="/images/dot04_00.png" width="31" height="10" /><a href="/English/Product/List/@subItem.categoryid">@subItem.text</a></li>
+                    }
+                </ul>
+            </div>
+        }
+
+    }
+</div>

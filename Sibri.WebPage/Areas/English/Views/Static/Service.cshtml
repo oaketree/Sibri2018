@@ -1,0 +1,40 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@{
+    ViewData["Title"] = "Contents Of Service";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+@await Component.InvokeAsync(nameof(BannerEn), new { categoryid = 21 })
+<div id="q_common" class="topcommon">
+    <div id="mid_common">
+    </div>
+</div>
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync(nameof(LeftEn), new { view = "Page", categoryid = 21 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">
+                Contents of service - according to the way of entrustment
+            </div>
+            <div>
+                <img src="/english/images/fuwu.gif" />
+            </div>
+            <div class="height30kong"></div>
+            <div class="protit01 margintop20">
+                Contents of service - according to the category of products
+            </div>
+            <div>
+                <img src="/english/images/fuwu02.gif" />
+            </div>
+            <div class="height30kong"> </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"> </div>
+
+

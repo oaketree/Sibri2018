@@ -15,9 +15,9 @@ namespace Sibri.BLL.pages.services
             this._dbContext = dbContext;
         }
 
-        public async Task<Pages> GetPage(int id)
+        public async Task<Pages> GetPage(int id,int language)
         {
-            var page =await  _dbContext.Pages.AsNoTracking().FirstOrDefaultAsync(p=>p.ColumnID==id&&p.Language==0);
+            var page =await  _dbContext.Pages.AsNoTracking().FirstOrDefaultAsync(p=>p.ColumnID==id&&p.Language==language);
             if (page != null)
             {
                 page.Hit = page.Hit + 1;

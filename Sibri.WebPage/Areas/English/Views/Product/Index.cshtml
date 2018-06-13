@@ -1,0 +1,68 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@{
+    ViewData["Title"] = "Basic introduction";
+}
+@section Css{
+    <style type="text/css">
+        .panelbodyli {
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+            .panelbodyli a {
+                color: #f66400;
+            }
+    </style>
+
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+@await Component.InvokeAsync(nameof(BannerEn), new { categoryid = 23 })
+@await Component.InvokeAsync(nameof(ProductEn))
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync(nameof(LeftEn), new { view = "Product", categoryid = 6 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">
+                Basic introduction
+            </div>
+            <div>
+                <p>
+                    SIBRI has been focused on the technology R & D and industrialization application of boilers and auxiliaries, and has accumulated a number of representative product technologies over the past 30 years.</p>
+                <p>
+                    In 2010, with the joining of the core technology team of the former Shanghai Si Fang Boiler Works, more enhanced the strength of technology research, product design and engineering management, and effectively expanded the product series and technical reserves.</p>
+                <p>
+                    At present, SIBRI has the registered trademark of the original Shanghai Si Fang Boiler Works:<img src="/images/logo001.png" />all patents, intellectual property and all the accumulated technology and information.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+@section Scripts{
+    <script>
+        $(function () {
+            $(".panel-body").hide();//隐藏二级菜单
+            $(".panel-header").on("click", function () {//产品与技术左导航
+                let next = $(this).next();
+                next.slideToggle(300);
+                $(".panel-body").not(next).slideUp();
+            })
+            $('.panel-body li').hover(function () {
+                $(this).find('img').attr("src", "/images/dot04.png");
+                $(this).siblings().find('img').attr("src", "/images/dot04_00.png")
+                $(this).addClass('panelbodyli').siblings().removeClass('panelbodyli');
+            });
+
+            $('#nei10_01_left>div').hover(function () {//子页面头导航
+                $(this).addClass('select02').siblings().removeClass('select02');
+            });
+
+        })
+    </script>
+}

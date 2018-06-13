@@ -116,7 +116,8 @@
             <div class="newsindextitbg"><img src="/images/newsyjs.gif" width="120" height="19"> </div>
             <div class="newsmainindex">
                 <ul>
-                    <li v-for="item in newsData">[{{item.shortRegDate}}]&nbsp; &nbsp; <a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(30)}}</a>
+                    <li v-for="item in newsData">
+                        [{{item.shortRegDate}}]&nbsp; &nbsp; <a v-bind:href="item.newsID|link" target="_blank">{{item.title|changeLength(30)}}</a>
                     </li>
                 </ul>
             </div>
@@ -340,49 +341,51 @@
     </div>
 </div>
 @section Scripts{
+    <script src="~/js/polyfill.js"></script>
     <script src="~/js/axios.min.js"></script>
+    @*<script src="~/js/es5/axios.min.js"></script>*@
     <script src="~/js/vue.js"></script>
     <script>
+        $(function () {
+            $.piccro();
+        });
         var vm = new Vue({
             el: "#mid_center01_01",
             data: {
                 picNewsData: {},
-                newsData: {},
-            }, mounted: function () {
+                newsData: {}
+            }, mounted: function mounted() {
                 axios.get("/News/NewsPicList2", {
                     params: {
                         count: 4,
                         language: 0
                     }
-                })
-                    .then(function (response) {
-                        //console.log(response.data);
-                        vm.picNewsData = response.data;
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
+                }).then(function (response) {
+                    //console.log(response.data);
+                    vm.picNewsData = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
                 axios.get("/News/NewsList2", {
                     params: {
                         count: 12,
                         language: 0
                     }
-                })
-                    .then(function (response) {
-                        vm.newsData = response.data;
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-
+                }).then(function (response) {
+                    vm.newsData = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }, filters: {
-                photo: function (value) {
-                    let imgUrl = `/upload/image/${value}`;
+                photo: function photo(value) {
+                    var imgUrl = "/upload/image/" + value;
                     return imgUrl;
-                }, link: function (value) {
-                    let Url = `/News/Detail/${value}`;
+                }, link: function link(value) {
+                    var Url = "/News/Detail/" + value;
                     return Url;
-                }, changeLength: function (value, length) {
+                }, changeLength: function changeLength(value, length) {
                     return value.substr(0, length);
-                }, clean: function (value) {
+                }, clean: function clean(value) {
                     return value.replace(/<\/?.+?>/g, "");
                 }
             }

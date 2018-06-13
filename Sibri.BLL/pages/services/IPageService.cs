@@ -8,6 +8,6 @@ namespace Sibri.BLL.pages.services
 {
     public interface IPageService
     {
-        Task<Pages> GetPage(int id);
+        Task<Pages> GetPage(int id,int language);
     }
 }

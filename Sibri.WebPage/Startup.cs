@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -39,6 +40,11 @@ namespace Sibri.WebPage
 
             services.AddMemoryCache();
             services.AddMvc();
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.Filters.Add(new RequireHttpsAttribute());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,9 +61,8 @@ namespace Sibri.WebPage
                 app.UseDeveloperExceptionPage();
                 //app.UseExceptionHandler("/Home/Error");
             }
-
+            
             app.UseStaticFiles();
-
             app.UseMvc(routes =>
             {
 

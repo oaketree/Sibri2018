@@ -29,9 +29,10 @@
         <script type="text/javascript" src="~/js/common.js"></script><!--内页导航图片切换-->
     </environment>
     <environment exclude="Development">
-        <script type="text/javascript" src="~/js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="~/js/jquery.SuperSlide.2.1.1.js"></script><!--导航-->
-        <script type="text/javascript" src="~/js/common.js"></script><!--内页导航图片切换-->
+        @*<script src="~/js/polyfill.js"></script>*@
+        <script src="~/js/jquery-1.11.1.min.js"></script>
+        <script src="~/js/jquery.SuperSlide.2.1.1.js"></script>
+        <script src="~/js/common.js"></script><!--内页导航图片切换-->
     </environment>
     @RenderSection("Scripts", required: false)
 </body>

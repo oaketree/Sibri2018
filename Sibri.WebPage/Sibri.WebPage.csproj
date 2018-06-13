@@ -20,8 +20,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\English\Data\" />
-    <Folder Include="wwwroot\english\images\" />
     <Folder Include="wwwroot\english\mobile\" />
+    <Folder Include="wwwroot\js\es5\" />
     <Folder Include="wwwroot\upload\image\" />
     <Folder Include="wwwroot\upload\file\" />
     <Folder Include="wwwroot\upload\video\" />
@@ -29,8 +29,29 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\lib\babel-polyfill\.npmignore" />
+    <None Include="wwwroot\lib\babel-polyfill\browser.js" />
+    <None Include="wwwroot\lib\babel-polyfill\dist\polyfill.js" />
+    <None Include="wwwroot\lib\babel-polyfill\dist\polyfill.min.js" />
+    <None Include="wwwroot\lib\babel-polyfill\lib\index.js" />
+    <None Include="wwwroot\lib\babel-polyfill\README.md" />
+    <None Include="wwwroot\lib\babel-polyfill\scripts\build-dist.sh" />
+    <None Include="wwwroot\lib\babel-polyfill\scripts\postpublish.js" />
+    <None Include="wwwroot\lib\babel-polyfill\scripts\prepublish.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Sibri.BLL\Sibri.BLL.csproj" />
     <ProjectReference Include="..\Sibri.Contract\Sibri.Contract.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\js\polyfill.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\js\polyfill.min.js">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

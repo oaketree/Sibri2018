@@ -31,14 +31,23 @@ h1 {
 
 
 
-ul {padding:0;margin:0
+ul, li {
+    padding: 0;
+    margin: 0
 }
 
 
-p{	text-indent: 2em;
-;text-align:justify;
-text-justify:inter-ideograph;}
 
+p{
+text-indent: 2em;
+text-align:justify;
+text-justify:inter-ideograph;
+}
+
+li > p {
+    text-indent:0em;
+    /*text-justify: inter-ideograph;*/
+}
 
 
 a {
@@ -697,23 +706,11 @@ and (max-width : 360px) {
 	overflow:hidden;
 	float:left;
 	padding-left:1100px;
-
-
-
-
-	
-	
- 
-	
 	transform: translate(-50%,10px);
 	-ms-transform: translate(-50%,10px);		/* IE 9 */
 	-webkit-transform: translate(-50%,10px);	/* Safari and Chrome */
 	-o-transform: translate(-50%,10px);		/* Opera */
 	-moz-transform: translate(-50%,10px);		/* Firefox */
-	
-	
-	
-	
 	}	
 	
 	

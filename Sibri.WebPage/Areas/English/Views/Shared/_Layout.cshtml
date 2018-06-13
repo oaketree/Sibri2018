@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SHANGHAI INDUSTRIAL BOILER RESEARCH INSTITUTE CO.,LTD- @ViewData["Title"]</title>
     @*<link href="~/css/nei.css" rel="stylesheet" />*@
+    <link href="~/english/css/nei.css" rel="stylesheet" />
     <link href="~/english/css/main_en.css" rel="stylesheet" />
+    @*<link href="~/css/main.css" rel="stylesheet" />*@
     <link href="~/english/css/main_sibriindex.css" rel="stylesheet" />
     <link href="~/english/css/comstyle.css" rel="stylesheet" />
     @RenderSection("Css", required: false)
@@ -14,9 +16,10 @@
     @RenderSection("Header")
     @RenderBody()
     @RenderSection("Footer")
-        <script type="text/javascript" src="~/js/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="~/js/jquery.SuperSlide.2.1.1.js"></script>
-        <script src="~/english/js/common.js"></script>
+    @*<script src="~/js/polyfill.min.js"></script>*@
+    <script src="~/js/jquery-1.11.1.min.js"></script>
+    <script src="~/js/jquery.SuperSlide.2.1.1.js"></script>
+    <script src="~/english/js/common.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

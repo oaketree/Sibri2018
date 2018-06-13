@@ -48,150 +48,150 @@
     </div>
 </div>
 <div class="height30kong"></div>
-<template id="pagingTpl">
+<template id="pagingTpl" style="display:none">
     <div class="tcdPageCode">
         <span v-if="cur>1" v-on:click="pageClick('up')">上一页</span>
-        <span v-if="cur==1" class="disabled">上一页</span>
+        @*<span v-if="cur==1" style="display:none">上一页</span>*@
         <span v-for="index in indexs" v-on:click="btnClick(index)" v-bind:class="{ 'active': cur == index}">{{ index }}</span>
         <span v-if="cur!=all" v-on:click="pageClick('down')">下一页</span>
-        <span v-if="cur==all" class="disabled">下一页</span>
+        @*<span v-if="cur==all" style="display:none">下一页</span>*@
     </div>
 </template>
 
 
 @section Scripts{
+    <script src="~/js/polyfill.js"></script>
     <script src="~/js/axios.min.js"></script>
     <script src="~/js/vue.js"></script>
     <script>
-            var vmPaging = {
-                props: ['pageData'],
-                template: "#pagingTpl",
-                methods: {
-                     pageClick: function (tp) {
-                        if (tp == 'up')
-                            this.$emit('update-pagedata', { pageIndex: this.cur - 1 });
-                        else
-                            this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
-                    }, btnClick: function (idx) {
-                        if (idx != this.cur) {
-                            this.$emit('update-pagedata', { pageIndex: idx });
-                        }
-                    }
-                }, computed: {
-                    indexs: function () {
-                        var left = 1;
-                        var right = this.all;
-                        var ar = [];
-                        if (this.all >= 5) {
-                            if (this.cur > 3 && this.cur < this.all - 2) {
-                                left = this.cur - 2
-                                right = this.cur + 2
-                            } else {
-                                if (this.cur <= 3) {
-                                    left = 1
-                                    right = 5
-                                } else {
-                                    right = this.all
-                                    left = this.all - 4
-                                }
-                            }
-                        }
-                        while (left <= right) {
-                            ar.push(left)
-                            left++
-                        }
-
-
-                        return ar
-
-                    }, all: function () {
-                        return this.pageData.totalPages
-                    }, cur: {
-                        get: function () {
-                            return this.pageData.pageIndex
-                        }
+           var vmPaging = {
+    props: ['pageData'],
+    template: "#pagingTpl",
+    methods: {
+        pageClick: function pageClick(tp) {
+            if (tp == 'up') this.$emit('update-pagedata', { pageIndex: this.cur - 1 });else this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
+        }, btnClick: function btnClick(idx) {
+            if (idx != this.cur && idx!="...") {
+                this.$emit('update-pagedata', { pageIndex: idx });
+            }
+        }
+    }, computed: {
+        indexs: function indexs() {
+            var left = 1;
+            var right = this.all;
+            var ar = [];
+            if (this.cur >= 4) { 
+                ar.push(1);
+            }
+            if (this.cur > 4) {
+                ar.push("...");
+            }
+            if (this.all >= 5) {
+                if (this.cur > 3 && this.cur < this.all - 2) {
+                    left = this.cur - 2;
+                    right = this.cur + 2;
+                } else {
+                    if (this.cur <= 3) {
+                        left = 1;
+                        right = 5;
+                    } else {
+                        right = this.all;
+                        left = this.all - 4;
                     }
                 }
             }
-
-        var vm = new Vue({
-            el: "#q_neipro_10",
-            data: {
-                picNewsData: {},
-                newsData: {},
-                pageSize: 10,
-                pageIndex: 1,
-                categoryid:@Model,
-                show: false
-            }, methods:{
-                updatePageData: function (payload) {
-                    if ("pageIndex" in payload)
-                        this.changeData.pageIndex = payload.pageIndex;
-                    //console.log(this.changeData);
-                    axios.get('/News/NewsList', {
-                        params: this.changeData
-                    })
-                        .then(function (response) {
-                            vm.newsData = response.data;
-                        })
-                        .catch(function (error) {
-                            console.log(error);
-                        });
-                }
-            }, mounted: function () {
-                axios.get("/News/NewsPicList", {
-                    params: {
-                        categoryid:this.categoryid,
-                        count: 2,
-                        language:0
-                    }
-                })
-                    .then(function (response) {
-                        //console.log(response.data);
-                        vm.picNewsData = response.data;
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-                axios.get("/News/NewsList", {
-                    params: this.changeData
-                })
-                    .then(function (response) {
-                        if (response.data.items.length!=0) {
-                            //console.log(response.data);
-                            vm.show = true;
-                            vm.newsData = response.data;
-                        }
-                    }).catch(function (error) {
-                        console.log(error);
-                    });
-
-            }, filters: {
-                photo: function (value)
-                {
-                    let imgUrl = `/upload/image/${value}`;
-                    return imgUrl;
-                }, link: function (value) {
-                    let Url = `/News/Detail/${value}`;
-                    return Url;
-                }, changeLength: function (value, length) {
-                    return value.substr(0,length);
-                }, clean: function (value) {
-                    return value.replace(/<\/?.+?>/g, "");
-
-                }
-            }, computed: {
-                changeData: function () {
-                    return {
-                        categoryid: this.categoryid,
-                        pageSize: this.pageSize,
-                        pageIndex: this.pageIndex,
-                        language: 0
-                    }
-                }
-
-            }, components: {
-                'paging-component': vmPaging,
+            while (left <= right) {
+                ar.push(left);
+                left++;
             }
+            if (this.cur + 3 < this.all) { 
+                ar.push("...");
+                
+            }
+            if (this.cur + 3 <= this.all) { 
+                ar.push(this.all);
+            }
+            return ar;
+        }, all: function all() {
+            return this.pageData.totalPages;
+        }, cur: {
+            get: function get() {
+                return this.pageData.pageIndex;
+            }
+        }
+    }
+};
+
+var vm = new Vue({
+    el: "#q_neipro_10",
+    data: {
+        picNewsData: {},
+        newsData: {},
+        pageSize: 10,
+        pageIndex: 1,
+        categoryid:"@Model",
+        show: false
+    }, methods: {
+        updatePageData: function updatePageData(payload) {
+            if ("pageIndex" in payload) this.changeData.pageIndex = payload.pageIndex;
+            //console.log(this.changeData);
+            axios.get('/News/NewsList', {
+                params: this.changeData
+            }).then(function (response) {
+                vm.newsData = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, mounted: function mounted() {
+        axios.get("/News/NewsPicList", {
+            params: {
+                categoryid: this.categoryid,
+                count: 2,
+                language: 0
+            }
+        }).then(function (response) {
+            //console.log(response.data);
+            vm.picNewsData = response.data;
+        }).catch(function (error) {
+            console.log(error);
         });
+        axios.get("/News/NewsList", {
+            params: this.changeData
+        }).then(function (response) {
+            if (response.data.items.length != 0) {
+                //console.log(response.data);
+                vm.show = true;
+                vm.newsData = response.data;
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }, filters: {
+        photo: function photo(value) {
+            var imgUrl = '/upload/image/' + value;
+            return imgUrl;
+        }, link: function link(value) {
+            var Url = '/News/Detail/' + value;
+            return Url;
+        }, changeLength: function changeLength(value, length) {
+            return value.substr(0, length);
+        }, clean: function clean(value) {
+            return value.replace(/<\/?.+?>/g, "");
+        }
+    }, computed: {
+        changeData: function changeData() {
+            return {
+                categoryid: this.categoryid,
+                pageSize: this.pageSize,
+                pageIndex: this.pageIndex,
+                language: 0
+            };
+        }
+
+    }, components: {
+        'paging-component': vmPaging
+    }
+});
     </script>
 }

@@ -22,13 +22,13 @@ div[id^=m] {
 #q_top06 {
 	
 	height:96px;
-	background-image:url(../images/topbgindex00.gif);
+	background-image:url(/images/topbgindex00.gif);
 	
 	}	
 	
 #mid_top06 {
 	height:96px;
-	background-image:url(../images/indextopbg02.jpg);
+	background-image:url(/images/indextopbg02.jpg);
 	background-repeat:no-repeat;
 	background-position:center;}
 	

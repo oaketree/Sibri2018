@@ -1,0 +1,75 @@
+﻿@using Sibri.WebPage.Areas.English.ViewComponents
+@model Sibri.Contract.pages.Pages
+@{
+    ViewData["Title"] = Model.Title;
+}
+@section Css{
+    <style type="text/css">
+        .panelbodyli {
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+            .panelbodyli a {
+                color: #f66400;
+            }
+    </style>
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopEn))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomEn))
+}
+@await Component.InvokeAsync(nameof(BannerEn), new { categoryid = Model.ColumnID })
+@await Component.InvokeAsync(nameof(ProductEn))
+<div id="q_neipro_bu50" class="nei50"></div>
+<div id="q_neipro_10">
+    <div id="mid_nei10_01" class="top50">
+        @await Component.InvokeAsync(nameof(LeftEn), new { view = "Product", categoryid = 6 })
+        <div id="nei10_01_right">
+            <div class="protit01 margintop20">@Model.Title</div>
+            <div>
+                @Html.Raw(@Model.PContent)
+            </div>
+        </div>
+    </div>
+</div>
+<div class="height30kong"></div>
+@section Scripts{
+    <script>
+        $(function () {
+            $('#tit>div').eq(1).addClass('select').siblings().removeClass('select');
+            //$('#con div').eq(1).show().siblings().hide();
+            //$('#neidaohangline').show();
+
+
+            $(".panel-body").hide();//隐藏二级菜单
+
+            $("#panel_body_@Model.ColumnID").show();
+            $("#panel_body_@Model.ColumnID").addClass('select02');
+
+
+            $("#panel_li_@Model.ColumnID").parent().parent().show();
+            $("#panel_li_@Model.ColumnID").parent().parent().addClass('select02');
+            $("#panel_li_@Model.ColumnID").addClass('panelbodyli');
+
+
+            $(".panel-header").on("click", function () {//产品与技术左导航
+                let next = $(this).next();
+                next.slideToggle(300);
+                $(".panel-body").not(next).slideUp();
+            })
+            $('.panel-body li').hover(function () {
+                $(this).find('img').attr("src", "/images/dot04.png");
+                $(this).siblings().find('img').attr("src", "/images/dot04_00.png")
+                $(this).addClass('panelbodyli').siblings().removeClass('panelbodyli');
+            });
+            $('#nei10_01_left>div').hover(function () {
+                $(this).addClass('select02').siblings().removeClass('select02');
+            });
+
+        })
+    </script>
+}
+
