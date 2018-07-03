@@ -1,0 +1,44 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "平台建设";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 3 })
+<div class="platform">
+    <div class="platformbg">
+        <div class="bigboxplat">
+            <div>
+                <img src="/images/platform/plat01.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat02.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat03.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat04.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat05.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat06.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat08.jpg">
+            </div>
+            <div>
+                <img src="/images/platform/plat07.jpg">
+            </div>
+            <div class="height30kong"></div>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>

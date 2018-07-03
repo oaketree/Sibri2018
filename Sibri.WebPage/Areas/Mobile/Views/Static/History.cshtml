@@ -1,0 +1,21 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "发展历程";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 10 })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "Page", categoryid = 10, direction = 0 })
+<div class="container">
+    <img class="img_center img-responsive" src="/images/his.jpg" />
+</div>
+<div class="kong30"></div>
+@*@section Scripts{
+        <script src="~/js/history.js"></script>
+    }*@
+

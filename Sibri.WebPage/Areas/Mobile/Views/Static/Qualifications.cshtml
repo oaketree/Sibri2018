@@ -1,0 +1,43 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "相关资质";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 19 })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "Page", categoryid = 19, direction = 0 })
+<div class="container">
+    <div id="mbpiccenter" class="container aptitudemain">
+        <div class="row">
+            <ul>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/zz01.jpg" /></div>
+                    <div class="col-xs-6">经国家认证认可监督管理委员会认证并批准（证书号：160008220218）,可以向社会出具具有证明作用的数据和结果，拥有在检测报告上使用CMA标志的资格。 </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/zz02.jpg" /></div>
+                    <div class="col-xs-6">2011年取得了中国合格评定国家认可委员会实验室认可证书[证书编号：CNAS L4911]。  </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/zz03.jpg" /></div>
+                    <div class="col-xs-6">2013年取得了中国合格评定国家认可委员会检查机构认可证书[证书编号：CNAS IB0344]。 </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/zz04.jpg" /></div>
+                    <div class="col-xs-6">2006年检测中心取得了中国环保产业协会批准的第一批环保产品检测机构资格（原证书编号：中环协认检（2015）19号）。 </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/zz05.jpg" /></div>
+                    <div class="col-xs-6">2010年取得了国家技术监督总局第二批认可的在用工业锅炉能效测试机构。 </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>
+

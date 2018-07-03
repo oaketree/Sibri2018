@@ -1,0 +1,155 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@model string
+@{
+    ViewData["Title"] = "新闻搜索";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+<div id="toplan"></div>
+<div id="mb_tit">
+    <span class="mbtit02">News Search</span><br />
+    <span class="mbtit01 mbbt">搜素结果：@Model</span>
+</div>
+
+<div id="mb_maincenter" class="container">
+    <div id="jwen_newslie" class="container">
+        <ul v-for="item in newsData.items">
+            <li><span class="text-warning">[{{item.shortRegDate}}]</span><a v-bind:href="item.newsID|link">{{item.title}}</a></li>
+        </ul>
+        <paging-component v-if="show" v-bind:page-data="newsData" v-on:update-pagedata="updatePageData"></paging-component>
+        @*<div class="tcdPageCode"></div>*@
+    </div>
+</div>
+<div class="kong30"></div>
+<template id="pagingTpl" style="display:none">
+    <div class="tcdPageCode">
+        <span v-if="cur>1" v-on:click="pageClick('up')"><</span>
+        @*<span v-if="cur==1" style="display:none">上一页</span>*@
+        <span v-for="index in indexs" v-on:click="btnClick(index)" v-bind:class="{ 'active': cur == index}">{{ index }}</span>
+        <span v-if="cur!=all" v-on:click="pageClick('down')">></span>
+        @*<span v-if="cur==all" style="display:none">下一页</span>*@
+    </div>
+</template>
+@section Scripts{
+    <script src="~/js/polyfill.js"></script>
+    <script src="~/js/axios.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script>
+          var vmPaging = {
+    props: ['pageData'],
+    template: "#pagingTpl",
+    methods: {
+        pageClick: function pageClick(tp) {
+            if (tp == 'up') this.$emit('update-pagedata', { pageIndex: this.cur - 1 });else this.$emit('update-pagedata', { pageIndex: this.cur + 1 });
+        }, btnClick: function btnClick(idx) {
+            if (idx != this.cur && idx != "...") {
+                this.$emit('update-pagedata', { pageIndex: idx });
+            }
+        }
+    }, computed: {
+        indexs: function indexs() {
+            var left = 1;
+            var right = this.all;
+            var ar = [];
+
+            if (this.all >= 5) {
+                if (this.cur > 3 && this.cur < this.all - 2) {
+                    left = this.cur - 2;
+                    right = this.cur + 2;
+                } else {
+                    if (this.cur <= 3) {
+                        left = 1;
+                        right = 5;
+                    } else {
+                        right = this.all;
+                        left = this.all - 4;
+                    }
+                }
+            }
+            if (left >= 2) {
+                ar.push(1);
+            }
+            if (left > 2) {
+                ar.push("...");
+            }
+            while (left <= right) {
+                ar.push(left);
+                left++;
+            }
+            if (right + 1 < this.all) {
+                ar.push("...");
+            }
+            if (right + 1 <= this.all) {
+                ar.push(this.all);
+            }
+            return ar;
+        }, all: function all() {
+            return this.pageData.totalPages;
+        }, cur: {
+            get: function get() {
+                return this.pageData.pageIndex;
+            }
+        }
+    }
+};
+
+var vm = new Vue({
+    el: "#jwen_newslie",
+    data: {
+        newsData: {},
+        pageSize: 20,
+        pageIndex: 1,
+        keywords: "@Model",
+        show: false
+    }, methods: {
+        updatePageData: function updatePageData(payload) {
+            if ("pageIndex" in payload) this.changeData.pageIndex = payload.pageIndex;
+            //console.log(this.changeData);
+            axios.get('/News/NewsSearch', {
+                params: this.changeData
+            }).then(function (response) {
+                vm.newsData = response.data;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, mounted: function mounted() {
+        axios.get("/News/NewsSearch", {
+            params: this.changeData
+        }).then(function (response) {
+            console.log(vm.keywords);
+            console.log(response.data);
+            if (response.data.items.length != 0) {
+                vm.show = true;
+                vm.newsData = response.data;
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }, filters: {
+        link: function link(value) {
+            var Url = '/News/Detail/' + value;
+            return Url;
+        }, changeLength: function changeLength(value, length) {
+            return value.substr(0, length);
+        }
+    }, computed: {
+        changeData: function changeData() {
+            return {
+                keywords: this.keywords,
+                pageSize: this.pageSize,
+                pageIndex: this.pageIndex,
+                language: 0
+            };
+        }
+    }, components: {
+        'paging-component': vmPaging
+    }
+});
+    </script>
+}

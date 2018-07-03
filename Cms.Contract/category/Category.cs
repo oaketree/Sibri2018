@@ -19,8 +19,8 @@ namespace Cms.Contract.category
         [StringLength(50)]
         public string Href { get; set; }
 
-        [StringLength(50)]
-        public string HrefEn { get; set; }
+        //[StringLength(50)]
+        //public string HrefEn { get; set; }
 
         public int? ParentID { get; set; }
 

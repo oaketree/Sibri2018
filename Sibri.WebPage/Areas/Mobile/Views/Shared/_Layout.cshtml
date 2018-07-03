@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>上海工业锅炉研究所有限公司- @ViewData["Title"]</title>
+    <link href="~/mobile/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/mobile/css/main.css" rel="stylesheet" />
+    @RenderSection("Css", required: false)
+</head>
+<body>
+    @RenderSection("Header")
+    @RenderBody()
+    @RenderSection("Footer")
+    <script src="~/js/jquery-1.11.1.min.js"></script>
+    <script src="~/mobile/js/bootstrap.js"></script>
+    <script src="~/mobile/js/common.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

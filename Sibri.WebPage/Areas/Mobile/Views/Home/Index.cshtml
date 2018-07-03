@@ -1,0 +1,224 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "首页";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+<div class="mbnewsss">
+    <form asp-controller="News" asp-action="Search" asp-area="Mobile" onsubmit="return $.validate()" method="get">
+        <div class="mbnewsssmain jz container">
+            <div class="inputwz"><input type="text" class="form-control" id="search" placeholder="新闻检索" name="search"></div>
+            <div><button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span></button></div>
+        </div>
+    </form>
+</div>
+<div class="container-fluid news_tit">
+    <div>
+        RESEARCH&nbsp;NEWS<br />
+        <span class="newsbiaoti">工锅所新闻</span>
+    </div>
+    <div><img src="/mobile/images/news_tit01.gif" width="150" height="18" alt="" /></div>
+</div>
+<div id="fuxmindex02" class="container mbindexnews">
+    <div>
+        <div class="fuwuul">
+            <ul>
+                <li>
+                    <div class="fontwhite">
+                        <div class="mbindexnewspic01"></div>
+                        <div class="indexbg05 mbindexnewstit"><a href="/Mobile/News/List/48">公司新闻</a></div>
+                    </div>
+                    <div class="fontwhite">
+                        <div class="mbindexnewspic02"></div>
+                        <div class="indexbg02 mbindexnewstit"><a href="/Mobile/News/List/52">科研成果</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="fuwuul">
+            <ul>
+                <li>
+                    <div class="fontwhite">
+                        <div class="mbindexnewspic03"></div>
+                        <div class="indexbg03 mbindexnewstit"><a href="/Mobile/News/List/50">通知公告</a></div>
+                    </div>
+                    <div class="fontwhite">
+                        <div class="mbindexnewspic04"></div>
+                        <div class="indexbg01 mbindexnewstit"><a href="/Mobile/News/List/51">专题专栏</a></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="newslinebg02"></div>
+<div id="indexnewmain">
+    <div class="newmain01">
+        <div class="container-fluid ">
+            <row>
+                <ul>
+                    <li v-for="item in picNewsData">
+                        <div class="newslie">
+                            <div class="newslieimg"><img v-bind:src="item.newsImageName|photo" width="100" height="100" /></div>
+                            <div class="newsliemain">
+                                <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title}}</a></div>
+                                <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
+                                <div class="j2wen"><a v-bind:href="item.newsID|link">{{item.newsDetail|clean|changeLength(30)}}...</a></div>
+                            </div>
+                        </div>
+                        <div class="newsline">
+                            <div class="newslinebg"></div>
+                        </div>
+                    </li>
+                </ul>
+            </row>
+        </div>
+    </div>
+    <div class="newmain02">
+        <div class="container-fluid news_wenjd">
+            <ul>
+                <li v-for="item in newsData"><a v-bind:href="item.newsID|link">{{item.title}}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>
+<div id="jsindex" class="container-fluid">
+    <div class="jsindex_mid">
+        <div>
+            <div class="jsindexkuang">
+                <div><img src="/mobile/images/indexjs01.jpg" width="100" height="120" /></div>
+            </div>
+        </div>
+        <div class="jsindexmain">
+            <div class="jsindexmaintit">公司简介 / About Us</div>
+            <div>
+                上海工业锅炉研究所有限公司是
+                我国唯一从事工业锅炉行业节能
+                新产品、新技术研发和推...
+            </div>
+            <div>
+                <div class="jsindexmainmore"><a href="/Mobile/Static/BriefIntroduction">了解更多</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>
+<div id="fuxmindex" class="container">
+    <div>
+        <div class="fuwuul">
+            <ul>
+                <li>
+                    <div class="indexbg01 fontwhite">
+                        <h2><span class="glyphicon glyphicon-globe"></span></h2><br />
+                        <h4>行业服务</h4>
+                    </div>
+                    <div>
+                        <div>
+                            论文出版；标准制修订；开展交流研讨；举办锅炉展
+                        </div>
+                        <div class="parentjz">
+                            <div class="button_showcenter jz"><a href="/Mobile/Page/PageInfo/13">MORE</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <div>始建于1985年，为由原机械工业部批准成立</div>
+                        <div class="parentjz">
+                            <div class="button_showcenter jz"><a href="/Mobile/Page/PageInfo/18">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexbg02 fontwhite">
+                        <h2><span class="glyphicon glyphicon-eye-open"></span></h2><br />
+                        <h4>检测与能审</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="fuwuul">
+            <ul>
+                <li>
+                    <div class="indexbg03 fontwhite">
+                        <h2><span class="glyphicon glyphicon-cog"></span></h2><br />
+                        <h4>产品与技术</h4>
+                    </div>
+                    <div>
+                        <div>专注于锅炉及辅机产品的技术研发和产业化推广应用</div>
+                        <div class="parentjz">
+                            <div class="button_showcenter jz"><a href="/Mobile/Product/List/23">MORE</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <div>
+                            我国唯一从事工业锅炉行业各项服务的应用型研究所
+                        </div>
+                        <div class="parentjz">
+                            <div class="button_showcenter jz"><a href="/Mobile/Static/Platform">MORE</a></div>
+                        </div>
+                    </div>
+                    <div class="indexbg04 fontwhite">
+                        <h2><span class="glyphicon glyphicon-random"></span></h2><br />
+                        <h4>平台建设</h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>
+@section Scripts{
+    <script src="~/js/polyfill.js"></script>
+    <script src="~/js/axios.min.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#indexnewmain",
+            data: {
+                picNewsData: {},
+                newsData: {}
+            }, mounted: function mounted() {
+                axios.get("/News/NewsPicList2", {
+                    params: {
+                        count: 2,
+                        language: 0
+                    }
+                }).then(function (response) {
+                    //console.log(response.data);
+                    vm.picNewsData = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                axios.get("/News/NewsList2", {
+                    params: {
+                        count: 10,
+                        language: 0
+                    }
+                }).then(function (response) {
+                    vm.newsData = response.data;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }, filters: {
+                photo: function photo(value) {
+                    var imgUrl = "/upload/image/" + value;
+                    return imgUrl;
+                }, link: function link(value) {
+                    var Url = "/Mobile/News/Detail/" + value;
+                    return Url;
+                }, changeLength: function changeLength(value, length) {
+                    return value.substr(0, length);
+                }, clean: function clean(value) {
+                    return value.replace(/<\/?.+?>/g, "");
+                }
+            }
+        });
+    </script>
+}

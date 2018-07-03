@@ -1,0 +1,18 @@
+﻿@model List<Sibri.Contract.category.Category>
+<div id="dh_prodetail">
+    <ul>
+        @foreach (var item in Model)
+        {
+            if (item.IsHref.Value)
+            {
+                var link = $"/Mobile{item.Href}";
+                <li><a href="@link">@item.CategoryName</a></li>
+            }
+            else
+            {
+                <li><a href="/Mobile/News/List/@item.CategoryID">@item.CategoryName</a></li>
+            }
+
+        }
+    </ul>
+</div>

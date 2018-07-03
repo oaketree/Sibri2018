@@ -7,9 +7,9 @@
 .zoomify.zoomed {
     cursor: -webkit-zoom-out;
     cursor: zoom-out;
-    padding: 0;
+    /*padding: 0;*/
     margin: 0;
-    border: none;
+    /*border: none;*/
     border-radius: 0;
     box-shadow: none;
     position: relative;

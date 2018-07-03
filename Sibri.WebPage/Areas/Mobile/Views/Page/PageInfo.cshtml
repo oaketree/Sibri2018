@@ -1,0 +1,28 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@model Sibri.Contract.pages.Pages
+@{
+    ViewData["Title"] = Model.Title;
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = Model.ColumnID })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view="Page",categoryid = Model.ColumnID,direction=0 })
+<div id="mbpiccenter" class="container">
+    @Html.Raw(@Model.PContent)
+</div>
+<div class="kong30"></div>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#mbpiccenter img").addClass("img-responsive img_center")
+        });
+    </script>
+}
+
+
+

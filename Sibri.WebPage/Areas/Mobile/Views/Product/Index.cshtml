@@ -1,0 +1,65 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "基本介绍";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@section Css{
+    <style type="text/css">
+        .panel-body {
+            display: none;
+        }
+
+        .panelbodyli {
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+            .panelbodyli a {
+                color: #f66400;
+            }
+    </style>
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+<div id="mb_tit">
+    <span class="mbtit02">Basic introduction</span><br />
+    <span class="mbtit01 mbbt">产品与技术——基本介绍</span>
+</div>
+<div class="tech_mb">
+    <div id="opentechdh" class="btn btn-success width50">技术开发</div>
+</div>
+<div id="techdh">
+    <div id="closedh">x</div>
+</div>
+<div id="techdhmain">
+    @await Component.InvokeAsync(nameof(ProductMb), new { categoryid = 6 })
+</div>
+<div class="container">
+    <div id="mbpiccenter" class="container">
+        <p>
+            公司一直专注于锅炉及辅机产品的技术研发和产业化推广应用，通过30多年的发展，积累了一批具有代表性的产品技术。
+            2010年，随着原四方锅炉厂核心技术团队的加入，更加增强了我所在技术 研发、产品设计和工程管理领域的实力，有效扩充了公司产品系列和技术储备。
+            目前公司拥有原上海四方锅炉厂的注册商标：<img src="/images/logo001.png" />全部专利、知识产权和所有积累的技术及资料。
+        </p>
+    </div>
+</div>
+<div class="kong30"></div>
+@section Scripts{
+    <script>
+        $(function () { 
+            $(".panel").on("click", ".panel-header", function () {//产品与技术左导航
+                var next = $(this).next();
+                next.slideToggle(300);
+                $(".panel-body").not(next).slideUp();
+            })
+            $('#nei10_01_left>div').hover(function () {
+                $(this).addClass('select02').siblings().removeClass('select02');
+            });
+        })
+    </script>
+}
+

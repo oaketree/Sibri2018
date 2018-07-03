@@ -71,12 +71,12 @@
                                         <input placeholder="结点链接" class="form-control" v-model.trim="href">
                                     </div>
                                 </div>
-                                <div class="form-group clearfix">
+                                @*<div class="form-group clearfix">
                                     <label class="col-sm-3 control-label">Node Link：</label>
                                     <div class="col-sm-9">
                                         <input placeholder="Node Link" class="form-control" v-model.trim="hrefen">
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="form-group clearfix">
                                     <label class="col-sm-3 control-label">同级序列*：</label>
                                     <div class="col-sm-9">
@@ -121,7 +121,7 @@
                 categoryname: '',
                 categorynameen: '',
                 href: '',
-                hrefen: '',
+                //hrefen: '',
                 sortid: '',
                 state: 0,
                 checked:false
@@ -144,7 +144,7 @@
                     this.categoryname = '';
                     this.categorynameen = '';
                     this.href = '';
-                    this.hrefen = '';
+                    //this.hrefen = '';
                     this.sortid = '';
                     this.control = '添加同级';
                     this.ok = true;
@@ -153,7 +153,7 @@
                     this.categoryname = '';
                     this.categorynameen = '';
                     this.href = '';
-                    this.hrefen = '';
+                    //this.hrefen = '';
                     this.sortid = '';
                     this.control = '添加子级';
                     this.ok = true;
@@ -168,7 +168,7 @@
                             vm.categoryname = data.categoryName;
                             vm.categorynameen = data.categoryNameEN;
                             vm.href = data.href;
-                            vm.hrefen = data.hrefEn;
+                            //vm.hrefen = data.hrefEn;
                             vm.sortid = data.sortID.toString();
                             vm.checked = data.isHref;
                             vm.control = '编辑结点';
@@ -198,12 +198,12 @@
                         }
                     }
                 }, confirm: function () {
-                    if ((this.href == null||this.href=='') && (this.hrefen == null||this.hrefen=='')) {
+                    if ((this.href == null||this.href=='')) {
                         this.checked = false;
                     }
                     if (this.categoryname != "" && this.categorynameen != "" && this.sortid != "") { 
                         if (this.state == 0) {
-                            $.post('/Category/AddNodes', { parentid: this.parentid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen,ishref:this.checked }, function () {
+                            $.post('/Category/AddNodes', { parentid: this.parentid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href,ishref:this.checked }, function () {
                                 $.post('/Category/NodeList', function (data) {
                                     $('#treeview12').treeview({
                                         levels: 3,
@@ -213,7 +213,7 @@
                             })
                         }
                         if (this.state == 1) { 
-                            $.post('/Category/AddNodes', { parentid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen,ishref:this.checked }, function () {
+                            $.post('/Category/AddNodes', { parentid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href,ishref:this.checked }, function () {
                                 $.post('/Category/NodeList', function (data) {
                                     $('#treeview12').treeview({
                                         levels: 3,
@@ -223,7 +223,7 @@
                             })
                         }
                         if (this.state == 2) { 
-                            $.post('/Category/UpdateNode', { categoryid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, hrefen: this.hrefen, ishref: this.checked }, function () {
+                            $.post('/Category/UpdateNode', { categoryid: this.categoryid, categoryname: this.categoryname, categorynameen: this.categorynameen, sortid: this.sortid, href: this.href, ishref: this.checked }, function () {
                                 $.post('/Category/NodeList', function (data) {
                                     $('#treeview12').treeview({
                                         levels: 3,

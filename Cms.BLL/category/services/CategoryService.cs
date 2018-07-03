@@ -14,7 +14,7 @@ namespace Cms.BLL.category.services
         public CategoryService(CategoryDBContext dbContext) {
             this._dbContext = dbContext;
         }
-        public async Task addNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null,bool ishref=false)
+        public async Task addNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href,bool ishref)
         {
             _dbContext.Categorys.Add(new Category
             {
@@ -23,7 +23,7 @@ namespace Cms.BLL.category.services
                 CategoryNameEN = categorynameen,
                 SortID = sortid,
                 Href = href,
-                HrefEn = hrefen,
+                //HrefEn = hrefen,
                 IsHref=ishref
                 
             });
@@ -89,14 +89,14 @@ namespace Cms.BLL.category.services
             return category;
         }
 
-        public async Task updateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null, bool ishref = false)
+        public async Task updateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href, bool ishref)
         {
             var category = await _dbContext.Categorys.FirstOrDefaultAsync(n => n.CategoryID == categoryid);
             category.CategoryName = categoryname;
             category.CategoryNameEN = categorynameen;
             category.SortID = sortid;
             category.Href = href;
-            category.HrefEn = hrefen;
+            //category.HrefEn = hrefen;
             category.IsHref = ishref;
             _dbContext.Update(category);
             await _dbContext.SaveChangesAsync();

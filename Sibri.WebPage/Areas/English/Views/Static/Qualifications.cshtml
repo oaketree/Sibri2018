@@ -2,6 +2,9 @@
 @{
     ViewData["Title"] = "Qualifications";
 }
+@section Css{
+    <link href="~/css/zoomify.min.css" rel="stylesheet" />
+}
 @section Header{
     @await Component.InvokeAsync(nameof(TopEn))
 }

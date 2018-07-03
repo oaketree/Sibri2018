@@ -7,7 +7,7 @@
             var link = $"/English/Page/PageInfo/{item.CategoryID}";
             if (item.IsHref.Value)
             {
-                link = item.HrefEn;
+                link = $"/English{item.Href}";
             }
             //var title = item.CategoryNameEN;
             //if (title.Length > 18)

@@ -20,12 +20,14 @@
 
   <ItemGroup>
     <Folder Include="Areas\English\Data\" />
-    <Folder Include="wwwroot\english\mobile\" />
+    <Folder Include="Areas\Mobile\Data\" />
     <Folder Include="wwwroot\js\es5\" />
+    <Folder Include="wwwroot\mobile\css\" />
+    <Folder Include="wwwroot\mobile\images\" />
+    <Folder Include="wwwroot\mobile\js\" />
     <Folder Include="wwwroot\upload\image\" />
     <Folder Include="wwwroot\upload\file\" />
     <Folder Include="wwwroot\upload\video\" />
-    <Folder Include="wwwroot\mobile\" />
   </ItemGroup>
 
   <ItemGroup>

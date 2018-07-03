@@ -22,9 +22,9 @@ namespace Cms.WebPage.Controllers
         }
 
         [Authorize]
-        public async Task AddNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null,bool ishref=false)
+        public async Task AddNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href = null,bool ishref=false)
         {
-            await _categoryServices.addNodes(parentid, categoryname, categorynameen, sortid, href, hrefen,ishref);
+            await _categoryServices.addNodes(parentid, categoryname, categorynameen, sortid, href,ishref);
             //return Json(result);
         }
         [Authorize]
@@ -41,9 +41,9 @@ namespace Cms.WebPage.Controllers
         }
 
         [Authorize]
-        public async Task UpdateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null,bool ishref=false)
+        public async Task UpdateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href = null,bool ishref=false)
         {
-            await _categoryServices.updateNode(categoryid,categoryname,categorynameen,sortid,href,hrefen,ishref);
+            await _categoryServices.updateNode(categoryid,categoryname,categorynameen,sortid,href,ishref);
         }
         [Authorize]
         public async Task<bool> DelNode(int categoryid) {

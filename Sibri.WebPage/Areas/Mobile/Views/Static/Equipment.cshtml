@@ -1,0 +1,58 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "主要设备";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 20 })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "Page", categoryid = 20, direction = 0 })
+<div class="container">
+    <div id="mbpiccenter" class="container aptitudemain">
+        <p>现有用于开展检验、检测业务的各类实验室和现场用仪器和设备共有200台（套），其中主要设备包括： </p>
+        <div class="row">
+            <ul>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb01.jpg" /></div>
+                    <div class="col-xs-6">德国生产的ADM6275型高温超声波流量计。主要用于液体流量测量，如水、导热油。特点：可测量高达400℃以上液体，解决了热载体锅炉导热油流量不易测量的难题。<br /><br />  </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb02.jpg" /></div>
+                    <div class="col-xs-6">德国约克公司生产的MGA5型便携式红外烟气分析仪。主要用于锅炉及环保测试中对烟气成份的测试，其主要特点：精度高、测量范围广、测量项目多。<br /><br /> </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb03.jpg" /></div>
+                    <div class="col-xs-6">德国德图公司生产的350型便携式烟气分析仪。主要用于锅炉及环保测试中对烟气成份的测试，其主要特点：精度高、测量范围广、测量项目多。<br /><br /> </div>
+
+
+
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb04.jpg" /></div>
+                    <div class="col-xs-6">虹润产NHR-8700 48路彩色数据采集无纸记录仪（高速高性能32位微处理器）。其特点：电站锅炉网格法测试烟气温度无纸化一键记录。<br /><br /> </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb05.jpg" /></div>
+                    <div class="col-xs-6">美国生产的Ti10型红外热成像仪。主要用于锅炉散热分布情况测量。其特点：用图片来记录锅炉散热情况，能客观迅速反映问题所在。<br /><br />  </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb06.jpg" /></div>
+                    <div class="col-xs-6">德国生产的IKAC2000型量热仪。主要用于燃料热量分析。其特点：全自动、完全由计算机来记录分析测量结果。 <br /><br /> </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb07.jpg" /></div>
+                    <div class="col-xs-6">德国生产的CHNS型元素分析仪。主要用于燃料中碳、氢、氧、氮、硫元素的分析。其特点：能一次把燃料中的元素全部分析出来。 <br /><br /> </div>
+                </li>
+                <li>
+                    <div class="col-xs-6"><img class="img-responsive img_center" src="/images/sb08.jpg" /></div>
+                    <div class="col-xs-6">英国产灰熔融性测定炉。其特点：加热灰样品可达最高温度1600℃，在可控气氛和视觉融合的样品进行分析记录。<br /><br /> </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>

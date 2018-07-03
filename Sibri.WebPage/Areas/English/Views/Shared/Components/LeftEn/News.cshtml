@@ -7,7 +7,7 @@
             var link = $"/English/News/List/{item.CategoryID}";
             if (item.IsHref.Value)
             {
-                link = item.HrefEn;
+                link =$"/English{item.Href}";
             }
             <div class="boxbottom01" onclick="window.location.href='@link'"><img src="/images/dotarrow.png" />@item.CategoryNameEN</div>
         }

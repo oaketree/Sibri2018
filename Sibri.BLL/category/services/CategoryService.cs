@@ -26,7 +26,7 @@ namespace Sibri.BLL.category.services
             var cacheEntry = _cache.GetOrCreate(CacheKeys.Entry, entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromMinutes(25);
-                return _dbContext.Categorys.OrderBy(o=>o.SortID).AsNoTracking().ToListAsync();
+                return _dbContext.Categorys.OrderBy(o => o.SortID).AsNoTracking().ToListAsync();
             });
             return cacheEntry;
         }

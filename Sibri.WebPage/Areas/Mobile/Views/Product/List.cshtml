@@ -1,0 +1,68 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@inject Sibri.BLL.category.services.ICategoryService Options
+@model Sibri.Contract.pages.Pages
+@{
+    ViewData["Title"] = Model.Title;
+    var categorylist = await Options.GetCategoryListByID(Model.ColumnID, 1);
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@section Css{
+    <style type="text/css">
+        .panel-body {
+            display: none;
+        }
+
+        .panelbodyli {
+            font-weight: bold;
+            background-color: #fff;
+        }
+
+            .panelbodyli a {
+                color: #f66400;
+            }
+    </style>
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = Model.ColumnID })
+<div class="tech_mb">
+    <div id="opentechdh" class="btn btn-success width50">技术开发</div>
+</div>
+<div id="techdh">
+    <div id="closedh">x</div>
+</div>
+<div id="techdhmain">
+    @await Component.InvokeAsync(nameof(ProductMb), new { categoryid = 6 })
+</div>
+<div id="dh_prodetail">
+    <ul>
+        @foreach (var item in categorylist)
+        {
+            <li><a href="/Mobile/Product/List/@item.CategoryID">@item.CategoryName</a></li>
+        }
+    </ul>
+</div>
+<div id="mbpiccenter" class="container">
+    <span class="protit01">@Model.Title</span>
+    @Html.Raw(@Model.PContent)
+</div>
+<div class="kong30"></div>
+@section Scripts{
+    <script>
+        $(function () {
+            $(".panel").on("click", ".panel-header", function () {//产品与技术左导航
+                var next = $(this).next();
+                next.slideToggle(300);
+                $(".panel-body").not(next).slideUp();
+            })
+            $('#nei10_01_left>div').hover(function () {
+                $(this).addClass('select02').siblings().removeClass('select02');
+            });
+            $("#mbpiccenter img").addClass("img-responsive img_center")
+        });
+    </script>
+}

@@ -1,0 +1,34 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "基本情况";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 11 })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "Page", categoryid =11, direction = 0 })
+<div class="container">
+    <div id="mbpiccenter" class="container">
+        <p>上海工业锅炉研究所有限公司是我国唯一从事工业锅炉行业节能新产品、新技术研发和推广，产品热工性能测试和环保性能测试、锅炉辅机产品性能评定、行业情报和标准工作的应用型研究所。</p>
+
+        <p>本所是中国电器工业协会工业锅炉分会理事长单位和秘书长单位，也是全国锅炉压力容器标准化技术委员会工业锅炉节能减排专业委员会挂靠单位、中国锅炉水处理协会副理事长单位。</p>
+        <p>本所现有员工63人，工程技术人员占76%，其中教授级高工及国家有突出贡献专家2人，高级工程师10人，工程师25人，硕士7人。</p>
+        <div class="introducepic jz">
+            <ul>
+                <li>
+                    <div class="width35 introbg01"></div>
+                    <div class="width65 introbg02"></div>
+                </li>
+                <li>
+                    <div class="width65 introbg"><span class="intropict30"><a href="/Mobile/Static/Platform">PLATFORM<br />平台建设</a></span></div>
+                    <div class="width35 introbg04"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="kong30"></div>

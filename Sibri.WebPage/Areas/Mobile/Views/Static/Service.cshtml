@@ -1,0 +1,28 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "主要服务内容";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 21 })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "Page", categoryid = 21, direction = 0 })
+<div class="container">
+    <div id="mbpiccenter" class="container">
+        <img class="img-responsive img_center" src="/images/fuwu.gif" />
+    </div>
+</div>
+<div id="mb_tit02">
+    <span class="mbtit02">Contents of service</span><br />
+    <span class="mbtit01 mbbt">主要服务内容——按产品类别分</span>
+</div>
+<div class="container">
+    <div id="mbpiccenter" class="container">
+        <img class="img-responsive img_center" src="/images/fuwu02.gif" />
+    </div>
+</div>
+<div class="kong30"></div>

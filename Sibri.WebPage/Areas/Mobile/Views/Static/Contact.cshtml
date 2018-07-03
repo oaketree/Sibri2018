@@ -1,0 +1,151 @@
+﻿@using Sibri.WebPage.Areas.Mobile.ViewComponents
+@{
+    ViewData["Title"] = "联系我们";
+}
+@section Header{
+    @await Component.InvokeAsync(nameof(TopMb))
+}
+@section Footer{
+    @await Component.InvokeAsync(nameof(BottomMb))
+}
+@await Component.InvokeAsync(nameof(BannerMb))
+@await Component.InvokeAsync(nameof(TitleMb), new { categoryid = 9 })
+<div id="mbpiccenter" class="container">
+    <div class="protit03">上海工业锅炉研究所有限公司</div>
+    <div>
+        <table class="zebra">
+            <tr>
+                <th>地&nbsp; &nbsp; 址</th>
+                <td>上海市闵行区浦江镇新骏环路138号浦江高科技园区4幢1-3楼</td>
+            </tr>
+            <tr>
+                <th>邮&nbsp; &nbsp; 编</th>
+                <td>201114</td>
+            </tr>
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）</td>
+            </tr>
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54398636</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td>sibri@public1.sta.net.cn</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="padleftcontact">
+                    开户银行：工行上海市浦江高科技园支行 1001119809100005381<br />
+                    户&nbsp; &nbsp;名：上海工业锅炉研究所有限公司<br />
+                    电&nbsp; &nbsp;话：021-34781959<br />
+                    税&nbsp; &nbsp;号：91310106425014109E
+                </td>
+            </tr>
+        </table>
+        <div class="height30kong"></div>
+        @*<div class="baidumap">
+            <div id="container1" class="containermap"></div>
+        </div>*@
+        @*<div class="height30kong"></div>*@
+        <div class="protit03 ">综合办公室</div>
+        <table class="zebra">
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）-208</td>
+            </tr>
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54398636</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td></td>
+            </tr>
+        </table>
+        <div class="height30kong"></div>
+        <div class="protit03 ">科技经营处</div>
+        <table class="zebra">
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）-217</td>
+            </tr>
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54707609</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td></td>
+            </tr>
+        </table>
+        <div class="height30kong"> </div>
+        <div class="protit03 ">技术开发部</div>
+        <table class="zebra">
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）-328（一部）、327（二部）</td>
+            </tr>
+
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54399306（一部）、021-54399025（二部）</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td></td>
+            </tr>
+        </table>
+        <div class="height30kong"></div>
+        <div class="protit03 ">行业工作部</div>
+        <table class="zebra">
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）-329</td>
+            </tr>
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54395873</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td></td>
+            </tr>
+        </table>
+        <div class="height30kong"></div>
+        <div class="protit03 ">机械工业锅炉及环保产品质量监督检测中心</div>
+        <table class="zebra">
+            <tr>
+                <th>电&nbsp; &nbsp; 话</th>
+                <td>021-34781959（总机）-108</td>
+            </tr>
+            <tr>
+                <th>传&nbsp; &nbsp; 真</th>
+                <td>021-54709972</td>
+            </tr>
+            <tr>
+                <th> E-mail</th>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="height30kong"> </div>
+</div>
+<div class="kong30"></div>
+@section Scripts{
+    <script>
+        //async function loadJScript() {
+        //    var script = document.createElement("script");
+        //    script.type = "text/javascript";
+        //    script.src = "https://api.map.baidu.com/api?v=2.0&ak=A1LU7iHS0avqQwPLAxbhKn0UYSQCuRVH&callback=init"; //<-注意 callback回调，同步加载没有&callback
+        //    document.body.appendChild(script);
+        //}
+        //function init() {
+        //    var map = new BMap.Map("container1");            // 创建Map实例
+        //    var point = new BMap.Point(121.526977, 31.092226); // 创建点坐标
+        //    map.centerAndZoom(point, 15);
+        //    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+        //}
+        //loadJScript();
+    </script>
+}

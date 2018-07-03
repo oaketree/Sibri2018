@@ -50,10 +50,10 @@
 <div class="height30kong"></div>
 <template id="pagingTpl" style="display:none">
     <div class="tcdPageCode">
-        <span v-if="cur>1" v-on:click="pageClick('up')">上一页</span>
+        <span v-if="cur>1" v-on:click="pageClick('up')"><</span>
         @*<span v-if="cur==1" style="display:none">上一页</span>*@
         <span v-for="index in indexs" v-on:click="btnClick(index)" v-bind:class="{ 'active': cur == index}">{{ index }}</span>
-        <span v-if="cur!=all" v-on:click="pageClick('down')">下一页</span>
+        <span v-if="cur!=all" v-on:click="pageClick('down')">></span>
         @*<span v-if="cur==all" style="display:none">下一页</span>*@
     </div>
 </template>
@@ -80,12 +80,6 @@
             var left = 1;
             var right = this.all;
             var ar = [];
-            if (this.cur >= 4) { 
-                ar.push(1);
-            }
-            if (this.cur > 4) {
-                ar.push("...");
-            }
             if (this.all >= 5) {
                 if (this.cur > 3 && this.cur < this.all - 2) {
                     left = this.cur - 2;
@@ -100,15 +94,20 @@
                     }
                 }
             }
+            if (left >= 2) {
+                ar.push(1);
+            }
+            if (left > 2) {
+                ar.push("...");
+            }
             while (left <= right) {
                 ar.push(left);
                 left++;
             }
-            if (this.cur + 3 < this.all) { 
+            if (right + 1 < this.all) {
                 ar.push("...");
-                
             }
-            if (this.cur + 3 <= this.all) { 
+            if (right + 1 <= this.all) {
                 ar.push(this.all);
             }
             return ar;

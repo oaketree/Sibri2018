@@ -10,13 +10,13 @@ namespace Cms.BLL.category.services
 {
     public interface ICategoryService
     {
-        Task addNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null,bool ishref = false);
+        Task addNodes(int? parentid, string categoryname, string categorynameen, int? sortid, string href, bool ishref);
         Task<List<CategoryView>> categoryList();
         Task<List<Category>> getCategoryByID(int? id);
         Task<List<SelectListItem>> getSelectListItemByID(int? id);
         //Task<Category> getCategoryNameByID(int id);
         Task<Category> getNode(int categoryid);
-        Task updateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href = null, string hrefen = null, bool ishref = false);
+        Task updateNode(int categoryid, string categoryname, string categorynameen, int? sortid, string href, bool ishref);
         Task<bool> delNode(int categoryid);
 
     }
