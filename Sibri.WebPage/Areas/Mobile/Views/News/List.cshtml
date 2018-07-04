@@ -18,7 +18,7 @@
 <div id="mb_maincenter" class="container">
     <div v-for="item in picNewsData">
         <div class="mb_news00">
-            <img v-bind:src="item.newsImageName|photo" width="170" height="130" />
+            <img v-bind:src="item.newsImageName|photo" width="170" />
         </div>
         <div class="mb_news01">
             <div class="jwen newsneitit"><a v-bind:href="item.newsID|link">{{item.title}}</a></div>

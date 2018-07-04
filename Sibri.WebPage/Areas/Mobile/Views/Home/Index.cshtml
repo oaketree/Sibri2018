@@ -29,11 +29,11 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="fontwhite">
+                    <div class="fontwhite"  onclick="window.location.href='/Mobile/News/List/48'">
                         <div class="mbindexnewspic01"></div>
                         <div class="indexbg05 mbindexnewstit"><a href="/Mobile/News/List/48">公司新闻</a></div>
                     </div>
-                    <div class="fontwhite">
+                    <div class="fontwhite"  onclick="window.location.href='/Mobile/News/List/52'">
                         <div class="mbindexnewspic02"></div>
                         <div class="indexbg02 mbindexnewstit"><a href="/Mobile/News/List/52">科研成果</a></div>
                     </div>
@@ -43,11 +43,11 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="fontwhite">
+                    <div class="fontwhite" onclick="window.location.href='/Mobile/News/List/50'">
                         <div class="mbindexnewspic03"></div>
                         <div class="indexbg03 mbindexnewstit"><a href="/Mobile/News/List/50">通知公告</a></div>
                     </div>
-                    <div class="fontwhite">
+                    <div class="fontwhite" onclick="window.location.href='/Mobile/News/List/51'">
                         <div class="mbindexnewspic04"></div>
                         <div class="indexbg01 mbindexnewstit"><a href="/Mobile/News/List/51">专题专栏</a></div>
                     </div>
@@ -60,11 +60,11 @@
 <div id="indexnewmain">
     <div class="newmain01">
         <div class="container-fluid ">
-            <row>
+           
                 <ul>
                     <li v-for="item in picNewsData">
                         <div class="newslie">
-                            <div class="newslieimg"><img v-bind:src="item.newsImageName|photo" width="100" height="100" /></div>
+                            <div class="newslieimg"><img v-bind:src="item.newsImageName|photo" width="100" /></div>
                             <div class="newsliemain">
                                 <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title}}</a></div>
                                 <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
@@ -76,7 +76,7 @@
                         </div>
                     </li>
                 </ul>
-            </row>
+           
         </div>
     </div>
     <div class="newmain02">
@@ -114,7 +114,7 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="indexbg01 fontwhite">
+                    <div class="indexbg01 fontwhite" onclick="window.location.href='/Mobile/Page/PageInfo/13'">
                         <h2><span class="glyphicon glyphicon-globe"></span></h2><br />
                         <h4>行业服务</h4>
                     </div>
@@ -134,7 +134,7 @@
                             <div class="button_showcenter jz"><a href="/Mobile/Page/PageInfo/18">MORE</a></div>
                         </div>
                     </div>
-                    <div class="indexbg02 fontwhite">
+                    <div class="indexbg02 fontwhite" onclick="window.location.href='/Mobile/Page/PageInfo/18'">
                         <h2><span class="glyphicon glyphicon-eye-open"></span></h2><br />
                         <h4>检测与能审</h4>
                     </div>
@@ -144,7 +144,7 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="indexbg03 fontwhite">
+                    <div class="indexbg03 fontwhite" onclick="window.location.href='/Mobile/Page/PageInfo/23'">
                         <h2><span class="glyphicon glyphicon-cog"></span></h2><br />
                         <h4>产品与技术</h4>
                     </div>
@@ -164,7 +164,7 @@
                             <div class="button_showcenter jz"><a href="/Mobile/Static/Platform">MORE</a></div>
                         </div>
                     </div>
-                    <div class="indexbg04 fontwhite">
+                    <div class="indexbg04 fontwhite" onclick="window.location.href='/Mobile/Static/Platform'">
                         <h2><span class="glyphicon glyphicon-random"></span></h2><br />
                         <h4>平台建设</h4>
                     </div>
@@ -198,7 +198,7 @@
                 });
                 axios.get("/News/NewsList2", {
                     params: {
-                        count: 10,
+                        count: 5,
                         language: 0
                     }
                 }).then(function (response) {

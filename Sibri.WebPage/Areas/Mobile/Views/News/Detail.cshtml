@@ -9,8 +9,9 @@
 @section Footer{
     @await Component.InvokeAsync(nameof(BottomMb))
 }
-@await Component.InvokeAsync(nameof(BannerMb))
+@*@await Component.InvokeAsync(nameof(BannerMb))*@
 @await Component.InvokeAsync(nameof(TitleMb), new { categoryid = Model.ColumnID })
+@await Component.InvokeAsync(nameof(CategoryMb), new { view = "News", categoryid = Model.ColumnID, direction = 0 })
 <div class="container">
     <div>
         <div class="text-center">
