@@ -64,7 +64,7 @@
                 <ul>
                     <li v-for="item in picNewsData">
                         <div class="newslie">
-                            <div class="newslieimg"><img v-bind:src="item.newsImageName|photo" width="100" /></div>
+                            <div class="newslieimg"><a v-bind:href="item.newsID|link"><img v-bind:src="item.newsImageName|photo" width="100" /></a></div>
                             <div class="newsliemain">
                                 <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title}}</a></div>
                                 <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
@@ -144,7 +144,7 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="indexbg03 fontwhite" onclick="window.location.href='/Mobile/Page/PageInfo/23'">
+                    <div class="indexbg03 fontwhite" onclick="window.location.href='/Mobile/Product/List/23'">
                         <h2><span class="glyphicon glyphicon-cog"></span></h2><br />
                         <h4>产品与技术</h4>
                     </div>
