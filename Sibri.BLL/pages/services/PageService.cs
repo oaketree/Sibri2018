@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sibri.Contract.pages;
 using System;
 using System.Collections.Generic;
@@ -7,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Sibri.BLL.pages.services
 {
-    public class PageService:IPageService
+    public class PageService : IPageService
     {
         private readonly PageDBContext _dbContext;
         public PageService(PageDBContext dbContext)
         {
             this._dbContext = dbContext;
         }
-
-        public async Task<Pages> GetPage(int id,int language)
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "id", "language" })]
+        public async Task<Pages> GetPage(int id, int language)
         {
-            var page =await  _dbContext.Pages.AsNoTracking().FirstOrDefaultAsync(p=>p.ColumnID==id&&p.Language==language);
+            var page = await _dbContext.Pages.AsNoTracking().FirstOrDefaultAsync(p => p.ColumnID == id && p.Language == language);
             if (page != null)
             {
                 page.Hit = page.Hit + 1;
@@ -25,7 +26,6 @@ namespace Sibri.BLL.pages.services
                 await _dbContext.SaveChangesAsync();
                 return page;
             }
-                
             else
                 return null;
         }

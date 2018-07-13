@@ -15,7 +15,6 @@ namespace Sibri.WebPage.Areas.Mobile.Controllers
         {
             this._pageService = pageService;
         }
-
         public IActionResult Index()
         {
             return View();

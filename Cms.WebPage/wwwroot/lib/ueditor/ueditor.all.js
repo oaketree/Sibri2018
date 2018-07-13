@@ -23240,7 +23240,8 @@ UE.plugins['catchremoteimage'] = function () {
                 //成功抓取
                 success: function (r) {
                     try {
-                        var info = r.state !== undefined ? r:eval("(" + r.responseText + ")");
+                        var info = r.state !== undefined ? r : eval("(" + r.responseText + ")");
+                        //console.log(info);
                     } catch (e) {
                         return;
                     }
@@ -23250,7 +23251,10 @@ UE.plugins['catchremoteimage'] = function () {
 
                     for (i = 0; ci = imgs[i++];) {
                         oldSrc = ci.getAttribute("_src") || ci.src || "";
-                        for (j = 0; cj = list[j++];) {
+                        //console.log(oldSrc);
+                        for (j = 0; cj = list[j++].Result;) {
+                            //console.log(cj.Result.source);
+                            //console.log(cj.Result.url);
                             if (oldSrc == cj.source && cj.state == "SUCCESS") {  //抓取失败时不做替换处理
                                 newSrc = catcherUrlPrefix + cj.url;
                                 domUtils.setAttributes(ci, {
@@ -23259,6 +23263,7 @@ UE.plugins['catchremoteimage'] = function () {
                                 });
                                 break;
                             }
+                            //console.log(newSrc);
                         }
                     }
                     me.fireEvent('catchremotesuccess')

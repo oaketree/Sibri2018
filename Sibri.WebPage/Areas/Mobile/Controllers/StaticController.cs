@@ -13,7 +13,6 @@ namespace Sibri.WebPage.Areas.Mobile.Controllers
         {
             return View();
         }
-
         public IActionResult Job()
         {
             return View();

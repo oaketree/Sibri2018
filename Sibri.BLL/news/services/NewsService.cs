@@ -19,7 +19,7 @@ namespace Sibri.BLL.news.services
         {
             this._dbContext = dbContext;
         }
-        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "categoryid", "count" ,"language"})]
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "categoryid", "count", "language" })]
         public async Task<List<News>> GetNewsList(int categoryid, int count,int language)
         {
             var list = await _dbContext.News.AsNoTracking().Where(n => n.ColumnID == categoryid).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
@@ -31,7 +31,7 @@ namespace Sibri.BLL.news.services
                 return null;
             }
         }
-
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "categoryid", "count", "language" })]
         public async Task<List<News>> GetPicNewsList(int categoryid, int count,int language)
         {
             var list = await _dbContext.News.AsNoTracking().Where(n => n.ColumnID == categoryid&&!string.IsNullOrEmpty(n.NewsImageName)&&n.Language==language).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
@@ -44,7 +44,7 @@ namespace Sibri.BLL.news.services
                 return null;
             }
         }
-
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "count", "language" })]
         public async Task<List<News>> GetPicNewsList(int count, int language)
         {
             var list = await _dbContext.News.AsNoTracking().Where(n => !string.IsNullOrEmpty(n.NewsImageName) && n.Language == language).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
@@ -58,13 +58,12 @@ namespace Sibri.BLL.news.services
             }
         }
 
-
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "categoryid","language", "pageSize", "pageIndex" })]
         public Task<PaginatedList<News>> GetNewsList(int categoryid, int language, int pageSize, int pageIndex)
         {
             return PaginatedList<News>.CreateAsync(_dbContext.News.AsNoTracking().Where(n=>n.ColumnID==categoryid&&n.Language==language).OrderByDescending(o => o.RegDate), pageIndex, pageSize);
-
         }
-
+        [ResponseCache(Duration = 120, VaryByQueryKeys = new string[] { "count", "language"})]
         public async Task<List<News>> GetNewsList(int count, int language)
         {
             var list = await _dbContext.News.AsNoTracking().Where(n => n.Language == language).OrderByDescending(o => o.RegDate).Take(count).ToListAsync();
