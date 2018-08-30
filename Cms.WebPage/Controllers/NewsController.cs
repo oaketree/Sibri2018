@@ -62,13 +62,17 @@ namespace Cms.WebPage.Controllers
         [Authorize]
         public async Task<IActionResult> Create(NewsView nv,string[] checkbox)
         {
-            if (ModelState.IsValid)
-            {
-                await _newsServices.AddNews(nv, checkbox);
-                return RedirectToAction(nameof(Create));
-                //return Content("<script>alert('发布成功！');window.close();</script>");
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
             }
-            return View(nv);
+            await _newsServices.AddNews(nv, checkbox);
+            return RedirectToAction(nameof(Index));
+            //if (ModelState.IsValid)
+            //{
+            //    await _newsServices.AddNews(nv, checkbox);
+            //    return RedirectToAction(nameof(Create));
+            //}
+            //return View(nv);
         }
         //[Authorize]
         //public async Task<JsonResult> NewsList(int pageSize=10, int pageIndex = 1, string keywords = "", string category = "")

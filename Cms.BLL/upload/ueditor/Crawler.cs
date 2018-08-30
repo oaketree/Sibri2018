@@ -83,42 +83,29 @@ namespace Cms.BLL.upload.ueditor
                 }
                 try
                 {
+                    byte[] uploadFileBytes = null;
                     WebClient webClient = new WebClient();
                     webClient.Credentials = CredentialCache.DefaultCredentials;
+                    //var memoryStream = await webClient.OpenWriteTaskAsync(this.sourceUrl);
                     byte[] bytes = await webClient.DownloadDataTaskAsync(this.sourceUrl);
-                    //byte[] bytes = webClient.DownloadData(this.sourceUrl);
+                    var memoryStream = new MemoryStream(bytes);
                     webClient.Dispose();
-                    //var memoryStream = response.GetResponseStream();
-                    //_pictureHelper.ProcessByStream(memoryStream, new PictureSize
-                    //{
-                    //    Width = 700,
-                    //    Mode = "W"
-                    //});
-                    //memoryStream.Dispose();
-                    //memoryStream = _pictureHelper.Ms;
 
-                    //byte[] bytes = new byte[memoryStream.Length];
-                    //memoryStream.Seek(0, SeekOrigin.Begin);
-                    //memoryStream.Read(bytes, 0, bytes.Length);
+                    _pictureHelper.ProcessByStream(memoryStream, new PictureSize
+                    {
+                        Width = 700,
+                        Height = 700,
+                        Mode = "Auto"
+                    });
+                    memoryStream.Dispose();
+                    memoryStream = _pictureHelper.Ms;
+                    uploadFileBytes = new byte[memoryStream.Length];
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    memoryStream.Read(uploadFileBytes, 0, uploadFileBytes.Length);
+                    memoryStream.Dispose();
 
-
-                    //memoryStream.Dispose();需要的
-
-                    //var reader = new BinaryReader(memoryStream);
-                    //byte[] bytes;
-                    //using (var ms = new MemoryStream())
-                    //{
-                    //    byte[] buffer = new byte[4096];
-                    //    int count;
-                    //    while ((count = reader.Read(buffer, 0, buffer.Length)) != 0)
-                    //    {
-                    //        ms.Write(buffer, 0, count);
-                    //    }
-                    //    bytes = ms.ToArray();
-                    //}
-                    //File.WriteAllBytes(savePath, bytes);
-                    await File.WriteAllBytesAsync(savePath, bytes);
-                    await _uploadService.SaveToRemotePath(bytes, serverUrl);//保存到远程路径
+                    await File.WriteAllBytesAsync(savePath, uploadFileBytes);
+                    await _uploadService.SaveToRemotePath(uploadFileBytes, serverUrl);//保存到远程路径
                     await _uploadService.addFile(filename, extension, "Ueditor");
                     state = "SUCCESS";
                 }

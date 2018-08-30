@@ -62,7 +62,8 @@ namespace Cms.BLL.upload.ueditor
                         _pictureHelper.ProcessByStream(memoryStream, new PictureSize
                         {
                             Width = 700,
-                            Mode = "W"
+                            Height=700,
+                            Mode = "Auto"
                         });
                         memoryStream.Dispose();
                         memoryStream = _pictureHelper.Ms;

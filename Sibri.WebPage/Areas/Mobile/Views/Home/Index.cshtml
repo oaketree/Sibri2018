@@ -29,11 +29,11 @@
         <div class="fuwuul">
             <ul>
                 <li>
-                    <div class="fontwhite"  onclick="window.location.href='/Mobile/News/List/48'">
+                    <div class="fontwhite" onclick="window.location.href='/Mobile/News/List/48'">
                         <div class="mbindexnewspic01"></div>
                         <div class="indexbg05 mbindexnewstit"><a href="/Mobile/News/List/48">公司新闻</a></div>
                     </div>
-                    <div class="fontwhite"  onclick="window.location.href='/Mobile/News/List/52'">
+                    <div class="fontwhite" onclick="window.location.href='/Mobile/News/List/52'">
                         <div class="mbindexnewspic02"></div>
                         <div class="indexbg02 mbindexnewstit"><a href="/Mobile/News/List/52">科研成果</a></div>
                     </div>
@@ -60,29 +60,40 @@
 <div id="indexnewmain">
     <div class="newmain01">
         <div class="container-fluid ">
-           
-                <ul>
-                    <li v-for="item in picNewsData">
-                        <div class="newslie">
-                            <div class="newslieimg"><a v-bind:href="item.newsID|link"><img v-bind:src="item.newsImageName|photo" width="100" /></a></div>
-                            <div class="newsliemain">
-                                <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title}}</a></div>
-                                <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
-                                <div class="j2wen"><a v-bind:href="item.newsID|link">{{item.newsDetail|clean|changeLength(30)}}...</a></div>
-                            </div>
+
+            <ul>
+                <li v-for="item in picNewsData">
+                    <div class="newslie" v-show="isVertical">
+                        <div class="newslieimg"><a v-bind:href="item.newsID|link"><img v-bind:src="item.newsImageName|photo" width="100" /></a></div>
+                        <div class="newsliemain">
+                            <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title|changeLength(28)}}</a></div>
+                            <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
+                            <div class="j2wen"><a v-bind:href="item.newsID|link">{{item.newsDetail|clean|changeLength(31)}}</a></div>
                         </div>
-                        <div class="newsline">
-                            <div class="newslinebg"></div>
+                    </div>
+                    <div class="newslie" v-show="!isVertical">
+                        <div class="newslieimg"><a v-bind:href="item.newsID|link"><img v-bind:src="item.newsImageName|photo" width="100" /></a></div>
+                        <div class="newsliemain">
+                            <div class="newstitlie news_wenjd"><a v-bind:href="item.newsID|link">{{item.title|changeLength(31)}}</a></div>
+                            <div class="lineheight30 text-warning">{{item.shortRegDate}}</div>
+                            <div class="j2wen"><a v-bind:href="item.newsID|link">{{item.newsDetail|clean|changeLength(33)}}</a></div>
                         </div>
-                    </li>
-                </ul>
-           
+                    </div>
+                    <div class="newsline">
+                        <div class="newslinebg"></div>
+                    </div>
+                </li>
+            </ul>
+
         </div>
     </div>
     <div class="newmain02">
         <div class="container-fluid news_wenjd">
             <ul>
-                <li v-for="item in newsData"><a v-bind:href="item.newsID|link">{{item.title}}</a></li>
+                <li v-for="item in newsData">
+                    <a v-bind:href="item.newsID|link" v-show="isVertical">{{item.title|changeLength(46)}}</a>
+                    <a v-bind:href="item.newsID|link" v-show="!isVertical">{{item.title|changeLength(30)}}</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -183,7 +194,8 @@
             el: "#indexnewmain",
             data: {
                 picNewsData: {},
-                newsData: {}
+                newsData: {},
+                isVertical: true
             }, mounted: function mounted() {
                 axios.get("/News/NewsPicList2", {
                     params: {
@@ -198,7 +210,7 @@
                 });
                 axios.get("/News/NewsList2", {
                     params: {
-                        count: 5,
+                        count: 6,
                         language: 0
                     }
                 }).then(function (response) {
@@ -206,6 +218,17 @@
                 }).catch(function (error) {
                     console.log(error);
                 });
+                window.addEventListener(
+                    "onorientationchange" in window ? "orientationchange" : "resize",
+                    function () {
+                        if (window.orientation === 90 || window.orientation === -90) {
+                            vm.isVertical = false;
+                        } else {
+                            vm.isVertical = true;
+                        }
+                    },
+                    false
+                );
             }, filters: {
                 photo: function photo(value) {
                     var imgUrl = "/upload/image/" + value;
@@ -214,7 +237,12 @@
                     var Url = "/Mobile/News/Detail/" + value;
                     return Url;
                 }, changeLength: function changeLength(value, length) {
-                    return value.substr(0, length);
+                    if (value.length <= length)
+                        return value;
+                    else { 
+                        var newValue = value.substr(0, length) + "...";
+                        return newValue;
+                    }
                 }, clean: function clean(value) {
                     return value.replace(/<\/?.+?>/g, "");
                 }

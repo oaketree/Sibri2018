@@ -69,7 +69,7 @@ namespace Cms.WebPage
                .AddCookie(options =>
             {
                 options.LoginPath = new PathString("/Admin/Login");
-                options.AccessDeniedPath = new PathString("/Admin/Denied");
+                options.AccessDeniedPath = new PathString("/Admin/Login");
             });
 
             services.Configure<RemoteSave>(this.Configuration.GetSection("RemoteSave"));
